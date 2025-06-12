@@ -36,7 +36,7 @@ import java.io.File;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public final class MHDFBot implements Bot {
+public final class MHDFBot {
     @Getter
     private static final Logger logger = getLogger("MHDF-Bot");
     @Getter
@@ -88,298 +88,243 @@ public final class MHDFBot implements Bot {
         return LogManager.getLogger(prefix);
     }
 
-    @Override
-    public void cleanCache() {
+    public static void init() {
+        getBot().init();
+    }
+
+    public static void cleanCache() {
         getBot().cleanCache();
     }
 
-    @Override
-    public void restart(Long delay) {
+    public static void restart(Long delay) {
         getBot().restart(delay);
     }
 
-    @Override
-    public void restart() {
+    public static void restart() {
         getBot().restart();
     }
 
-    @Override
-    public Status getStatus() {
+    public static Status getStatus() {
         return getBot().getStatus();
     }
 
-    @Override
-    public VersionInfo getVersionInfo() {
+    public static VersionInfo getVersionInfo() {
         return getBot().getVersionInfo();
     }
 
-    @Override
-    public LoginInfo getLoginInfo() {
+    public static LoginInfo getLoginInfo() {
         return getBot().getLoginInfo();
     }
 
-    @Override
-    public Boolean ifCanSendRecord() {
+    public static Boolean ifCanSendRecord() {
         return getBot().ifCanSendRecord();
     }
 
-    @Override
-    public Boolean ifCanSendImage() {
+    public static Boolean ifCanSendImage() {
         return getBot().ifCanSendImage();
     }
 
-    @Override
-    public Long getCsrfToken() {
+    public static Long getCsrfToken() {
         return getBot().getCsrfToken();
     }
 
-    @Override
-    public List<Friend> getFriendList() {
+    public static List<Friend> getFriendList() {
         return getBot().getFriendList();
     }
 
-    @Override
-    public List<Group> getGroupList() {
+    public static List<Group> getGroupList() {
         return getBot().getGroupList();
     }
 
-    @Override
-    public AbstractMessageEvent getMsg(Long messageId) {
+    public static AbstractMessageEvent getMsg(Long messageId) {
         return getBot().getMsg(messageId);
     }
 
-    @Override
-    public Long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape) {
+    public static Long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape) {
         return getBot().sendMsg(messageType, targetId, message, autoEscape);
     }
 
-    @Override
-    public Long sendPrivateMsg(Long targetId, String message, boolean autoEscape) {
+    public static Long sendPrivateMsg(Long targetId, String message, boolean autoEscape) {
         return getBot().sendPrivateMsg(targetId, message, autoEscape);
     }
 
-    @Override
-    public Long sendPrivateMsg(Long targetId, String message) {
+    public static Long sendPrivateMsg(Long targetId, String message) {
         return getBot().sendPrivateMsg(targetId, message);
     }
 
-    @Override
-    public Long sendGroupMsg(Long targetId, String message, boolean autoEscape) {
+    public static Long sendGroupMsg(Long targetId, String message, boolean autoEscape) {
         return getBot().sendGroupMsg(targetId, message, autoEscape);
     }
 
-    @Override
-    public Long sendGroupMsg(Long targetId, String message) {
+    public static Long sendGroupMsg(Long targetId, String message) {
         return getBot().sendGroupMsg(targetId, message);
     }
 
-    @Override
-    public void deleteMsg(Long messageId) {
+    public static void deleteMsg(Long messageId) {
         getBot().deleteMsg(messageId);
     }
 
-    @Override
-    public void sendLike(Long targetId, int times) {
+    public static void sendLike(Long targetId, int times) {
         getBot().sendLike(targetId, times);
     }
 
-    @Override
-    public void groupKick(Long groupId, Long userId, boolean rejectAddRequest) {
+    public static void groupKick(Long groupId, Long userId, boolean rejectAddRequest) {
         getBot().groupKick(groupId, userId, rejectAddRequest);
     }
 
-    @Override
-    public void groupKick(Long groupId, Long userId) {
+    public static void groupKick(Long groupId, Long userId) {
         getBot().groupKick(groupId, userId);
     }
 
-    @Override
-    public void setGroupMute(Long groupId, Long userId, Long duration) {
+    public static void setGroupMute(Long groupId, Long userId, Long duration) {
         getBot().setGroupMute(groupId, userId, duration);
     }
 
-    @Override
-    public void setGroupMute(Long groupId, Long userId) {
+    public static void setGroupMute(Long groupId, Long userId) {
         getBot().setGroupMute(groupId, userId);
     }
 
-    @Override
-    public void unsetGroupMute(Long groupId, Long userId) {
+    public static void unsetGroupMute(Long groupId, Long userId) {
         getBot().unsetGroupMute(groupId, userId);
     }
 
-    @Override
-    public void setGroupWholeMute(Long groupId, boolean enable) {
+    public static void setGroupWholeMute(Long groupId, boolean enable) {
         getBot().setGroupWholeMute(groupId, enable);
     }
 
-    @Override
-    public void setGroupWholeMute(Long groupId) {
+    public static void setGroupWholeMute(Long groupId) {
         getBot().setGroupWholeMute(groupId);
     }
 
-    @Override
-    public void unsetGroupWholeMute(Long groupId) {
+    public static void unsetGroupWholeMute(Long groupId) {
         getBot().unsetGroupWholeMute(groupId);
     }
 
-    @Override
-    public void setGroupAdmin(Long groupId, Long userId, boolean enable) {
+    public static void setGroupAdmin(Long groupId, Long userId, boolean enable) {
         getBot().setGroupAdmin(groupId, userId, enable);
     }
 
-    @Override
-    public void setGroupAdmin(Long groupId, Long userId) {
+    public static void setGroupAdmin(Long groupId, Long userId) {
         getBot().setGroupAdmin(groupId, userId);
     }
 
-    @Override
-    public void unsetGroupAdmin(Long groupId, Long userId) {
+    public static void unsetGroupAdmin(Long groupId, Long userId) {
         getBot().unsetGroupAdmin(groupId, userId);
     }
 
-    @Override
-    public void setGroupCard(Long groupId, Long userId, String card) {
+    public static void setGroupCard(Long groupId, Long userId, String card) {
         getBot().setGroupCard(groupId, userId, card);
     }
 
-    @Override
-    public void unsetGroupCard(Long groupId, Long userId) {
+    public static void unsetGroupCard(Long groupId, Long userId) {
         getBot().unsetGroupCard(groupId, userId);
     }
 
-    @Override
-    public void setGroupName(Long groupId, String name) {
+    public static void setGroupName(Long groupId, String name) {
         getBot().setGroupName(groupId, name);
     }
 
-    @Override
-    public void leaveGroup(Long groupId, boolean dismiss) {
+    public static void leaveGroup(Long groupId, boolean dismiss) {
         getBot().leaveGroup(groupId, dismiss);
     }
 
-    @Override
-    public void leaveGroup(Long groupId) {
+    public static void leaveGroup(Long groupId) {
         getBot().leaveGroup(groupId);
     }
 
-    @Override
-    public void dismissGroup(Long groupId) {
+    public static void dismissGroup(Long groupId) {
         getBot().dismissGroup(groupId);
     }
 
-    @Override
-    public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, Long duration) {
+    public static void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, Long duration) {
         getBot().setGroupSpecialTitle(groupId, userId, specialTitle, duration);
     }
 
-    @Override
-    public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle) {
+    public static void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle) {
         getBot().setGroupSpecialTitle(groupId, userId, specialTitle);
     }
 
-    @Override
-    public void unsetGroupSpecialTitle(Long groupId, Long userId) {
+    public static void unsetGroupSpecialTitle(Long groupId, Long userId) {
         getBot().unsetGroupSpecialTitle(groupId, userId);
     }
 
-    @Override
-    public void handleFriendAddRequest(String flag, boolean approve, String remark) {
+    public static void handleFriendAddRequest(String flag, boolean approve, String remark) {
         getBot().handleFriendAddRequest(flag, approve, remark);
     }
 
-    @Override
-    public void handleFriendAddRequest(String flag, boolean approve) {
+    public static void handleFriendAddRequest(String flag, boolean approve) {
         getBot().handleFriendAddRequest(flag, approve);
     }
 
-    @Override
-    public void acceptFriendAddRequest(String flag) {
+    public static void acceptFriendAddRequest(String flag) {
         getBot().acceptFriendAddRequest(flag);
     }
 
-    @Override
-    public void rejectFriendAddRequest(String flag) {
+    public static void rejectFriendAddRequest(String flag) {
         getBot().rejectFriendAddRequest(flag);
     }
 
-    @Override
-    public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve, String reason) {
+    public static void handleGroupAddRequest(String flag, RequestSubType type, boolean approve, String reason) {
         getBot().handleGroupAddRequest(flag, type, approve, reason);
     }
 
-    @Override
-    public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve) {
+    public static void handleGroupAddRequest(String flag, RequestSubType type, boolean approve) {
         getBot().handleGroupAddRequest(flag, type, approve);
     }
 
-    @Override
-    public void acceptGroupAddRequest(String flag, RequestSubType type) {
+    public static void acceptGroupAddRequest(String flag, RequestSubType type) {
         getBot().acceptGroupAddRequest(flag, type);
     }
 
-    @Override
-    public void rejectGroupAddRequest(String flag, RequestSubType type) {
+    public static void rejectGroupAddRequest(String flag, RequestSubType type) {
         getBot().rejectGroupAddRequest(flag, type);
     }
 
-    @Override
-    public Stranger getStrangerInfo(Long userId, boolean cache) {
+    public static Stranger getStrangerInfo(Long userId, boolean cache) {
         return getBot().getStrangerInfo(userId, cache);
     }
 
-    @Override
-    public Stranger getStrangerInfo(Long userId) {
+    public static Stranger getStrangerInfo(Long userId) {
         return getBot().getStrangerInfo(userId);
     }
 
-    @Override
-    public Member getGroupMemberInfo(Long groupId, Long userId, boolean cache) {
+    public static Member getGroupMemberInfo(Long groupId, Long userId, boolean cache) {
         return getBot().getGroupMemberInfo(groupId, userId, cache);
     }
 
-    @Override
-    public Member getGroupMemberInfo(Long groupId, Long userId) {
+    public static Member getGroupMemberInfo(Long groupId, Long userId) {
         return getBot().getGroupMemberInfo(groupId, userId);
     }
 
-    @Override
-    public List<Member> getGroupMemberList(Long groupId, boolean cache) {
+    public static List<Member> getGroupMemberList(Long groupId, boolean cache) {
         return getBot().getGroupMemberList(groupId, cache);
     }
 
-    @Override
-    public List<Member> getGroupMemberList(Long groupId) {
+    public static List<Member> getGroupMemberList(Long groupId) {
         return getBot().getGroupMemberList(groupId);
     }
 
-    @Override
-    public GroupHonor getGroupHonorInfo(Long groupId, HonorType type) {
+    public static GroupHonor getGroupHonorInfo(Long groupId, HonorType type) {
         return getBot().getGroupHonorInfo(groupId, type);
     }
 
-    @Override
-    public GroupHonor getGroupHonorInfo(Long groupId) {
+    public static GroupHonor getGroupHonorInfo(Long groupId) {
         return getBot().getGroupHonorInfo(groupId);
     }
 
-    @Override
-    public String getCookies(String domain) {
+    public static String getCookies(String domain) {
         return getBot().getCookies(domain);
     }
 
-    @Override
-    public Record getRecord(String file, RecordFormat format) {
+    public static Record getRecord(String file, RecordFormat format) {
         return getBot().getRecord(file, format);
     }
 
-    @Override
-    public Record getRecord(String file) {
+    public static Record getRecord(String file) {
         return getBot().getRecord(file);
     }
 
-    @Override
-    public File getImage(String file) {
+    public static File getImage(String file) {
         return getBot().getImage(file);
     }
 }

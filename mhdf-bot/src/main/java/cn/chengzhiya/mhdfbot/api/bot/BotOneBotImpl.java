@@ -33,6 +33,11 @@ public final class BotOneBotImpl implements Bot {
     private static final OneBotHttpClient oneBotHttpClient = new OneBotHttpClient();
 
     @Override
+    public void init() {
+        getOneBotWebSocketClient().connectServer();
+    }
+
+    @Override
     public void cleanCache() {
         getOneBotHttpClient().post("clean_cache");
     }

@@ -20,6 +20,11 @@ import java.util.List;
 
 public interface Bot {
     /**
+     * 初始化
+     */
+    void init();
+
+    /**
      * 清理缓存
      */
     void cleanCache();
