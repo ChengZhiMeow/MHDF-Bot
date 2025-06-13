@@ -78,12 +78,13 @@
         </repository>
     </repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>alimaven</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>chengzhimeow-maven-repo-releases</id>
+            <name>橙汁喵の仓库</name>
+            <url>https://maven.chengzhimeow.cn/releases</url>
+        </repository>
+    </distributionManagement>
 
     <modules>
         <module>mhdf-bot</module>
