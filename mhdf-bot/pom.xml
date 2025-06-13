@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.chengzhiya</groupId>
         <artifactId>mhdfbot</artifactId>
-        <version>2.0.0</version>
+        <version>2.1.0</version>
     </parent>
 
     <artifactId>mhdf-bot</artifactId>
@@ -39,6 +39,14 @@
         </resources>
         <finalName>[梦之机器人]${project.artifactId}-${project.version}</finalName>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>chengzhimeow-maven-repo-releases</id>
+            <name>橙汁喵の仓库</name>
+            <url>https://maven.chengzhimeow.cn/releases</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

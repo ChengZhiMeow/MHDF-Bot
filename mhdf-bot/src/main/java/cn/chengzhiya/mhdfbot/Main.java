@@ -21,7 +21,7 @@ public class Main {
     private static final ConfigManager configManager = new ConfigManager();
     @Getter
     private static final PluginInfo frameworkInfo =
-            new PluginInfo("MHDF-Bot", "2.0.0", null, Collections.singletonList("ChengZhiYa"));
+            new PluginInfo("MHDF-Bot", "2.1.0", null, Collections.singletonList("ChengZhiYa"));
 
     public static void main(String[] args) throws Exception {
         Long startTime = System.currentTimeMillis();
