@@ -1,5 +1,6 @@
 package cn.chengzhiya.mhdfbot.api.manager;
 
+import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.event.Event;
 import cn.chengzhiya.mhdfbot.api.listener.EventHandler;
@@ -32,11 +33,25 @@ public final class ListenerManager {
     public void callEvent(Event event) {
         for (Listener listener : getListenerHashMap().keySet()) {
             for (Method method : listener.getClass().getMethods()) {
-                if (method.isAnnotationPresent(EventHandler.class)) {
-                    try {
-                        method.invoke(listener, event);
-                    } catch (Exception ignored) {
-                    }
+                if (!method.isAnnotationPresent(EventHandler.class)) {
+                    continue;
+                }
+
+                if (method.getParameters().length != 1) {
+                    continue;
+                }
+
+                if (!method.getParameters()[0].getType().equals(event.getClass())) {
+                    continue;
+                }
+
+                try {
+                    method.invoke(listener, event);
+                } catch (Exception e) {
+                    MHDFBot.getLogger().error("在处理监听器 {} 的时候遇到了问题:",
+                            listener.getClass()
+                    );
+                    e.printStackTrace();
                 }
             }
         }

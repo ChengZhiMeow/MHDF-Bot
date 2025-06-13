@@ -13,7 +13,8 @@ public final class MediaBuilder {
     private String cover;
     private String magic;
 
-    public String build() {
+    @Override
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("file=").append(MessageUtil.escape(this.file));
         if (this.cache != null) {

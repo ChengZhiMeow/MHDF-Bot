@@ -3,6 +3,7 @@ package cn.chengzhiya.mhdfbot.api.bot;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
+import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.group.Group;
 import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
 import cn.chengzhiya.mhdfbot.api.entity.message.Record;
@@ -19,6 +20,13 @@ import java.io.File;
 import java.util.List;
 
 public interface Bot {
+    /**
+     * 获取机器人配置实例
+     *
+     * @return 机器人配置实例
+     */
+    YamlConfiguration getBotConfig();
+
     /**
      * 初始化
      */
@@ -81,7 +89,7 @@ public interface Bot {
      *
      * @return csrfToken值
      */
-    Long getCsrfToken();
+    long getCsrfToken();
 
     /**
      * 获取好友列表
@@ -114,7 +122,7 @@ public interface Bot {
      * @param autoEscape  消息内容是否作为纯文本发送
      * @return 消息ID
      */
-    Long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape);
+    long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape);
 
     /**
      * 发送私聊消息
@@ -124,7 +132,7 @@ public interface Bot {
      * @param autoEscape 消息内容是否作为纯文本发送
      * @return 消息ID
      */
-    Long sendPrivateMsg(Long targetId, String message, boolean autoEscape);
+    long sendPrivateMsg(Long targetId, String message, boolean autoEscape);
 
     /**
      * 发送私聊消息
@@ -133,7 +141,7 @@ public interface Bot {
      * @param message  消息内容
      * @return 消息ID
      */
-    Long sendPrivateMsg(Long targetId, String message);
+    long sendPrivateMsg(Long targetId, String message);
 
     /**
      * 发送私聊消息
@@ -143,7 +151,7 @@ public interface Bot {
      * @param autoEscape 消息内容是否作为纯文本发送
      * @return 消息ID
      */
-    Long sendGroupMsg(Long targetId, String message, boolean autoEscape);
+    long sendGroupMsg(Long targetId, String message, boolean autoEscape);
 
     /**
      * 发送私聊消息
@@ -152,7 +160,7 @@ public interface Bot {
      * @param message  消息内容
      * @return 消息ID
      */
-    Long sendGroupMsg(Long targetId, String message);
+    long sendGroupMsg(Long targetId, String message);
 
     /**
      * 通过消息ID撤回消息

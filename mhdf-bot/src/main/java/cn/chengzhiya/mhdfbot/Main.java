@@ -3,13 +3,10 @@ package cn.chengzhiya.mhdfbot;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
-import cn.chengzhiya.mhdfbot.api.event.message.GroupMessageEvent;
-import cn.chengzhiya.mhdfbot.api.event.message.PrivateMessageEvent;
-import cn.chengzhiya.mhdfbot.api.listener.EventHandler;
-import cn.chengzhiya.mhdfbot.api.listener.Listener;
 import cn.chengzhiya.mhdfbot.command.Help;
 import cn.chengzhiya.mhdfbot.command.Plugins;
 import cn.chengzhiya.mhdfbot.console.CommandCompleter;
+import cn.chengzhiya.mhdfbot.listener.MessageListener;
 import cn.chengzhiya.mhdfbot.manager.ConfigManager;
 import cn.chengzhiya.mhdfbot.minecraft.MinecraftWebSocketServer;
 import lombok.Getter;
@@ -76,37 +73,6 @@ public class Main {
      * 注册框架自带事件
      */
     private static void registerListener() {
-        MHDFBot.getListenerManager().registerListener(Main.getFrameworkInfo(), new Listener() {
-            /**
-             * 群聊消息提示
-             */
-            @EventHandler
-            public void onGroupMessage(GroupMessageEvent event) {
-                if (getConfigManager().getConfig().getBoolean("logSettings.groupMessage")) {
-                    MHDFBot.getLogger().info(
-                            "在群聊{}收到了一条消息: {}({}): {}",
-                            event.getGroupId(),
-                            event.getSender().getNickName(),
-                            event.getSender().getUserId(),
-                            event.getMessage()
-                    );
-                }
-            }
-
-            /**
-             * 私聊消息提示
-             */
-            @EventHandler
-            public void onPrivateMessage(PrivateMessageEvent event) {
-                if (getConfigManager().getConfig().getBoolean("logSettings.privateMessage")) {
-                    MHDFBot.getLogger().info(
-                            "在私聊收到了一条消息: {}({}): {}",
-                            event.getSender().getNickName(),
-                            event.getSender().getUserId(),
-                            event.getMessage()
-                    );
-                }
-            }
-        });
+        MHDFBot.getListenerManager().registerListener(Main.getFrameworkInfo(), new MessageListener());
     }
 }

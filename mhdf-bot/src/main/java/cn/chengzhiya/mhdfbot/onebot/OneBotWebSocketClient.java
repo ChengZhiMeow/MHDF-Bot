@@ -1,6 +1,5 @@
 package cn.chengzhiya.mhdfbot.onebot;
 
-import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.enums.notice.NoticeType;
 import cn.chengzhiya.mhdfbot.api.enums.notice.NotifySubType;
@@ -11,85 +10,21 @@ import cn.chengzhiya.mhdfbot.api.event.message.PrivateMessageEvent;
 import cn.chengzhiya.mhdfbot.api.event.notice.*;
 import cn.chengzhiya.mhdfbot.api.event.request.FriendRequestEvent;
 import cn.chengzhiya.mhdfbot.api.event.request.GroupRequestEvent;
+import cn.chengzhiya.mhdfbot.api.websocket.AbstractWebSocketClient;
 import com.alibaba.fastjson2.JSONObject;
-import jakarta.websocket.*;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+public final class OneBotWebSocketClient extends AbstractWebSocketClient {
+    public OneBotWebSocketClient() {
+        super(
+                MHDFBot.getBot().getBotConfig().getString("websocketHost"),
+                true
+        );
 
-@SuppressWarnings({"unused"})
-public final class OneBotWebSocketClient extends Endpoint {
-    private final String websocketHost = Main.getConfigManager().getConfig().getString("oneBotSettings.websocketHost");
-    private final String accessToken = Main.getConfigManager().getConfig().getString("oneBotSettings.accessToken");
-    private final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-    public Session session;
-
-    /**
-     * 连接服务器
-     */
-    public void connectServer() {
-        try {
-            ClientEndpointConfig clientEndpointConfig = ClientEndpointConfig.Builder.create()
-                    .configurator(new ClientEndpointConfig.Configurator() {
-                        @Override
-                        public void beforeRequest(Map<String, List<String>> headers) {
-                            if (accessToken != null) {
-                                headers.put("Authorization", Collections.singletonList("Bearer " + accessToken));
-                            }
-                        }
-                    })
-                    .build();
-
-            container.connectToServer(this, clientEndpointConfig, new URI(websocketHost));
-        } catch (DeploymentException | IOException | URISyntaxException e) {
-            MHDFBot.getLogger().info("无法正常连接至websocket服务端,正在重试!");
-            MHDFBot.getScheduler().runTaskLater(this::connectServer, 5L);
-        }
-    }
-
-    /**
-     * 向服务器发送消息
-     *
-     * @param message 消息
-     */
-    public void send(String message) {
-        try {
-            if (this.session != null && this.session.isOpen()) {
-                this.session.getAsyncRemote().sendText(message);
-            } else {
-                this.session = null;
-            }
-        } catch (Exception ignored) {
-        }
+        setAccessToken("Bearer " + MHDFBot.getBot().getBotConfig().getString("accessToken"));
     }
 
     @Override
-    public void onOpen(Session session, EndpointConfig config) {
-        this.session = session;
-
-        session.addMessageHandler(String.class, this::handlerMessage);
-        MHDFBot.getLogger().info("websocket服务端连接成功!");
-    }
-
-    @Override
-    public void onClose(Session session, CloseReason closeReason) {
-        this.session = null;
-        MHDFBot.getLogger().info("websocket服务端已离线!");
-        this.connectServer();
-    }
-
-    @OnError
-    public void onError(Session session, Throwable e) {
-        this.session = null;
-        this.connectServer();
-        MHDFBot.getLogger().error(e);
-    }
-
-    public void handlerMessage(String message) {
+    public void handleMessage(String message) {
         JSONObject data = JSONObject.parseObject(message);
         if (data.getString("post_type") != null) {
             switch (data.getString("post_type")) {

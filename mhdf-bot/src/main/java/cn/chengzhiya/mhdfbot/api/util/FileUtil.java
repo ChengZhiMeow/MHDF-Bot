@@ -6,9 +6,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 public final class FileUtil {
+    /**
+     * 删除指定目录文件实例
+     *
+     * @param directory 目录文件实例
+     */
+    public static void removeFiles(File directory) {
+        if (!directory.exists()) {
+            return;
+        }
+
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            if (file.isDirectory()) {
+                removeFiles(file);
+                continue;
+            }
+            file.delete();
+        }
+        directory.delete();
+    }
+
     /**
      * 创建空文件夹
      *

@@ -108,7 +108,7 @@ public final class YamlConfiguration {
     }
 
     public Long getLong(String path) {
-        return Long.parseLong((String) Objects.requireNonNull(this.get(path)));
+        return (Long) this.get(path);
     }
 
     public List<?> getList(String path) {

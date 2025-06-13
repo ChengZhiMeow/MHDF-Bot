@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.api.event.notice;
 
-import cn.chengzhiya.mhdfbot.api.entity.File;
+import cn.chengzhiya.mhdfbot.api.entity.file.File;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 

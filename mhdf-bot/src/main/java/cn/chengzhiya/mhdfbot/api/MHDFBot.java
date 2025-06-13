@@ -1,16 +1,20 @@
 package cn.chengzhiya.mhdfbot.api;
 
+import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.bot.Bot;
-import cn.chengzhiya.mhdfbot.api.bot.BotOneBotImpl;
+import cn.chengzhiya.mhdfbot.api.bot.OneBotImpl;
+import cn.chengzhiya.mhdfbot.api.bot.QqBotImpl;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
+import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.group.Group;
 import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
 import cn.chengzhiya.mhdfbot.api.entity.message.Record;
 import cn.chengzhiya.mhdfbot.api.entity.user.Friend;
 import cn.chengzhiya.mhdfbot.api.entity.user.Member;
 import cn.chengzhiya.mhdfbot.api.entity.user.Stranger;
+import cn.chengzhiya.mhdfbot.api.enums.bot.BotType;
 import cn.chengzhiya.mhdfbot.api.enums.message.MessageType;
 import cn.chengzhiya.mhdfbot.api.enums.message.RecordFormat;
 import cn.chengzhiya.mhdfbot.api.enums.notice.HonorType;
@@ -34,11 +38,14 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 @SuppressWarnings("unused")
 public final class MHDFBot {
     @Getter
     private static final Logger logger = getLogger("MHDF-Bot");
+    @Getter
+    private static final BotType botType;
     @Getter
     private static final Bot bot;
     @Getter
@@ -51,7 +58,17 @@ public final class MHDFBot {
     private static final MinecraftWebSocketServer minecraftWebSocketServer = new MinecraftWebSocketServer();
 
     static {
-        bot = new BotOneBotImpl();
+        YamlConfiguration botConfig = Main.getConfigManager().getConfig().getConfigurationSection("botSettings");
+        if (botConfig == null) {
+            throw new RuntimeException("机器人配置错误!");
+        }
+
+        botType = BotType.valueOf(botConfig.getString("type").toUpperCase(Locale.ROOT));
+        switch (botType) {
+            case ONEBOT -> bot = new OneBotImpl();
+            case QQBOT -> bot = new QqBotImpl();
+            default -> throw new RuntimeException("不支持的机器人类型!");
+        }
     }
 
     /**

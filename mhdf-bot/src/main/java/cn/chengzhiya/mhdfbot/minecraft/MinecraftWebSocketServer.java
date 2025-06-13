@@ -7,12 +7,9 @@ import cn.chengzhiya.mhdfbot.api.runnable.MHDFBotRunnable;
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
-import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.tomcat.websocket.server.WsSci;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -40,9 +37,6 @@ public final class MinecraftWebSocketServer {
             Tomcat tomcat = new Tomcat();
             tomcat.setPort(port);
             tomcat.getConnector();
-
-            Context ctx = tomcat.addWebapp("", new File(".").getAbsolutePath());
-            ctx.addServletContainerInitializer(new WsSci(), null);
 
             tomcat.start();
             MHDFBot.getLogger().info("websocket服务端启动成功(0.0.0.0:{})!", port);

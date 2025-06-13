@@ -1,11 +1,42 @@
-# OneBot设置
-oneBotSettings:
-  # WebSocket地址 (末尾必须为/)
-  websocketHost: "ws://127.0.0.1:3001/"
-  # HTTP地址 (末尾必须为/)
-  httpHost: "http://127.0.0.1:3000/"
-  # 鉴权
-  # accessToken: ""
+# 机器人设置
+botSettings:
+  # 类型
+  # qqBot
+  # oneBot
+  type: "oneBot"
+  # 官方机器人
+  qqBot:
+    # 机器人QQ
+    qq: 0
+    # 机器人ID
+    appId: ""
+    # 机器人令牌
+    token: ""
+    # 机器人密钥
+    secret: ""
+    # 接口服务
+    webHook:
+      # 端口
+      port: 8081
+      # ssl设置(jks格式)
+      ssl:
+        # 开关
+        enable: false
+        # 别名
+        alias: ""
+        # 文件
+        file: ""
+        # 密钥
+        key: ""
+
+  # OneBot
+  oneBot:
+    # WebSocket地址 (末尾必须为/)
+    websocketHost: "ws://127.0.0.1:3001/"
+    # HTTP地址 (末尾必须为/)
+    httpHost: "http://127.0.0.1:3000/"
+    # 鉴权
+    # accessToken: ""
 
 # WebSocket服务器设置
 webSocketServerSettings:
