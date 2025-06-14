@@ -38,12 +38,37 @@ public final class OpenIdCacheUtil {
     public static int addData(OpenIdType openIdType, String openId) {
         Map<Integer, String> map = getMap(openIdType);
 
-        map.put(map.size(), openId);
-        return map.size() - 1;
+        Integer id = getId(openIdType, openId);
+        if (id == null) {
+            map.put(map.size(), openId);
+            return map.size() - 1;
+        }
+
+        return id;
     }
 
     /**
-     * 获取数据
+     * 获取数据ID编号
+     *
+     * @param openIdType ID类型
+     * @param openId     数据ID
+     * @return 数据ID编号
+     */
+    public static Integer getId(OpenIdType openIdType, String openId) {
+        Map<Integer, String> map = getMap(openIdType);
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            if (!entry.getValue().equals(openId)) {
+                continue;
+            }
+
+            return entry.getKey();
+        }
+
+        return null;
+    }
+
+    /**
+     * 获取数据ID
      *
      * @param openIdType ID类型
      * @param id         数据ID编号

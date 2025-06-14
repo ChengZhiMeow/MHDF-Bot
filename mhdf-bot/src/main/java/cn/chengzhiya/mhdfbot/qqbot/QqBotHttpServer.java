@@ -10,6 +10,7 @@ import cn.chengzhiya.mhdfbot.api.http.annotation.RequestType;
 import cn.chengzhiya.mhdfbot.api.http.entity.JsonHttpData;
 import cn.chengzhiya.mhdfbot.api.http.entity.SSLConfig;
 import cn.chengzhiya.mhdfbot.api.http.filter.CorsFilter;
+import cn.chengzhiya.mhdfbot.api.util.FileUtil;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import org.apache.catalina.Context;
@@ -80,10 +81,10 @@ public final class QqBotHttpServer extends HttpServlet implements HttpServer {
     @Override
     public void start() {
         File fileFolder = new File("files");
-//        if (imageFolder.exists()) {
-//            FileUtil.removeFiles(imageFolder);
-//        }
-//        imageFolder.mkdirs();
+        if (fileFolder.exists()) {
+            FileUtil.removeFiles(fileFolder);
+        }
+        fileFolder.mkdirs();
 
         new Thread(() -> {
             try {
@@ -184,118 +185,125 @@ public final class QqBotHttpServer extends HttpServlet implements HttpServer {
 
         List<Class<?>> controllerList = getControllerList(path);
         for (Class<?> controller : controllerList) {
-            for (Method method : controller.getMethods()) {
-                if (HttpAnnotationUtil.getRequestType(method) != type) {
-                    continue;
-                }
-
-                String requestPath = HttpAnnotationUtil.getRequestPath(method);
-                if (!Objects.requireNonNull(requestPath).equals("*") && !Objects.equals(requestPath, methodPath)) {
-                    continue;
-                }
-
-                JSONObject body = null;
-                try {
-                    InputStream in = request.getInputStream();
-                    byte[] bytes = in.readAllBytes();
-                    body = JSONObject.parseObject(new String(bytes));
-                } catch (IOException ignored) {
-                }
-
-                List<Object> data = new ArrayList<>();
-                for (Parameter parameter : method.getParameters()) {
-                    if (parameter.getType().equals(HttpServletRequest.class)) {
-                        data.add(request);
-                        continue;
-                    }
-                    if (parameter.getType().equals(HttpServletResponse.class)) {
-                        data.add(response);
+            try {
+                for (Method method : controller.getMethods()) {
+                    if (HttpAnnotationUtil.getRequestType(method) != type) {
                         continue;
                     }
 
-                    String paramData = HttpAnnotationUtil.getDefaultValue(parameter);
-
-                    // 获取cookie中的数据
-                    {
-                        String paramName = HttpAnnotationUtil.getCookieDataName(parameter);
-                        if (paramName != null && request.getCookies() != null) {
-                            for (Cookie cookie : request.getCookies()) {
-                                if (!cookie.getName().equals(paramName)) {
-                                    continue;
-                                }
-
-                                if (cookie.getValue() == null) {
-                                    continue;
-                                }
-
-                                paramData = cookie.getValue();
-                                break;
-                            }
-
-                            if (paramData == null || paramData.isEmpty()) {
-                                HttpUtil.returnJsonHttpData(response, JsonHttpData.noCookie);
-                                return;
-                            }
-                        }
+                    String requestPath = HttpAnnotationUtil.getRequestPath(method);
+                    if (!Objects.requireNonNull(requestPath).equals("*") && !Objects.equals(requestPath, methodPath)) {
+                        continue;
                     }
 
-                    // 获取请求参数中的数据
-                    {
-                        String paramName = HttpAnnotationUtil.getRequestParamName(parameter);
-                        if (paramName != null) {
-                            if (request.getParameter(paramName) != null) {
-                                paramData = request.getParameter(paramName);
-                            }
-
-                            if (paramData == null || paramData.isEmpty()) {
-                                HttpUtil.returnJsonHttpData(response, JsonHttpData.noParam);
-                                return;
-                            }
-                        }
+                    JSONObject body = null;
+                    try {
+                        InputStream in = request.getInputStream();
+                        byte[] bytes = in.readAllBytes();
+                        body = JSONObject.parseObject(new String(bytes));
+                    } catch (IOException ignored) {
                     }
 
-                    // 获取请求数据中的数据
-                    {
-                        String paramName = HttpAnnotationUtil.getBodyDataName(parameter);
-                        if (paramName != null) {
-                            if (body == null) {
-                                data.add(null);
-                                continue;
-                            }
-
-                            if (paramName.equals("body")) {
-                                data.add(body);
-                                continue;
-                            }
-
-                            Object bodyData = null;
-                            if (body.getObject(paramName, parameter.getType()) != null) {
-                                bodyData = body.getObject(paramName, parameter.getType());
-                            }
-
-                            if (bodyData == null) {
-                                HttpUtil.returnJsonHttpData(response, JsonHttpData.noParam);
-                                return;
-                            }
-
-                            data.add(bodyData);
+                    List<Object> data = new ArrayList<>();
+                    for (Parameter parameter : method.getParameters()) {
+                        if (parameter.getType().equals(HttpServletRequest.class)) {
+                            data.add(request);
                             continue;
                         }
+                        if (parameter.getType().equals(HttpServletResponse.class)) {
+                            data.add(response);
+                            continue;
+                        }
+
+                        String paramData = HttpAnnotationUtil.getDefaultValue(parameter);
+
+                        // 获取cookie中的数据
+                        {
+                            String paramName = HttpAnnotationUtil.getCookieDataName(parameter);
+                            if (paramName != null && request.getCookies() != null) {
+                                for (Cookie cookie : request.getCookies()) {
+                                    if (!cookie.getName().equals(paramName)) {
+                                        continue;
+                                    }
+
+                                    if (cookie.getValue() == null) {
+                                        continue;
+                                    }
+
+                                    paramData = cookie.getValue();
+                                    break;
+                                }
+
+                                if (paramData == null || paramData.isEmpty()) {
+                                    HttpUtil.returnJsonHttpData(response, JsonHttpData.noCookie);
+                                    return;
+                                }
+                            }
+                        }
+
+                        // 获取请求参数中的数据
+                        {
+                            String paramName = HttpAnnotationUtil.getRequestParamName(parameter);
+                            if (paramName != null) {
+                                if (request.getParameter(paramName) != null) {
+                                    paramData = request.getParameter(paramName);
+                                }
+
+                                if (paramData == null || paramData.isEmpty()) {
+                                    HttpUtil.returnJsonHttpData(response, JsonHttpData.noParam);
+                                    return;
+                                }
+                            }
+                        }
+
+                        // 获取请求数据中的数据
+                        {
+                            String paramName = HttpAnnotationUtil.getBodyDataName(parameter);
+                            if (paramName != null) {
+                                if (body == null) {
+                                    data.add(null);
+                                    continue;
+                                }
+
+                                if (paramName.equals("body")) {
+                                    data.add(body);
+                                    continue;
+                                }
+
+                                Object bodyData = null;
+                                if (body.getObject(paramName, parameter.getType()) != null) {
+                                    bodyData = body.getObject(paramName, parameter.getType());
+                                }
+
+                                if (bodyData == null) {
+                                    HttpUtil.returnJsonHttpData(response, JsonHttpData.noParam);
+                                    return;
+                                }
+
+                                data.add(bodyData);
+                                continue;
+                            }
+                        }
+
+                        data.add(converter(
+                                parameter.getType(),
+                                paramData
+                        ));
                     }
 
-                    data.add(converter(
-                            parameter.getType(),
-                            paramData
-                    ));
-                }
+                    try {
+                        method.invoke(null, data.toArray());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
 
-                try {
-                    method.invoke(null, data.toArray());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    return;
                 }
-
-                return;
+            } catch (Exception e) {
+                MHDFBot.getLogger().error("在处理 {} 接口的时候发生了错误",
+                        controller.getName()
+                );
+                e.printStackTrace();
             }
         }
 

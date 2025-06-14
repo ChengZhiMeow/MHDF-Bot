@@ -27,9 +27,12 @@ import cn.chengzhiya.mhdfbot.qqbot.QqBotHttpServer;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,7 +106,17 @@ public final class QqBotImpl implements Bot {
      * @param mediaUrl   资源URL
      * @return 媒体资源实例
      */
+    @SneakyThrows
     private MediaInfo getMediaInfo(MediaType type, OpenIdType openIdType, String openId, String mediaUrl) {
+        if (!mediaUrl.startsWith("http")) {
+            File file = new File(mediaUrl);
+            String fileName = UUID.randomUUID() + mediaUrl.substring(mediaUrl.lastIndexOf("."));
+            File outFile = new File("files", fileName);
+            Files.copy(file.toPath(), outFile.toPath());
+
+            mediaUrl = getBotConfig().getString("webHook.defaultFileFormat")
+                    .replace("{name}", fileName);
+        }
         JSONObject body = new JSONObject();
         body.put("file_type", type.ordinal() + 1);
         body.put("url", mediaUrl);
@@ -251,6 +264,14 @@ public final class QqBotImpl implements Bot {
         body.put("msg_seq", 1);
 
         JSONObject data = JSONObject.parseObject(getHttpClient().post(url, body));
+        if (data == null) {
+            MHDFBot.getLogger().info("消息({})发送失败,内容: {}",
+                    messageType.name(),
+                    message
+            );
+            return -999;
+        }
+
         return OpenIdCacheUtil.addData(OpenIdType.MESSAGE, data.getString("id"));
     }
 

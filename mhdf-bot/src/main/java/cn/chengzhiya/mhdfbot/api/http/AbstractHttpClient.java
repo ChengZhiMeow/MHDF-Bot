@@ -50,19 +50,21 @@ public abstract class AbstractHttpClient implements HttpClient {
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                     return in.readLine();
                 }
-            } else {
-                MHDFBot.getLogger().info(
-                        "向{}发送{}请求失败 #{}({})",
-                        connection.getURL(),
-                        connection.getRequestMethod(),
-                        connection.getResponseCode(),
-                        connection.getResponseMessage()
-                );
             }
+
+            MHDFBot.getLogger().info(
+                    "向{}发送{}请求失败 #{}({})",
+                    connection.getURL(),
+                    connection.getRequestMethod(),
+                    connection.getResponseCode(),
+                    connection.getResponseMessage()
+            );
         } catch (IOException e) {
-            MHDFBot.getLogger().error(e);
+            MHDFBot.getLogger().error("发送网络请求的时候发生了错误: ");
+            e.printStackTrace();
+        } finally {
+            connection.disconnect();
         }
-        connection.disconnect();
         return null;
     }
 

@@ -99,12 +99,15 @@ public final class PluginManager {
                 pluginInfo.setPluginStatus(PluginStatus.Load_Done);
             } catch (Exception e) {
                 pluginInfo.setPluginStatus(PluginStatus.Load_Error);
-                MHDFBot.getLogger().error(e);
+                MHDFBot.getLogger().error("在加载插件 {} 的时候遇到了问题:",
+                        pluginInfo.getName()
+                );
+                e.printStackTrace();
             }
 
             getPluginHashMap().put(pluginInfo.getName(), pluginInfo);
         } catch (IOException e) {
-            MHDFBot.getLogger().error(e);
+            e.printStackTrace();
         }
     }
 
