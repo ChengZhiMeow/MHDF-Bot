@@ -1,16 +1,17 @@
 package cn.chengzhiya.mhdfbot.api.http;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
+import cn.chengzhiya.mhdfbot.api.exception.DownloadException;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 
 @Getter
@@ -123,5 +124,59 @@ public abstract class AbstractHttpClient implements HttpClient {
             return post(urlString, "");
         }
         return post(urlString, data.toString());
+    }
+
+    /**
+     * 通过URL连接下载文件
+     *
+     * @param connection URL连接
+     * @return 文件数据
+     */
+    public byte[] downloadFile(URLConnection connection) throws DownloadException {
+        try {
+            try (InputStream in = connection.getInputStream()) {
+                byte[] bytes = in.readAllBytes();
+                if (bytes.length == 0) {
+                    throw new DownloadException("无可下载文件");
+                }
+                return bytes;
+            }
+        } catch (Exception e) {
+            throw new DownloadException(e);
+        }
+    }
+
+    /**
+     * 通过URL地址下载文件
+     *
+     * @param url URL地址
+     * @return 文件数据
+     */
+    public byte[] downloadFile(String url) throws DownloadException {
+        return downloadFile(getConnection(url));
+    }
+
+    /**
+     * 通过URL连接下载并保存文件
+     *
+     * @param connection URL连接
+     * @param savePath   保存目录
+     */
+    public void downloadFile(URLConnection connection, Path savePath) throws DownloadException {
+        try {
+            Files.write(savePath, downloadFile(connection));
+        } catch (IOException e) {
+            throw new DownloadException(e);
+        }
+    }
+
+    /**
+     * 通过URL地址下载并保存文件
+     *
+     * @param url      URL地址
+     * @param savePath 保存目录
+     */
+    public void downloadFile(String url, Path savePath) throws DownloadException {
+        downloadFile(getConnection(url), savePath);
     }
 }
