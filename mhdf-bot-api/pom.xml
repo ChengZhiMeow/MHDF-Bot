@@ -3,16 +3,30 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>cn.chengzhiya</groupId>
-        <artifactId>mhdfbot</artifactId>
-        <version>2.1.2</version>
-    </parent>
+
+    <groupId>cn.chengzhiya</groupId>
+    <version>2.1.2</version>
+    <packaging>jar</packaging>
     <artifactId>mhdf-bot-api</artifactId>
 
     <properties>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <distributionManagement>
         <repository>
