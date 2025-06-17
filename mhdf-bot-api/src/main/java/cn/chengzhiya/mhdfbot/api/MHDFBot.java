@@ -1,13 +1,9 @@
 package cn.chengzhiya.mhdfbot.api;
 
-import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.bot.Bot;
-import cn.chengzhiya.mhdfbot.api.bot.OneBotImpl;
-import cn.chengzhiya.mhdfbot.api.bot.QqBotImpl;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.group.Group;
 import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
 import cn.chengzhiya.mhdfbot.api.entity.message.Record;
@@ -24,8 +20,8 @@ import cn.chengzhiya.mhdfbot.api.manager.CommandManager;
 import cn.chengzhiya.mhdfbot.api.manager.ListenerManager;
 import cn.chengzhiya.mhdfbot.api.manager.PluginManager;
 import cn.chengzhiya.mhdfbot.api.manager.SchedulerManager;
-import cn.chengzhiya.mhdfbot.minecraft.MinecraftWebSocketServer;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.appender.ConsoleAppender;
@@ -38,16 +34,11 @@ import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 
 @SuppressWarnings("unused")
 public final class MHDFBot {
     @Getter
     private static final Logger logger = getLogger("MHDF-Bot");
-    @Getter
-    private static final BotType botType;
-    @Getter
-    private static final Bot bot;
     @Getter
     private static final PluginManager pluginManager = new PluginManager();
     @Getter
@@ -55,21 +46,11 @@ public final class MHDFBot {
     @Getter
     private static final ListenerManager listenerManager = new ListenerManager();
     @Getter
-    private static final MinecraftWebSocketServer minecraftWebSocketServer = new MinecraftWebSocketServer();
-
-    static {
-        YamlConfiguration botConfig = Main.getConfigManager().getConfig().getConfigurationSection("botSettings");
-        if (botConfig == null) {
-            throw new RuntimeException("机器人配置错误!");
-        }
-
-        botType = BotType.valueOf(botConfig.getString("type").toUpperCase(Locale.ROOT));
-        switch (botType) {
-            case ONEBOT -> bot = new OneBotImpl();
-            case QQBOT -> bot = new QqBotImpl();
-            default -> throw new RuntimeException("不支持的机器人类型!");
-        }
-    }
+    @Setter
+    private static BotType botType;
+    @Getter
+    @Setter
+    private static Bot bot;
 
     /**
      * 获取调度器实例

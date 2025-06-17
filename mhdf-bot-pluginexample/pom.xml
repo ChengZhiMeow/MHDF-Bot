@@ -9,23 +9,50 @@
         <artifactId>mhdfbot</artifactId>
         <version>2.1.1</version>
     </parent>
-
     <artifactId>mhdf-bot-pluginexample</artifactId>
 
     <build>
+        <finalName>[梦之机器人-插件示例]${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/</exclude>
+                                        <exclude>schema/</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
-        <finalName>[梦之机器人-插件示例]${project.artifactId}-${project.version}</finalName>
     </build>
 
     <dependencies>
         <dependency>
             <groupId>cn.chengzhiya</groupId>
-            <artifactId>mhdf-bot</artifactId>
+            <artifactId>mhdf-bot-api</artifactId>
             <version>2.1.1</version>
             <scope>provided</scope>
         </dependency>

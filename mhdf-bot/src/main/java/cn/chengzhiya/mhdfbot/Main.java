@@ -1,8 +1,12 @@
 package cn.chengzhiya.mhdfbot;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
+import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
+import cn.chengzhiya.mhdfbot.api.enums.bot.BotType;
+import cn.chengzhiya.mhdfbot.bot.OneBotImpl;
+import cn.chengzhiya.mhdfbot.bot.QqBotImpl;
 import cn.chengzhiya.mhdfbot.command.Help;
 import cn.chengzhiya.mhdfbot.command.Plugins;
 import cn.chengzhiya.mhdfbot.console.CommandCompleter;
@@ -15,10 +19,14 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 
 import java.util.Collections;
+import java.util.Locale;
 
 public class Main {
     @Getter
     private static final ConfigManager configManager = new ConfigManager();
+    @Getter
+    private static final MinecraftWebSocketServer minecraftWebSocketServer = new MinecraftWebSocketServer();
+
     @Getter
     private static final PluginInfo frameworkInfo =
             new PluginInfo("MHDF-Bot", "2.1.1", null, Collections.singletonList("ChengZhiYa"));
@@ -29,7 +37,7 @@ public class Main {
         getConfigManager().saveDefaultConfig();
         getConfigManager().reloadConfig();
 
-        new MinecraftWebSocketServer.HeartBeat().runTaskAsynchronouslyTimer(0L, 1L);
+        initBot();
 
         registerCommand();
         registerListener();
@@ -37,7 +45,7 @@ public class Main {
         MHDFBot.getPluginManager().loadPlugins();
 
         MHDFBot.getScheduler().runTaskAsynchronously(MHDFBot::init);
-        MHDFBot.getScheduler().runTaskAsynchronously(() -> MHDFBot.getMinecraftWebSocketServer().startServer());
+        MHDFBot.getScheduler().runTaskAsynchronously(() -> getMinecraftWebSocketServer().startServer());
 
         Long endTime = System.currentTimeMillis();
         MHDFBot.getLogger().info("启动成功,本次启动时长: {}ms", endTime - startTime);
@@ -53,6 +61,23 @@ public class Main {
             }
         } catch (UserInterruptException e) {
             System.exit(0);
+        }
+    }
+
+    /**
+     * 初始化机器人
+     */
+    private static void initBot() {
+        YamlConfiguration botConfig = Main.getConfigManager().getConfig().getConfigurationSection("botSettings");
+        if (botConfig == null) {
+            throw new RuntimeException("机器人配置错误!");
+        }
+
+        MHDFBot.setBotType(BotType.valueOf(botConfig.getString("type").toUpperCase(Locale.ROOT)));
+        switch (MHDFBot.getBotType()) {
+            case ONEBOT -> MHDFBot.setBot(new OneBotImpl());
+            case QQBOT -> MHDFBot.setBot(new QqBotImpl());
+            default -> throw new RuntimeException("不支持的机器人类型!");
         }
     }
 

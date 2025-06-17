@@ -3,7 +3,6 @@ package cn.chengzhiya.mhdfbot.minecraft;
 import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.event.minecraft.MinecraftWebsocketMessageEvent;
-import cn.chengzhiya.mhdfbot.api.runnable.MHDFBotRunnable;
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
@@ -44,6 +43,8 @@ public final class MinecraftWebSocketServer {
         } catch (LifecycleException e) {
             throw new RuntimeException(e);
         }
+
+        MHDFBot.getScheduler().runTaskAsynchronouslyTimer(() -> send("heartBeat", new JSONObject()), 0, 1);
     }
 
     /**
@@ -95,12 +96,5 @@ public final class MinecraftWebSocketServer {
     public void onClose(Session session) {
         this.sessions.remove(session);
         MHDFBot.getLogger().info("客户端{}断开websocket服务端!", session.getId());
-    }
-
-    public static class HeartBeat extends MHDFBotRunnable {
-        @Override
-        public void run() {
-            MHDFBot.getMinecraftWebSocketServer().send("heartBeat", new JSONObject());
-        }
     }
 }

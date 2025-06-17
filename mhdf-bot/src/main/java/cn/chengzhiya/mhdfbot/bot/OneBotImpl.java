@@ -1,6 +1,7 @@
-package cn.chengzhiya.mhdfbot.api.bot;
+package cn.chengzhiya.mhdfbot.bot;
 
 import cn.chengzhiya.mhdfbot.Main;
+import cn.chengzhiya.mhdfbot.api.bot.Bot;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
