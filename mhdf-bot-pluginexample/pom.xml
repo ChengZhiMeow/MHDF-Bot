@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.chengzhiya</groupId>
         <artifactId>mhdfbot</artifactId>
-        <version>2.1.1</version>
+        <version>2.1.2</version>
     </parent>
     <artifactId>mhdf-bot-pluginexample</artifactId>
 
@@ -49,11 +49,19 @@
         </resources>
     </build>
 
+    <repositories>
+        <repository>
+            <id>chengzhimeow-maven-repo-releases</id>
+            <name>橙汁喵の仓库</name>
+            <url>https://maven.chengzhimeow.cn/releases</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>cn.chengzhiya</groupId>
             <artifactId>mhdf-bot-api</artifactId>
-            <version>2.1.1</version>
+            <version>2.1.2</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -29,7 +29,7 @@ public class Main {
 
     @Getter
     private static final PluginInfo frameworkInfo =
-            new PluginInfo("MHDF-Bot", "2.1.1", null, Collections.singletonList("ChengZhiYa"));
+            new PluginInfo("MHDF-Bot", "2.1.2", null, Collections.singletonList("ChengZhiYa"));
 
     public static void main(String[] args) throws Exception {
         Long startTime = System.currentTimeMillis();
