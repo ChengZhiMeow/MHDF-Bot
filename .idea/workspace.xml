@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修改版本号为2.1.1">
-      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/pom.xml" afterDir="false" />
+    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="新增 github action">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/OneBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/OneBotImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +58,9 @@
     "Maven.mhdf-bot [org.apache.maven.plugins:maven-javadoc-plugin:3.11.1:javadoc].executor": "Run",
     "Maven.mhdf-bot [org.apache.maven.plugins:maven-site-plugin:3.12.1:attach-descriptor].executor": "Run",
     "Maven.mhdf-bot [org.projectlombok:lombok-maven-plugin:1.18.20.0:delombok].executor": "Run",
+    "Maven.mhdf-bot [package].executor": "Run",
+    "Maven.mhdf-bot-api [deploy].executor": "Run",
+    "Maven.mhdf-bot-api [package].executor": "Run",
     "Maven.mhdfbot [clean].executor": "Run",
     "Maven.mhdfbot [deploy].executor": "Run",
     "Maven.mhdfbot [install].executor": "Run",
@@ -66,13 +73,13 @@
     "git-widget-placeholder": "v2",
     "jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk": "azul-21",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/MHDFBot-ChatGLM",
+    "last_opened_file_path": "D:/Projects/MHDF-Bot",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -87,9 +94,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\MHDF-Bot" />
       <recent name="D:\Projects\MHDF-Bot\plugins" />
       <recent name="D:\Projects\MHDF-Bot\mhdf-bot\src\main\java\cn\chengzhiya\mhdfbot\api" />
-      <recent name="D:\Projects\MHDF-Bot" />
       <recent name="D:\Projects\MHDF-Bot\files" />
       <recent name="D:\Projects\MHDF-Bot\images" />
     </key>
@@ -227,7 +234,7 @@
       <workItem from="1749897919779" duration="40000" />
       <workItem from="1749899850988" duration="312000" />
       <workItem from="1749995338469" duration="2613000" />
-      <workItem from="1750001899349" duration="6020000" />
+      <workItem from="1750001899349" duration="8616000" />
     </task>
     <task id="LOCAL-00001" summary="提交V2.0.0框架本体">
       <option name="closed" value="true" />
@@ -453,7 +460,31 @@
       <option name="project" value="LOCAL" />
       <updated>1749887568002</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="将API库拆出&#10;整理代码&#10;格式化代码">
+      <option name="closed" value="true" />
+      <created>1750139867859</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1750139867859</updated>
+    </task>
+    <task id="LOCAL-00030" summary="修改版本号为 2.1.2">
+      <option name="closed" value="true" />
+      <created>1750140276021</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1750140276021</updated>
+    </task>
+    <task id="LOCAL-00031" summary="新增 github action">
+      <option name="closed" value="true" />
+      <created>1750140384170</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1750140384170</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -472,7 +503,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="提交V2.0.0框架本体" />
     <MESSAGE value="修复readme一处错误" />
     <MESSAGE value="实现服务端Hook" />
     <MESSAGE value="新增IDEA构建命令配置&#10;新增javadoc生成插件" />
@@ -495,7 +525,10 @@
     <MESSAGE value="支持QQ机器人自动接管本地资源处理" />
     <MESSAGE value="为HttpClient增加下载功能" />
     <MESSAGE value="修改版本号为2.1.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改版本号为2.1.1" />
+    <MESSAGE value="将API库拆出&#10;整理代码&#10;格式化代码" />
+    <MESSAGE value="修改版本号为 2.1.2" />
+    <MESSAGE value="新增 github action" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增 github action" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

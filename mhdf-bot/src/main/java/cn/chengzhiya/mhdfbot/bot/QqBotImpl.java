@@ -41,13 +41,11 @@ import java.util.regex.Pattern;
 public final class QqBotImpl implements Bot {
     private final String accessTokenUrl = "https://bots.qq.com/app/getAppAccessToken";
     private final String openApiUrl = "https://api.sgroup.qq.com";
-    private final QqBotHttpClient httpClient = new QqBotHttpClient();
-    private final QqBotHttpServer httpServer = new QqBotHttpServer(
-            getBotConfig().getInt("webHook.port"),
-            new SSLConfig(getBotConfig().getConfigurationSection("webHook.ssl"))
-    );
     @Setter
     private String botName;
+
+    private QqBotHttpClient httpClient;
+    private QqBotHttpServer httpServer;
 
     @Override
     public YamlConfiguration getBotConfig() {
@@ -132,6 +130,12 @@ public final class QqBotImpl implements Bot {
 
     @Override
     public void init() {
+        this.httpClient = new QqBotHttpClient();
+        this.httpServer = new QqBotHttpServer(
+                getBotConfig().getInt("webHook.port"),
+                new SSLConfig(getBotConfig().getConfigurationSection("webHook.ssl"))
+        );
+
         updateAccessToken();
         updateBotName();
         getHttpServer().start();

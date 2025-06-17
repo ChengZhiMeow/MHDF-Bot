@@ -24,8 +24,9 @@ import java.util.Locale;
 public class Main {
     @Getter
     private static final ConfigManager configManager = new ConfigManager();
+
     @Getter
-    private static final MinecraftWebSocketServer minecraftWebSocketServer = new MinecraftWebSocketServer();
+    private static MinecraftWebSocketServer minecraftWebSocketServer;
 
     @Getter
     private static final PluginInfo frameworkInfo =
@@ -45,6 +46,8 @@ public class Main {
         MHDFBot.getPluginManager().loadPlugins();
 
         MHDFBot.getScheduler().runTaskAsynchronously(MHDFBot::init);
+
+        minecraftWebSocketServer = new MinecraftWebSocketServer();
         MHDFBot.getScheduler().runTaskAsynchronously(() -> getMinecraftWebSocketServer().startServer());
 
         Long endTime = System.currentTimeMillis();

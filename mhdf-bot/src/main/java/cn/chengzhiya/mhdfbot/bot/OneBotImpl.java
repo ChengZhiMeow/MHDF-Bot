@@ -31,8 +31,8 @@ import java.util.Objects;
 
 @Getter
 public final class OneBotImpl implements Bot {
-    private final OneBotHttpClient httpClient = new OneBotHttpClient();
-    private final OneBotWebSocketClient webSocketClient = new OneBotWebSocketClient();
+    private OneBotHttpClient httpClient;
+    private OneBotWebSocketClient webSocketClient;
 
     @Override
     public YamlConfiguration getBotConfig() {
@@ -46,6 +46,9 @@ public final class OneBotImpl implements Bot {
 
     @Override
     public void init() {
+        this.httpClient = new OneBotHttpClient();
+        this.webSocketClient = new OneBotWebSocketClient();
+
         getWebSocketClient().connectServer();
     }
 
