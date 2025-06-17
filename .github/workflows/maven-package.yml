@@ -1,0 +1,31 @@
+name: maven package - v2
+
+on:
+  push:
+    branches: [ "v2" ]
+  pull_request:
+    branches: [ "v2" ]
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: default
+    steps:
+      - name: Checkout Git Repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+      - name: Build projects
+        run: mvn package
+      - name: Copy built jar
+        run: mkdir build_out && cp mhdf-bot/target/*.jar ./build_out && cp mhdf-bot-api/target/*.jar ./build_out && cp mhdf-bot-bukkithook/target/*.jar ./build_out && cp mhdf-bot-bungeehook/target/*.jar ./build_out
+      - name: Upload Artifact
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "MHDF-Bot Artifacts"
+          path: "build_out/*.jar"
