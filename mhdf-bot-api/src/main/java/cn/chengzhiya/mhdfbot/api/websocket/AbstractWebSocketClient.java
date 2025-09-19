@@ -42,8 +42,8 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
                     .configurator(new ClientEndpointConfig.Configurator() {
                         @Override
                         public void beforeRequest(Map<String, List<String>> headers) {
-                            if (this.getAccessToken() != null) {
-                                headers.put("Authorization", Collections.singletonList(this.getAccessToken()));
+                            if (getAccessToken() != null) {
+                                headers.put("Authorization", Collections.singletonList(getAccessToken()));
                             }
                         }
                     })
