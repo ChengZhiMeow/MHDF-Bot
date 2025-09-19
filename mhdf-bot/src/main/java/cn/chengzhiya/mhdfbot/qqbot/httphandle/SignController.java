@@ -2,11 +2,13 @@ package cn.chengzhiya.mhdfbot.qqbot.httphandle;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.http.HttpUtil;
-import cn.chengzhiya.mhdfbot.api.http.annotation.BodyData;
-import cn.chengzhiya.mhdfbot.api.http.annotation.RequestPath;
-import cn.chengzhiya.mhdfbot.api.http.annotation.RequestType;
 import cn.chengzhiya.mhdfbot.api.http.entity.JsonHttpData;
 import cn.chengzhiya.mhdfbot.api.util.Ed25519Util;
+import cn.chengzhiya.mhdfhttpframework.api.enums.RequestTypes;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.BodyData;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.Priority;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.RequestPath;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.RequestType;
 import com.alibaba.fastjson2.JSONObject;
 import org.bouncycastle.crypto.params.Ed25519PrivateKeyParameters;
 import org.bouncycastle.crypto.signers.Ed25519Signer;
@@ -15,19 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HexFormat;
 
-@RequestPath("*")
+@RequestPath("/")
 public final class SignController {
-    @RequestPath("*")
-    @RequestType(RequestType.Type.POST)
-    public static void postSign(HttpServletRequest request, HttpServletResponse response,
-                                @BodyData("d") JSONObject d
+    @Priority(-1)
+    @RequestPath("/default")
+    @RequestType(RequestTypes.POST)
+    public static boolean postSign(HttpServletRequest request, HttpServletResponse response,
+                                   @BodyData("d") JSONObject d
     ) {
         String eventTs = d.getString("event_ts");
         String plainToken = d.getString("plain_token");
         String signature = request.getHeader("x-signature-ed25519");
         if (eventTs == null || plainToken == null || !Ed25519Util.verifySignature(signature)) {
             HttpUtil.returnJsonHttpData(response, JsonHttpData.noAuth);
-            return;
+            return true;
         }
 
         String msg = eventTs + plainToken;
@@ -46,5 +49,6 @@ public final class SignController {
         data.put("signature", msgSignature);
 
         HttpUtil.returnJsonHttpData(response, data);
+        return true;
     }
 }

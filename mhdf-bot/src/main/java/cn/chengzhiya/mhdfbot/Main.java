@@ -24,31 +24,29 @@ import java.util.Locale;
 public class Main {
     @Getter
     private static final ConfigManager configManager = new ConfigManager();
-
-    @Getter
-    private static MinecraftWebSocketServer minecraftWebSocketServer;
-
     @Getter
     private static final PluginInfo frameworkInfo =
             new PluginInfo("MHDF-Bot", "2.1.2", null, Collections.singletonList("ChengZhiYa"));
+    @Getter
+    private static MinecraftWebSocketServer minecraftWebSocketServer;
 
     public static void main(String[] args) throws Exception {
         Long startTime = System.currentTimeMillis();
 
-        getConfigManager().saveDefaultConfig();
-        getConfigManager().reloadConfig();
+        Main.getConfigManager().saveDefaultConfig();
+        Main.getConfigManager().reloadConfig();
 
-        initBot();
+        Main.initBot();
 
-        registerCommand();
-        registerListener();
+        Main.registerCommand();
+        Main.registerListener();
 
         MHDFBot.getPluginManager().loadPlugins();
 
         MHDFBot.getScheduler().runTaskAsynchronously(MHDFBot::init);
 
-        minecraftWebSocketServer = new MinecraftWebSocketServer();
-        MHDFBot.getScheduler().runTaskAsynchronously(() -> getMinecraftWebSocketServer().startServer());
+        Main.minecraftWebSocketServer = new MinecraftWebSocketServer();
+        MHDFBot.getScheduler().runTaskAsynchronously(() -> Main.getMinecraftWebSocketServer().startServer());
 
         Long endTime = System.currentTimeMillis();
         MHDFBot.getLogger().info("启动成功,本次启动时长: {}ms", endTime - startTime);
@@ -89,11 +87,11 @@ public class Main {
      */
     private static void registerCommand() {
         MHDFBot.getCommandManager().registerCommand(
-                new Command("help").plugin(frameworkInfo).executor(new Help()).description("查看命令帮助").usage("help <页数>")
+                new Command("help").plugin(Main.frameworkInfo).executor(new Help()).description("查看命令帮助").usage("help <页数>")
         );
 
         MHDFBot.getCommandManager().registerCommand(
-                new Command("plugins").plugin(frameworkInfo).executor(new Plugins()).description("查看插件列表")
+                new Command("plugins").plugin(Main.frameworkInfo).executor(new Plugins()).description("查看插件列表")
         );
     }
 

@@ -34,17 +34,17 @@ public final class MinecraftWebSocketServer {
             tomcatLogger.addHandler(consoleHandler);
 
             Tomcat tomcat = new Tomcat();
-            tomcat.setPort(port);
+            tomcat.setPort(this.port);
             tomcat.getConnector();
 
             tomcat.start();
-            MHDFBot.getLogger().info("websocket服务端启动成功(0.0.0.0:{})!", port);
+            MHDFBot.getLogger().info("websocket服务端启动成功(0.0.0.0:{})!", this.port);
             tomcat.getServer().await();
         } catch (LifecycleException e) {
             throw new RuntimeException(e);
         }
 
-        MHDFBot.getScheduler().runTaskAsynchronouslyTimer(() -> send("heartBeat", new JSONObject()), 0, 1);
+        MHDFBot.getScheduler().runTaskAsynchronouslyTimer(() -> this.send("heartBeat", new JSONObject()), 0, 1);
     }
 
     /**
@@ -55,7 +55,7 @@ public final class MinecraftWebSocketServer {
      */
     public void send(String action, JSONObject data) {
         for (Session session : this.sessions) {
-            send(session, action, data);
+            this.send(session, action, data);
         }
     }
 

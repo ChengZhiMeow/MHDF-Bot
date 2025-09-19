@@ -7,9 +7,9 @@ public enum RequestSubType {
 
     public static RequestSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "add" -> ADD;
-            case "invite" -> INVITE;
-            default -> OTHER;
-        } : OTHER;
+            case "add" -> RequestSubType.ADD;
+            case "invite" -> RequestSubType.INVITE;
+            default -> RequestSubType.OTHER;
+        } : RequestSubType.OTHER;
     }
 }

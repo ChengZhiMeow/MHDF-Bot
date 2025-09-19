@@ -13,15 +13,15 @@ public enum RecordFormat {
 
     public static RecordFormat get(String subType) {
         return subType != null ? switch (subType) {
-            case "mp3" -> MP3;
-            case "amr" -> AMR;
-            case "wma" -> WMA;
-            case "m4a" -> M4A;
-            case "spx" -> SPX;
-            case "ogg" -> OGG;
-            case "wav" -> WAV;
-            case "flac" -> FLAC;
-            default -> OTHER;
-        } : OTHER;
+            case "mp3" -> RecordFormat.MP3;
+            case "amr" -> RecordFormat.AMR;
+            case "wma" -> RecordFormat.WMA;
+            case "m4a" -> RecordFormat.M4A;
+            case "spx" -> RecordFormat.SPX;
+            case "ogg" -> RecordFormat.OGG;
+            case "wav" -> RecordFormat.WAV;
+            case "flac" -> RecordFormat.FLAC;
+            default -> RecordFormat.OTHER;
+        } : RecordFormat.OTHER;
     }
 }

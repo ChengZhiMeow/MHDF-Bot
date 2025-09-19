@@ -7,9 +7,9 @@ public enum MessageType {
 
     public static MessageType get(String type) {
         return type != null ? switch (type) {
-            case "group" -> GROUP;
-            case "private" -> PRIVATE;
-            default -> OTHER;
-        } : OTHER;
+            case "group" -> MessageType.GROUP;
+            case "private" -> MessageType.PRIVATE;
+            default -> MessageType.OTHER;
+        } : MessageType.OTHER;
     }
 }

@@ -19,11 +19,11 @@ public final class WebSocketEvent extends Event {
 
     public @NotNull
     static HandlerList getHandlerList() {
-        return handlers;
+        return WebSocketEvent.handlers;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return handlers;
+        return WebSocketEvent.handlers;
     }
 }

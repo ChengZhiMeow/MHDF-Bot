@@ -19,10 +19,10 @@ public final class MediaInfo {
 
     public JSONObject toJsonObject() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("file_uuid", fileUuid);
-        jsonObject.put("file_info", fileInfo);
-        jsonObject.put("ttl", ttl);
-        jsonObject.put("id", id);
+        jsonObject.put("file_uuid", this.fileUuid);
+        jsonObject.put("file_info", this.fileInfo);
+        jsonObject.put("ttl", this.ttl);
+        jsonObject.put("id", this.id);
 
         return jsonObject;
     }

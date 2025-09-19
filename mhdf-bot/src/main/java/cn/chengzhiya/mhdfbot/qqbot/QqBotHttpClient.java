@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.qqbot;
 
-import cn.chengzhiya.mhdfbot.api.http.AbstractHttpClient;
+import cn.chengzhiya.mhdfhttpframework.client.HttpClient;
 
-public final class QqBotHttpClient extends AbstractHttpClient {
+public final class QqBotHttpClient extends HttpClient {
 }

@@ -12,22 +12,22 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        instance = this;
+        Main.instance = this;
 
-        saveDefaultConfig();
-        reloadConfig();
+        super.saveDefaultConfig();
+        super.reloadConfig();
 
-        webSocketClient = new WebSocketClient();
-        getWebSocketClient().connectServer();
+        Main.webSocketClient = new WebSocketClient();
+        Main.getWebSocketClient().connectServer();
 
-        getLogger().info("梦之机器人框架服务端Hook已启动!");
+        super.getLogger().info("梦之机器人框架服务端Hook已启动!");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        instance = null;
+        Main.instance = null;
 
-        getLogger().info("梦之机器人框架服务端Hook已卸载!");
+        super.getLogger().info("梦之机器人框架服务端Hook已卸载!");
     }
 }

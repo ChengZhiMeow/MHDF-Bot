@@ -21,10 +21,10 @@ import cn.chengzhiya.mhdfbot.api.enums.message.RecordFormat;
 import cn.chengzhiya.mhdfbot.api.enums.notice.HonorType;
 import cn.chengzhiya.mhdfbot.api.enums.request.RequestSubType;
 import cn.chengzhiya.mhdfbot.api.event.message.AbstractMessageEvent;
-import cn.chengzhiya.mhdfbot.api.http.entity.SSLConfig;
 import cn.chengzhiya.mhdfbot.api.util.OpenIdCacheUtil;
 import cn.chengzhiya.mhdfbot.qqbot.QqBotHttpClient;
 import cn.chengzhiya.mhdfbot.qqbot.QqBotHttpServer;
+import cn.chengzhiya.mhdfhttpframework.server.entity.SSLConfig;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,12 +60,13 @@ public final class QqBotImpl implements Bot {
     /**
      * 更新访问密钥
      */
+    @SneakyThrows
     private void updateAccessToken() {
         JSONObject body = new JSONObject();
-        body.put("appId", getBotConfig().getString("appId"));
-        body.put("clientSecret", getBotConfig().getString("secret"));
+        body.put("appId", this.getBotConfig().getString("appId"));
+        body.put("clientSecret", this.getBotConfig().getString("secret"));
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post(getAccessTokenUrl(), body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(this.getAccessTokenUrl(), body.toString()));
 
         Integer code = data.getInteger("code");
         if (code != null) {
@@ -79,7 +80,7 @@ public final class QqBotImpl implements Bot {
         String accessToken = "QQBot " + data.getString("access_token");
         int updateTime = data.getInteger("expires_in") - 30;
 
-        getHttpClient().setAccessToken(accessToken);
+        this.getHttpClient().getHeaderHashMap().put("Authorization", accessToken);
         MHDFBot.getLogger().info("机器人访问密钥更新完成, 新的密钥: {}, 下次更新还需要 {} 秒后!",
                 accessToken,
                 updateTime
@@ -91,9 +92,10 @@ public final class QqBotImpl implements Bot {
     /**
      * 更新机器人名称
      */
+    @SneakyThrows
     private void updateBotName() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().get(getOpenApiUrl() + "/users/@me"));
-        setBotName(data.getString("username"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().get(this.getOpenApiUrl() + "/users/@me"));
+        this.setBotName(data.getString("username"));
     }
 
     /**
@@ -113,7 +115,7 @@ public final class QqBotImpl implements Bot {
             File outFile = new File("files", fileName);
             Files.copy(file.toPath(), outFile.toPath());
 
-            mediaUrl = getBotConfig().getString("webHook.defaultFileFormat")
+            mediaUrl = this.getBotConfig().getString("webHook.defaultFileFormat")
                     .replace("{name}", fileName);
         }
         JSONObject body = new JSONObject();
@@ -122,23 +124,36 @@ public final class QqBotImpl implements Bot {
         body.put("srv_send_msg", false);
 
         String targetType = openIdType == OpenIdType.GROUP ? "groups" : "users";
-        String url = getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/files";
+        String url = this.getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/files";
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post(url, body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(url, body.toString()));
         return new MediaInfo(data);
     }
 
     @Override
+    @SneakyThrows
     public void init() {
         this.httpClient = new QqBotHttpClient();
+
+        SSLConfig sslConfig = new SSLConfig();
+        {
+            YamlConfiguration config = this.getBotConfig().getConfigurationSection("webHook.ssl");
+            if (config != null) {
+                sslConfig.setEnable(config.getBoolean("enable"));
+                sslConfig.setAlias(config.getString("alias"));
+                sslConfig.setFile(config.getString("file"));
+                sslConfig.setKey(config.getString("key"));
+            }
+        }
+
         this.httpServer = new QqBotHttpServer(
-                getBotConfig().getInt("webHook.port"),
-                new SSLConfig(getBotConfig().getConfigurationSection("webHook.ssl"))
+                this.getBotConfig().getInt("webHook.port"),
+                sslConfig
         );
 
-        updateAccessToken();
-        updateBotName();
-        getHttpServer().start();
+        this.updateAccessToken();
+        this.updateBotName();
+        this.getHttpServer().start();
     }
 
     @Override
@@ -153,7 +168,7 @@ public final class QqBotImpl implements Bot {
 
     @Override
     public void restart() {
-        restart(0L);
+        this.restart(0L);
     }
 
     @Override
@@ -178,8 +193,8 @@ public final class QqBotImpl implements Bot {
     @Override
     public LoginInfo getLoginInfo() {
         JSONObject data = new JSONObject();
-        data.put("user_id", getBotConfig().getLong("qq"));
-        data.put("nickname", getBotName());
+        data.put("user_id", this.getBotConfig().getLong("qq"));
+        data.put("nickname", this.getBotName());
         return new LoginInfo(data);
     }
 
@@ -214,6 +229,7 @@ public final class QqBotImpl implements Bot {
     }
 
     @Override
+    @SneakyThrows
     public long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape) {
         // 获取消息ID
         String messageId;
@@ -242,7 +258,7 @@ public final class QqBotImpl implements Bot {
                 if (matcher.find()) {
                     String file = matcher.group(1);
 
-                    media = getMediaInfo(mediaType, openIdType, openId, file);
+                    media = this.getMediaInfo(mediaType, openIdType, openId, file);
                     hasMedia = true;
                     if (mediaType != MediaType.IMAGE) {
                         allowText = false;
@@ -259,7 +275,7 @@ public final class QqBotImpl implements Bot {
             }
         }
 
-        String url = getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/messages";
+        String url = this.getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/messages";
 
         JSONObject body = new JSONObject();
         body.put("content", allowText ? message : null);
@@ -268,7 +284,7 @@ public final class QqBotImpl implements Bot {
         body.put("msg_id", OpenIdCacheUtil.getData(OpenIdType.MESSAGE, Integer.parseInt(messageId)));
         body.put("msg_seq", 1);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post(url, body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(url, body.toString()));
         if (data == null) {
             MHDFBot.getLogger().info("消息({})发送失败,内容: {}",
                     messageType.name(),
@@ -282,22 +298,22 @@ public final class QqBotImpl implements Bot {
 
     @Override
     public long sendPrivateMsg(Long targetId, String message, boolean autoEscape) {
-        return sendMsg(MessageType.PRIVATE, targetId, message, autoEscape);
+        return this.sendMsg(MessageType.PRIVATE, targetId, message, autoEscape);
     }
 
     @Override
     public long sendPrivateMsg(Long targetId, String message) {
-        return sendPrivateMsg(targetId, message, false);
+        return this.sendPrivateMsg(targetId, message, false);
     }
 
     @Override
     public long sendGroupMsg(Long targetId, String message, boolean autoEscape) {
-        return sendMsg(MessageType.GROUP, targetId, message, autoEscape);
+        return this.sendMsg(MessageType.GROUP, targetId, message, autoEscape);
     }
 
     @Override
     public long sendGroupMsg(Long targetId, String message) {
-        return sendMsg(MessageType.GROUP, targetId, message, false);
+        return this.sendMsg(MessageType.GROUP, targetId, message, false);
     }
 
     @Override

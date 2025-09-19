@@ -41,6 +41,14 @@
             <id>sonatype-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+        <repository>
+            <id>nachorealms-repository-releases</id>
+            <url>https://repo-eo.catnies.top/releases</url>
+        </repository>
+        <repository>
+            <id>chengzhimeow-maven-repo-releases</id>
+            <url>https://maven.chengzhimeow.cn/releases</url>
+        </repository>
     </repositories>
 
     <distributionManagement>

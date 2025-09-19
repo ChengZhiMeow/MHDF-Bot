@@ -7,9 +7,9 @@ public enum GroupBanSubType {
 
     public static GroupBanSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "ban" -> BAN;
-            case "lift_ban" -> LIFT_BAN;
-            default -> OTHER;
-        } : OTHER;
+            case "ban" -> GroupBanSubType.BAN;
+            case "lift_ban" -> GroupBanSubType.LIFT_BAN;
+            default -> GroupBanSubType.OTHER;
+        } : GroupBanSubType.OTHER;
     }
 }

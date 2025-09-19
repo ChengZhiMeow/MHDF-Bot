@@ -42,14 +42,14 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
                     .configurator(new ClientEndpointConfig.Configurator() {
                         @Override
                         public void beforeRequest(Map<String, List<String>> headers) {
-                            if (getAccessToken() != null) {
-                                headers.put("Authorization", Collections.singletonList(getAccessToken()));
+                            if (this.getAccessToken() != null) {
+                                headers.put("Authorization", Collections.singletonList(this.getAccessToken()));
                             }
                         }
                     })
                     .build();
 
-            getContainer().connectToServer(this, clientEndpointConfig, new URI(getUrlString()));
+            this.getContainer().connectToServer(this, clientEndpointConfig, new URI(this.getUrlString()));
         } catch (DeploymentException | IOException | URISyntaxException e) {
             MHDFBot.getLogger().info("无法正常连接至websocket服务端,正在重试!");
             MHDFBot.getScheduler().runTaskLater(this::connectServer, 5L);
@@ -59,8 +59,8 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
     @Override
     public void send(String message) {
         try {
-            if (getSession() != null && getSession().isOpen()) {
-                getSession().getAsyncRemote().sendText(message);
+            if (this.getSession() != null && this.getSession().isOpen()) {
+                this.getSession().getAsyncRemote().sendText(message);
                 return;
             }
 
@@ -72,37 +72,37 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
     @Override
     public void onOpen(Session session, EndpointConfig config) {
         this.session = session;
-        open(config);
+        this.open(config);
 
         session.addMessageHandler(String.class, this::handleMessage);
         MHDFBot.getLogger().info("websocket服务端连接成功({})!",
-                getUrlString()
+                this.getUrlString()
         );
     }
 
     @Override
     public void onClose(Session session, CloseReason closeReason) {
-        close(closeReason);
+        this.close(closeReason);
 
         this.session = null;
         MHDFBot.getLogger().info("websocket服务端已离线({})!",
-                getUrlString()
+                this.getUrlString()
         );
 
-        if (isCloseReConnect()) {
-            connectServer();
+        if (this.isCloseReConnect()) {
+            this.connectServer();
         }
     }
 
     @OnError
     public void onError(Session session, Throwable e) {
-        error(e);
+        this.error(e);
 
         this.session = null;
         MHDFBot.getLogger().error(e);
 
-        if (isCloseReConnect()) {
-            connectServer();
+        if (this.isCloseReConnect()) {
+            this.connectServer();
         }
     }
 

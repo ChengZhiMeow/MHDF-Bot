@@ -10,6 +10,6 @@ public final class FriendRequestEvent extends AbstractRequestEvent {
     }
 
     public void handlingFriendRequest(boolean accept) {
-        MHDFBot.handleFriendAddRequest(getFlag(), accept);
+        MHDFBot.handleFriendAddRequest(super.getFlag(), accept);
     }
 }

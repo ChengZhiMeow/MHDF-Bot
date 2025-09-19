@@ -22,7 +22,7 @@ public final class FileUtil {
 
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.isDirectory()) {
-                removeFiles(file);
+                FileUtil.removeFiles(file);
                 continue;
             }
             file.delete();

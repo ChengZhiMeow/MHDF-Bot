@@ -8,10 +8,10 @@ public enum LifecycleSubType {
 
     public static LifecycleSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "connect" -> CONNECT;
-            case "enable" -> ENABLE;
-            case "disable" -> DISABLE;
-            default -> OTHER;
-        } : OTHER;
+            case "connect" -> LifecycleSubType.CONNECT;
+            case "enable" -> LifecycleSubType.ENABLE;
+            case "disable" -> LifecycleSubType.DISABLE;
+            default -> LifecycleSubType.OTHER;
+        } : LifecycleSubType.OTHER;
     }
 }

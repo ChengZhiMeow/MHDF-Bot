@@ -7,9 +7,9 @@ public enum ServerType {
 
     public static ServerType get(String subType) {
         return subType != null ? switch (subType) {
-            case "bungee" -> BUNGEE;
-            case "bukkit" -> BUKKIT;
-            default -> OTHER;
-        } : OTHER;
+            case "bungee" -> ServerType.BUNGEE;
+            case "bukkit" -> ServerType.BUKKIT;
+            default -> ServerType.OTHER;
+        } : ServerType.OTHER;
     }
 }

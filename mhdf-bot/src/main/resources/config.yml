@@ -17,9 +17,9 @@ botSettings:
     # 接口服务
     webHook:
       # 端口
-      port: 8081
+      port: 8443
       # 默认文件URL格式
-      defaultFileFormat: "http://127.0.0.1:8081/file/get?path={name}"
+      defaultFileFormat: "http://127.0.0.1:8443/file/get?path={name}"
       # ssl设置(jks格式)
       ssl:
         # 开关

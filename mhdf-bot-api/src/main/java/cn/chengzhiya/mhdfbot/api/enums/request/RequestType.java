@@ -7,9 +7,9 @@ public enum RequestType {
 
     public static RequestType get(String type) {
         return type != null ? switch (type) {
-            case "group" -> GROUP;
-            case "friend" -> FRIEND;
-            default -> OTHER;
-        } : OTHER;
+            case "group" -> RequestType.GROUP;
+            case "friend" -> RequestType.FRIEND;
+            default -> RequestType.OTHER;
+        } : RequestType.OTHER;
     }
 }

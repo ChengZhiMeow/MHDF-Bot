@@ -7,9 +7,9 @@ public enum GroupAdminSubType {
 
     public static GroupAdminSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "set" -> SET;
-            case "unset" -> UNSET;
-            default -> OTHER;
-        } : OTHER;
+            case "set" -> GroupAdminSubType.SET;
+            case "unset" -> GroupAdminSubType.UNSET;
+            default -> GroupAdminSubType.OTHER;
+        } : GroupAdminSubType.OTHER;
     }
 }

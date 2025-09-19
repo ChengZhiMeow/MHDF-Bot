@@ -2,10 +2,12 @@ package cn.chengzhiya.mhdfbot.qqbot.httphandle;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.http.HttpUtil;
-import cn.chengzhiya.mhdfbot.api.http.annotation.RequestParam;
-import cn.chengzhiya.mhdfbot.api.http.annotation.RequestPath;
-import cn.chengzhiya.mhdfbot.api.http.annotation.RequestType;
 import cn.chengzhiya.mhdfbot.api.http.entity.JsonHttpData;
+import cn.chengzhiya.mhdfhttpframework.api.enums.RequestTypes;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.RequestParam;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.RequestPath;
+import cn.chengzhiya.mhdfhttpframework.server.annotation.RequestType;
+import cn.chengzhiya.mhdfhttpframework.server.util.HttpServerUtil;
 import lombok.SneakyThrows;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +17,7 @@ import java.io.File;
 public final class FileController {
     @SneakyThrows
     @RequestPath("/get")
-    @RequestType(RequestType.Type.GET)
+    @RequestType(RequestTypes.GET)
     public static void getImage(HttpServletResponse response,
                                 @RequestParam("path") String path
     ) {
@@ -27,6 +29,6 @@ public final class FileController {
             return;
         }
 
-        HttpUtil.returnFileHttpData(response, file);
+        HttpServerUtil.returnFileData(response, file);
     }
 }

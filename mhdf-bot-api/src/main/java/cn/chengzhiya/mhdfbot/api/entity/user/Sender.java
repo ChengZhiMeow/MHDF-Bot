@@ -25,7 +25,7 @@ public final class Sender {
         switch (MHDFBot.getBotType()) {
             case QQBOT -> {
                 this.userId = (long) OpenIdCacheUtil.addData(OpenIdType.USER, data.getString("id"));
-                this.nickName = String.valueOf(userId);
+                this.nickName = String.valueOf(this.userId);
             }
             case ONEBOT -> {
                 this.userId = data.getLong("user_id");

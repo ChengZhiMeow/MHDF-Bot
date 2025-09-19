@@ -83,6 +83,20 @@
             <scope>provided</scope>
         </dependency>
 
+
+        <dependency>
+            <groupId>cn.chengzhiya</groupId>
+            <artifactId>MHDF-HttpFramework-client</artifactId>
+            <version>1.0.11</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.chengzhiya</groupId>
+            <artifactId>MHDF-HttpFramework-server</artifactId>
+            <version>1.0.11</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>

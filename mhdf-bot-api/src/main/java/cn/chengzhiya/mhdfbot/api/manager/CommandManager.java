@@ -19,7 +19,7 @@ public final class CommandManager {
      * @param command 命令实例
      */
     public void registerCommand(Command command) {
-        getCommandHashMap().put(command.getCommand(), command);
+        this.getCommandHashMap().put(command.getCommand(), command);
     }
 
     /**
@@ -29,7 +29,7 @@ public final class CommandManager {
      * @return 命令实例
      */
     public Command getCommand(String command) {
-        return getCommandHashMap().get(command);
+        return this.getCommandHashMap().get(command);
     }
 
     /**
@@ -38,7 +38,7 @@ public final class CommandManager {
      * @return 命令实例列表
      */
     public List<Command> getCommandList() {
-        return new ArrayList<>(getCommandHashMap().values());
+        return new ArrayList<>(this.getCommandHashMap().values());
     }
 
     /**
@@ -53,12 +53,12 @@ public final class CommandManager {
         String[] args = new String[parts.length - 1];
         System.arraycopy(parts, 1, args, 0, parts.length - 1);
 
-        if (getCommand(parts[0]) == null) {
+        if (this.getCommand(parts[0]) == null) {
             MHDFBot.getLogger().error("找不到这个命令");
             return;
         }
 
-        getCommand(parts[0]).getExecutor().onCommand(command, args);
+        this.getCommand(parts[0]).getExecutor().onCommand(command, args);
     }
 
     /**
@@ -70,12 +70,12 @@ public final class CommandManager {
         long length = input.chars().filter(c -> c == ' ').count();
 
         if (length == 0) {
-            return getCommandHashMap().keySet().stream().toList();
+            return this.getCommandHashMap().keySet().stream().toList();
         }
 
         String[] parts = input.split(" ");
 
-        Command command = getCommand(parts[0]);
+        Command command = this.getCommand(parts[0]);
 
         if (command == null) {
             return new ArrayList<>();

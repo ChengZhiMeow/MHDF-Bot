@@ -8,11 +8,11 @@ public enum GroupDecreaseSubType {
 
     public static GroupDecreaseSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "leave" -> LEAVE;
-            case "kick" -> KICK;
-            case "kick_me" -> KICK_ME;
-            default -> OTHER;
-        } : OTHER;
+            case "leave" -> GroupDecreaseSubType.LEAVE;
+            case "kick" -> GroupDecreaseSubType.KICK;
+            case "kick_me" -> GroupDecreaseSubType.KICK_ME;
+            default -> GroupDecreaseSubType.OTHER;
+        } : GroupDecreaseSubType.OTHER;
     }
 }
 

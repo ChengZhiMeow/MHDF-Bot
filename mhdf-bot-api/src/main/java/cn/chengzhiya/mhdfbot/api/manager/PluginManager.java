@@ -36,7 +36,7 @@ public final class PluginManager {
      * @return 插件实例
      */
     public PluginInfo getPlugin(String pluginName) {
-        return pluginHashMap.get(pluginName);
+        return this.pluginHashMap.get(pluginName);
     }
 
     /**
@@ -45,15 +45,15 @@ public final class PluginManager {
      * @return 插件实例列表
      */
     public List<PluginInfo> getPluginList() {
-        return new ArrayList<>(pluginHashMap.values());
+        return new ArrayList<>(this.pluginHashMap.values());
     }
 
     /**
      * 加载插件目录下所有插件
      */
     public void loadPlugins() throws IOException {
-        FileUtil.createFolder(pluginFolder.toFile());
-        try (Stream<Path> paths = Files.list(pluginFolder)) {
+        FileUtil.createFolder(this.pluginFolder.toFile());
+        try (Stream<Path> paths = Files.list(this.pluginFolder)) {
             paths.filter(path -> path.toString().endsWith(".jar")).forEach(this::loadPlugin);
         }
     }
@@ -105,7 +105,7 @@ public final class PluginManager {
                 e.printStackTrace();
             }
 
-            getPluginHashMap().put(pluginInfo.getName(), pluginInfo);
+            this.getPluginHashMap().put(pluginInfo.getName(), pluginInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,8 +115,8 @@ public final class PluginManager {
      * 卸载所有插件
      */
     public void unloadPlugins() {
-        for (PluginInfo pluginInfo : getPluginHashMap().values()) {
-            unloadPlugin(pluginInfo);
+        for (PluginInfo pluginInfo : this.getPluginHashMap().values()) {
+            this.unloadPlugin(pluginInfo);
         }
     }
 
@@ -129,7 +129,7 @@ public final class PluginManager {
         if (pluginInfo == null) {
             return;
         }
-        getPluginHashMap().remove(pluginInfo.getName());
+        this.getPluginHashMap().remove(pluginInfo.getName());
 
         // 取消注册监听器
         {
@@ -167,11 +167,11 @@ public final class PluginManager {
      * @param pluginName 插件名称
      */
     public void reloadPlugin(String pluginName) {
-        PluginInfo pluginInfo = getPlugin(pluginName);
+        PluginInfo pluginInfo = this.getPlugin(pluginName);
         if (pluginInfo != null) {
-            Path pluginPath = Path.of(getPlugin(pluginName).getJarFile().getName());
-            unloadPlugin(pluginInfo);
-            loadPlugin(pluginPath);
+            Path pluginPath = Path.of(this.getPlugin(pluginName).getJarFile().getName());
+            this.unloadPlugin(pluginInfo);
+            this.loadPlugin(pluginPath);
         }
     }
 }

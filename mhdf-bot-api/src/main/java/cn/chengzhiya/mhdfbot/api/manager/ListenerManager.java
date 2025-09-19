@@ -22,7 +22,7 @@ public final class ListenerManager {
      * @param listener   监听器实例
      */
     public void registerListener(PluginInfo pluginInfo, Listener listener) {
-        getListenerHashMap().put(listener, pluginInfo);
+        this.getListenerHashMap().put(listener, pluginInfo);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class ListenerManager {
      * @param event 事件实例
      */
     public void callEvent(Event event) {
-        for (Listener listener : getListenerHashMap().keySet()) {
+        for (Listener listener : this.getListenerHashMap().keySet()) {
             for (Method method : listener.getClass().getMethods()) {
                 if (!method.isAnnotationPresent(EventHandler.class)) {
                     continue;

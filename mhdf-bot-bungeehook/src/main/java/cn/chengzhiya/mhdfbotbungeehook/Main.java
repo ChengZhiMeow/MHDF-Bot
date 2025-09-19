@@ -24,30 +24,30 @@ public final class Main extends Plugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        instance = this;
+        Main.instance = this;
 
         this.saveDefaultConfig();
         this.reloadConfig();
 
-        webSocketClient = new WebSocketClient();
-        getWebSocketClient().connectServer();
+        Main.webSocketClient = new WebSocketClient();
+        Main.getWebSocketClient().connectServer();
 
-        getLogger().info("梦之机器人框架服务端Hook已启动!");
+        super.getLogger().info("梦之机器人框架服务端Hook已启动!");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        instance = null;
+        Main.instance = null;
 
-        getLogger().info("梦之机器人框架服务端Hook已卸载!");
+        super.getLogger().info("梦之机器人框架服务端Hook已卸载!");
     }
 
     /**
      * 保存默认配置文件
      */
     private void saveDefaultConfig() {
-        saveResource("config.yml", "config.yml", false);
+        this.saveResource("config.yml", "config.yml", false);
     }
 
     /**
@@ -55,7 +55,7 @@ public final class Main extends Plugin {
      */
     private void reloadConfig() {
         try {
-            this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(), "config.yml"));
+            this.config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(super.getDataFolder(), "config.yml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,7 +74,7 @@ public final class Main extends Plugin {
             return;
         }
 
-        URL url = getClass().getResource(resourcePath);
+        URL url = super.getClass().getResource(resourcePath);
         if (url == null) {
             throw new RuntimeException("找不到资源: " + resourcePath);
         }

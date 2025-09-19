@@ -7,9 +7,9 @@ public enum RoleType {
 
     public static RoleType get(String type) {
         return type != null ? switch (type) {
-            case "owner" -> OWNER;
-            case "admin" -> ADMIN;
-            default -> MEMBER;
-        } : MEMBER;
+            case "owner" -> RoleType.OWNER;
+            case "admin" -> RoleType.ADMIN;
+            default -> RoleType.MEMBER;
+        } : RoleType.MEMBER;
     }
 }

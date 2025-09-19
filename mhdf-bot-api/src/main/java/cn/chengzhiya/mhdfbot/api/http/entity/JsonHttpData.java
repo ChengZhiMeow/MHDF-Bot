@@ -51,9 +51,9 @@ public final class JsonHttpData {
 
     public String toString() {
         JSONObject dataJson = new JSONObject();
-        dataJson.put("id", id);
-        dataJson.put("msg", msg);
-        dataJson.put("data", data);
+        dataJson.put("id", this.id);
+        dataJson.put("msg", this.msg);
+        dataJson.put("data", this.data);
 
         return dataJson.toString();
     }

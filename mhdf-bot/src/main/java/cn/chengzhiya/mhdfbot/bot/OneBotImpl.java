@@ -23,6 +23,7 @@ import cn.chengzhiya.mhdfbot.onebot.OneBotHttpClient;
 import cn.chengzhiya.mhdfbot.onebot.OneBotWebSocketClient;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 import java.io.File;
 import java.util.List;
@@ -49,72 +50,81 @@ public final class OneBotImpl implements Bot {
         this.httpClient = new OneBotHttpClient();
         this.webSocketClient = new OneBotWebSocketClient();
 
-        getWebSocketClient().connectServer();
+        this.getWebSocketClient().connectServer();
     }
 
     @Override
+    @SneakyThrows
     public void cleanCache() {
-        getHttpClient().post("clean_cache");
+        this.getHttpClient().post("clean_cache");
     }
 
     @Override
+    @SneakyThrows
     public void restart(Long delay) {
         JSONObject body = new JSONObject();
         body.put("delay", delay);
 
-        getHttpClient().post("set_restart", body);
+        this.getHttpClient().post("set_restart", body.toString());
     }
 
     @Override
     public void restart() {
-        restart(0L);
+        this.restart(0L);
     }
 
     @Override
+    @SneakyThrows
     public Status getStatus() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_status"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_status"));
 
         return new Status(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
+    @SneakyThrows
     public VersionInfo getVersionInfo() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_version_info"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_version_info"));
 
         return new VersionInfo(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
+    @SneakyThrows
     public LoginInfo getLoginInfo() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_login_info"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_login_info"));
 
         return new LoginInfo(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
+    @SneakyThrows
     public Boolean ifCanSendRecord() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("if_can_send_record"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("if_can_send_record"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
 
     @Override
+    @SneakyThrows
     public Boolean ifCanSendImage() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("if_can_send_image"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("if_can_send_image"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
 
     @Override
+    @SneakyThrows
     public long getCsrfToken() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_csrf_token"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_csrf_token"));
 
         return Objects.requireNonNull(data).getLong("token");
     }
 
     @Override
+    @SneakyThrows
     public List<Friend> getFriendList() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_friend_list"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_friend_list"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Friend::new)
@@ -122,8 +132,9 @@ public final class OneBotImpl implements Bot {
     }
 
     @Override
+    @SneakyThrows
     public List<Group> getGroupList() {
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_group_list"));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_list"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Group::new)
@@ -131,11 +142,12 @@ public final class OneBotImpl implements Bot {
     }
 
     @Override
+    @SneakyThrows
     public AbstractMessageEvent getMsg(Long messageId) {
         JSONObject body = new JSONObject();
         body.put("message_id", messageId);
 
-        JSONObject data = Objects.requireNonNull(JSONObject.parseObject(getHttpClient().post("get_msg", body)))
+        JSONObject data = Objects.requireNonNull(JSONObject.parseObject(this.getHttpClient().post("get_msg", body.toString())))
                 .getJSONObject("data");
 
         return switch (data.getString("message_type")) {
@@ -146,6 +158,7 @@ public final class OneBotImpl implements Bot {
     }
 
     @Override
+    @SneakyThrows
     public long sendMsg(MessageType messageType, Long targetId, String message, boolean autoEscape) {
         JSONObject body = new JSONObject();
         if (messageType == MessageType.GROUP) {
@@ -159,165 +172,175 @@ public final class OneBotImpl implements Bot {
         body.put("message", message);
         body.put("auto_escape", autoEscape);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("send_msg", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("send_msg", body.toString()));
         return Objects.requireNonNull(data).getLong("message_id");
     }
 
     @Override
     public long sendPrivateMsg(Long targetId, String message, boolean autoEscape) {
-        return sendMsg(MessageType.GROUP, targetId, message, autoEscape);
+        return this.sendMsg(MessageType.GROUP, targetId, message, autoEscape);
     }
 
     @Override
     public long sendPrivateMsg(Long targetId, String message) {
-        return sendPrivateMsg(targetId, message, false);
+        return this.sendPrivateMsg(targetId, message, false);
     }
 
     @Override
     public long sendGroupMsg(Long targetId, String message, boolean autoEscape) {
-        return sendMsg(MessageType.GROUP, targetId, message, autoEscape);
+        return this.sendMsg(MessageType.GROUP, targetId, message, autoEscape);
     }
 
     @Override
     public long sendGroupMsg(Long targetId, String message) {
-        return sendGroupMsg(targetId, message, false);
+        return this.sendGroupMsg(targetId, message, false);
     }
 
     @Override
+    @SneakyThrows
     public void deleteMsg(Long messageId) {
         JSONObject body = new JSONObject();
         body.put("message_id", messageId);
 
-        getHttpClient().post("delete_msg", body);
+        this.getHttpClient().post("delete_msg", body.toString());
     }
 
     @Override
+    @SneakyThrows
     public void sendLike(Long targetId, int times) {
         JSONObject body = new JSONObject();
         body.put("user_id", targetId);
         body.put("times", times);
 
-        getHttpClient().post("send_like", body);
+        this.getHttpClient().post("send_like", body.toString());
     }
 
     @Override
+    @SneakyThrows
     public void groupKick(Long groupId, Long userId, boolean rejectAddRequest) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("user_id", userId);
         body.put("reject_add_request", rejectAddRequest);
 
-        getHttpClient().post("set_group_kick", body);
+        this.getHttpClient().post("set_group_kick", body.toString());
     }
 
     @Override
     public void groupKick(Long groupId, Long userId) {
-        groupKick(groupId, userId, false);
+        this.groupKick(groupId, userId, false);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupMute(Long groupId, Long userId, Long duration) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("user_id", userId);
         body.put("duration", duration);
 
-        getHttpClient().post("set_group_ban", body);
+        this.getHttpClient().post("set_group_ban", body.toString());
     }
 
     @Override
     public void setGroupMute(Long groupId, Long userId) {
-        setGroupMute(groupId, userId, 1800L);
+        this.setGroupMute(groupId, userId, 1800L);
     }
 
     @Override
     public void unsetGroupMute(Long groupId, Long userId) {
-        setGroupMute(groupId, userId, 0L);
+        this.setGroupMute(groupId, userId, 0L);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupWholeMute(Long groupId, boolean enable) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("enable", enable);
 
-        getHttpClient().post("set_group_whole_ban", body);
+        this.getHttpClient().post("set_group_whole_ban", body.toString());
     }
 
     @Override
     public void setGroupWholeMute(Long groupId) {
-        setGroupWholeMute(groupId, true);
+        this.setGroupWholeMute(groupId, true);
     }
 
     @Override
     public void unsetGroupWholeMute(Long groupId) {
-        setGroupWholeMute(groupId, false);
+        this.setGroupWholeMute(groupId, false);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupAdmin(Long groupId, Long userId, boolean enable) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("user_id", userId);
         body.put("enable", enable);
 
-        getHttpClient().post("set_group_admin", body);
+        this.getHttpClient().post("set_group_admin", body.toString());
     }
 
     @Override
     public void setGroupAdmin(Long groupId, Long userId) {
-        setGroupAdmin(groupId, userId, true);
+        this.setGroupAdmin(groupId, userId, true);
     }
 
     @Override
     public void unsetGroupAdmin(Long groupId, Long userId) {
-        setGroupAdmin(groupId, userId, false);
+        this.setGroupAdmin(groupId, userId, false);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupCard(Long groupId, Long userId, String card) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("user_id", userId);
         body.put("card", card);
 
-        getHttpClient().post("set_group_card", body);
+        this.getHttpClient().post("set_group_card", body.toString());
     }
 
     @Override
     public void unsetGroupCard(Long groupId, Long userId) {
-        setGroupCard(groupId, userId, null);
+        this.setGroupCard(groupId, userId, null);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupName(Long groupId, String name) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("group_name", name);
 
-        getHttpClient().post("set_group_name", body);
+        this.getHttpClient().post("set_group_name", body.toString());
     }
 
     @Override
+    @SneakyThrows
     public void leaveGroup(Long groupId, boolean dismiss) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("is_dismiss", dismiss);
 
-        getHttpClient().post("set_group_leave", body);
+        this.getHttpClient().post("set_group_leave", body.toString());
     }
 
     @Override
     public void leaveGroup(Long groupId) {
-        leaveGroup(groupId, false);
+        this.leaveGroup(groupId, false);
     }
 
     @Override
     public void dismissGroup(Long groupId) {
-        leaveGroup(groupId, true);
+        this.leaveGroup(groupId, true);
     }
 
     @Override
+    @SneakyThrows
     public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, Long duration) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
@@ -325,45 +348,47 @@ public final class OneBotImpl implements Bot {
         body.put("special_title", specialTitle);
         body.put("duration", duration);
 
-        getHttpClient().post("set_group_special_title", body);
+        this.getHttpClient().post("set_group_special_title", body.toString());
     }
 
     @Override
     public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle) {
-        setGroupSpecialTitle(groupId, userId, specialTitle, -1L);
+        this.setGroupSpecialTitle(groupId, userId, specialTitle, -1L);
     }
 
     @Override
     public void unsetGroupSpecialTitle(Long groupId, Long userId) {
-        setGroupSpecialTitle(groupId, userId, null);
+        this.setGroupSpecialTitle(groupId, userId, null);
     }
 
     @Override
+    @SneakyThrows
     public void handleFriendAddRequest(String flag, boolean approve, String remark) {
         JSONObject body = new JSONObject();
         body.put("flag", flag);
         body.put("approve", approve);
         body.put("remark", remark);
 
-        getHttpClient().post("set_friend_add_request", body);
+        this.getHttpClient().post("set_friend_add_request", body.toString());
     }
 
     @Override
     public void handleFriendAddRequest(String flag, boolean approve) {
-        handleFriendAddRequest(flag, approve, null);
+        this.handleFriendAddRequest(flag, approve, null);
     }
 
     @Override
     public void acceptFriendAddRequest(String flag) {
-        handleFriendAddRequest(flag, true);
+        this.handleFriendAddRequest(flag, true);
     }
 
     @Override
     public void rejectFriendAddRequest(String flag) {
-        handleFriendAddRequest(flag, false);
+        this.handleFriendAddRequest(flag, false);
     }
 
     @Override
+    @SneakyThrows
     public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve, String reason) {
         JSONObject body = new JSONObject();
         body.put("flag", flag);
@@ -371,64 +396,67 @@ public final class OneBotImpl implements Bot {
         body.put("approve", approve);
         body.put("reason", reason);
 
-        getHttpClient().post("set_group_add_request", body);
+        this.getHttpClient().post("set_group_add_request", body.toString());
     }
 
     @Override
     public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve) {
-        handleGroupAddRequest(flag, type, approve, null);
+        this.handleGroupAddRequest(flag, type, approve, null);
     }
 
     @Override
     public void acceptGroupAddRequest(String flag, RequestSubType type) {
-        handleGroupAddRequest(flag, type, true);
+        this.handleGroupAddRequest(flag, type, true);
     }
 
     @Override
     public void rejectGroupAddRequest(String flag, RequestSubType type) {
-        handleGroupAddRequest(flag, type, false);
+        this.handleGroupAddRequest(flag, type, false);
     }
 
     @Override
+    @SneakyThrows
     public Stranger getStrangerInfo(Long userId, boolean cache) {
         JSONObject body = new JSONObject();
         body.put("user_id", userId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_stranger_info", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_stranger_info", body.toString()));
 
         return new Stranger(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
     public Stranger getStrangerInfo(Long userId) {
-        return getStrangerInfo(userId, true);
+        return this.getStrangerInfo(userId, true);
     }
 
     @Override
+    @SneakyThrows
     public Member getGroupMemberInfo(Long groupId, Long userId, boolean cache) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("user_id", userId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_group_member_info", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_member_info", body.toString()));
 
         return new Member(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
     public Member getGroupMemberInfo(Long groupId, Long userId) {
-        return getGroupMemberInfo(groupId, userId, true);
+        return this.getGroupMemberInfo(groupId, userId, true);
     }
 
     @Override
+    @SneakyThrows
     public List<Member> getGroupMemberList(Long groupId, boolean cache) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_group_member_list", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_member_list", body.toString()));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Member::new)
@@ -437,57 +465,61 @@ public final class OneBotImpl implements Bot {
 
     @Override
     public List<Member> getGroupMemberList(Long groupId) {
-        return getGroupMemberList(groupId, true);
+        return this.getGroupMemberList(groupId, true);
     }
 
     @Override
+    @SneakyThrows
     public GroupHonor getGroupHonorInfo(Long groupId, HonorType type) {
         JSONObject body = new JSONObject();
         body.put("group_id", groupId);
         body.put("type", type.toString().toLowerCase(Locale.ROOT));
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_group_honor_info", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_honor_info", body.toString()));
 
         return new GroupHonor(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
     public GroupHonor getGroupHonorInfo(Long groupId) {
-        return getGroupHonorInfo(groupId, HonorType.ALL);
+        return this.getGroupHonorInfo(groupId, HonorType.ALL);
     }
 
     @Override
+    @SneakyThrows
     public String getCookies(String domain) {
         JSONObject body = new JSONObject();
         body.put("domain", domain);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_cookies", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_cookies", body.toString()));
 
         return Objects.requireNonNull(data).getString("cookies");
     }
 
     @Override
+    @SneakyThrows
     public Record getRecord(String file, RecordFormat format) {
         JSONObject body = new JSONObject();
         body.put("file", file);
         body.put("format", format.toString());
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_record", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_record", body.toString()));
 
         return new Record(Objects.requireNonNull(data).getJSONObject("data"));
     }
 
     @Override
     public Record getRecord(String file) {
-        return getRecord(file, RecordFormat.WAV);
+        return this.getRecord(file, RecordFormat.WAV);
     }
 
     @Override
+    @SneakyThrows
     public File getImage(String file) {
         JSONObject body = new JSONObject();
         body.put("file", file);
 
-        JSONObject data = JSONObject.parseObject(getHttpClient().post("get_image", body));
+        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_image", body.toString()));
 
         return new java.io.File(Objects.requireNonNull(data).getJSONObject("data").getString("file"));
     }

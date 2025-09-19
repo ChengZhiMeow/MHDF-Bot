@@ -15,7 +15,7 @@ public final class YamlConfiguration {
 
     public static YamlConfiguration loadConfiguration(java.io.File file) {
         try {
-            return loadConfiguration(Files.newInputStream(file.toPath()));
+            return YamlConfiguration.loadConfiguration(Files.newInputStream(file.toPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

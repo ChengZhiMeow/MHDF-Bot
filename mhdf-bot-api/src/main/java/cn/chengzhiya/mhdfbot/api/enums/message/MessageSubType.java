@@ -10,12 +10,12 @@ public enum MessageSubType {
 
     public static MessageSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "friend" -> FRIEND;
-            case "group" -> GROUP;
-            case "normal" -> NORMAL;
-            case "anonymous" -> ANONYMOUS;
-            case "notice" -> NOTICE;
-            default -> OTHER;
-        } : OTHER;
+            case "friend" -> MessageSubType.FRIEND;
+            case "group" -> MessageSubType.GROUP;
+            case "normal" -> MessageSubType.NORMAL;
+            case "anonymous" -> MessageSubType.ANONYMOUS;
+            case "notice" -> MessageSubType.NOTICE;
+            default -> MessageSubType.OTHER;
+        } : MessageSubType.OTHER;
     }
 }

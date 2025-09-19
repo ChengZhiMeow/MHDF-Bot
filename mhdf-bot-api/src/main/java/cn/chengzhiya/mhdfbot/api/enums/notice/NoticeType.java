@@ -14,16 +14,16 @@ public enum NoticeType {
 
     public static NoticeType get(String type) {
         return type != null ? switch (type) {
-            case "group_upload" -> GROUP_UPLOAD;
-            case "group_admin" -> GROUP_ADMIN;
-            case "group_decrease" -> GROUP_DECREASE;
-            case "group_increase" -> GROUP_INCREASE;
-            case "group_ban" -> GROUP_BAN;
-            case "group_card" -> GROUP_CARD;
-            case "group_recall" -> GROUP_RECALL;
-            case "friend_add" -> FRIEND_ADD;
-            case "friend_recall" -> FRIEND_RECALL;
-            default -> NOTIFY;
-        } : NOTIFY;
+            case "group_upload" -> NoticeType.GROUP_UPLOAD;
+            case "group_admin" -> NoticeType.GROUP_ADMIN;
+            case "group_decrease" -> NoticeType.GROUP_DECREASE;
+            case "group_increase" -> NoticeType.GROUP_INCREASE;
+            case "group_ban" -> NoticeType.GROUP_BAN;
+            case "group_card" -> NoticeType.GROUP_CARD;
+            case "group_recall" -> NoticeType.GROUP_RECALL;
+            case "friend_add" -> NoticeType.FRIEND_ADD;
+            case "friend_recall" -> NoticeType.FRIEND_RECALL;
+            default -> NoticeType.NOTIFY;
+        } : NoticeType.NOTIFY;
     }
 }

@@ -7,9 +7,9 @@ public enum GroupIncreaseSubType {
 
     public static GroupIncreaseSubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "approve" -> APPROVE;
-            case "invite" -> INVITE;
-            default -> OTHER;
-        } : OTHER;
+            case "approve" -> GroupIncreaseSubType.APPROVE;
+            case "invite" -> GroupIncreaseSubType.INVITE;
+            default -> GroupIncreaseSubType.OTHER;
+        } : GroupIncreaseSubType.OTHER;
     }
 }

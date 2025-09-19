@@ -22,9 +22,9 @@ public final class OpenIdCacheUtil {
      */
     private static Map<Integer, String> getMap(OpenIdType openIdType) {
         return switch (openIdType) {
-            case MESSAGE -> getMessageIdHashMap();
-            case USER -> getUserIdHashMap();
-            case GROUP -> getGroupIdHashMap();
+            case MESSAGE -> OpenIdCacheUtil.getMessageIdHashMap();
+            case USER -> OpenIdCacheUtil.getUserIdHashMap();
+            case GROUP -> OpenIdCacheUtil.getGroupIdHashMap();
         };
     }
 
@@ -36,9 +36,9 @@ public final class OpenIdCacheUtil {
      * @return 数据ID编号
      */
     public static int addData(OpenIdType openIdType, String openId) {
-        Map<Integer, String> map = getMap(openIdType);
+        Map<Integer, String> map = OpenIdCacheUtil.getMap(openIdType);
 
-        Integer id = getId(openIdType, openId);
+        Integer id = OpenIdCacheUtil.getId(openIdType, openId);
         if (id == null) {
             map.put(map.size(), openId);
             return map.size() - 1;
@@ -55,7 +55,7 @@ public final class OpenIdCacheUtil {
      * @return 数据ID编号
      */
     public static Integer getId(OpenIdType openIdType, String openId) {
-        Map<Integer, String> map = getMap(openIdType);
+        Map<Integer, String> map = OpenIdCacheUtil.getMap(openIdType);
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (!entry.getValue().equals(openId)) {
                 continue;
@@ -75,7 +75,7 @@ public final class OpenIdCacheUtil {
      * @return 数据ID
      */
     public static String getData(OpenIdType openIdType, int id) {
-        Map<Integer, String> map = getMap(openIdType);
+        Map<Integer, String> map = OpenIdCacheUtil.getMap(openIdType);
         return map.get(id);
     }
 }

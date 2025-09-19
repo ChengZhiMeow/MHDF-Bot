@@ -13,11 +13,11 @@ public final class GroupRequestEvent extends AbstractRequestEvent {
 
     public GroupRequestEvent(JSONObject data) {
         super(data);
-        subType = RequestSubType.get(data.getString("sub_type"));
-        groupId = data.getLong("group_id");
+        this.subType = RequestSubType.get(data.getString("sub_type"));
+        this.groupId = data.getLong("group_id");
     }
 
     public void handlingGroupRequest(boolean accept) {
-        MHDFBot.handleGroupAddRequest(getFlag(), getSubType(), accept);
+        MHDFBot.handleGroupAddRequest(super.getFlag(), this.getSubType(), accept);
     }
 }

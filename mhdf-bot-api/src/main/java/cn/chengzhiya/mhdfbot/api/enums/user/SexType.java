@@ -7,9 +7,9 @@ public enum SexType {
 
     public static SexType get(String type) {
         return type != null ? switch (type) {
-            case "male" -> MALE;
-            case "female" -> FEMALE;
-            default -> UNKNOWN;
-        } : UNKNOWN;
+            case "male" -> SexType.MALE;
+            case "female" -> SexType.FEMALE;
+            default -> SexType.UNKNOWN;
+        } : SexType.UNKNOWN;
     }
 }

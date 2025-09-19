@@ -10,11 +10,11 @@ public enum NotifySubType {
 
     public static NotifySubType get(String subType) {
         return subType != null ? switch (subType) {
-            case "poke" -> POKE;
-            case "lucky_king" -> LUCKY_KING;
-            case "honor" -> HONOR;
-            case "input_status" -> INPUT_STATUS;
-            default -> OTHER;
-        } : OTHER;
+            case "poke" -> NotifySubType.POKE;
+            case "lucky_king" -> NotifySubType.LUCKY_KING;
+            case "honor" -> NotifySubType.HONOR;
+            case "input_status" -> NotifySubType.INPUT_STATUS;
+            default -> NotifySubType.OTHER;
+        } : NotifySubType.OTHER;
     }
 }

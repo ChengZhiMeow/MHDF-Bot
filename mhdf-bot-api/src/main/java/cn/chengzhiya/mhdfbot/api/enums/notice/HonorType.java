@@ -11,13 +11,13 @@ public enum HonorType {
 
     public static HonorType get(String subType) {
         return subType != null ? switch (subType) {
-            case "talkative" -> TALKATIVE;
-            case "performer" -> PERFORMER;
-            case "legend" -> LEGEND;
-            case "strong_newbie" -> STRONG_NEWBIE;
-            case "emotion" -> EMOTION;
-            case "all" -> ALL;
-            default -> OTHER;
-        } : OTHER;
+            case "talkative" -> HonorType.TALKATIVE;
+            case "performer" -> HonorType.PERFORMER;
+            case "legend" -> HonorType.LEGEND;
+            case "strong_newbie" -> HonorType.STRONG_NEWBIE;
+            case "emotion" -> HonorType.EMOTION;
+            case "all" -> HonorType.ALL;
+            default -> HonorType.OTHER;
+        } : HonorType.OTHER;
     }
 }
