@@ -4,73 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修改readme">
-      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/NoFoundController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修复一个错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/MHDFBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/MHDFBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/builder/MessageBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/builder/MessageBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/config/YamlConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/config/YamlConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/file/MediaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/file/MediaInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Sender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/LifecycleSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/LifecycleSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/RecordFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/RecordFormat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/minecraft/ServerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/minecraft/ServerType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupAdminSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupAdminSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupBanSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupBanSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupDecreaseSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupDecreaseSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupIncreaseSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupIncreaseSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/HonorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/HonorType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NoticeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NoticeType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NotifySubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NotifySubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestSubType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/RoleType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/SexType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/SexType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/FriendRequestEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/FriendRequestEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/GroupRequestEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/GroupRequestEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/AbstractHttpClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpAnnotationUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpServer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/BodyData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/CookieData.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/DefaultValue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/RequestParam.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/RequestPath.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/annotation/RequestType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/entity/JsonHttpData.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/entity/JsonHttpData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/entity/SSLConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/filter/CorsFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/ListenerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/ListenerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/PluginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/PluginManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/FileUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/OpenIdCacheUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/OpenIdCacheUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/event/WebSocketEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/event/WebSocketEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-pluginexample/src/main/java/cn/chengzhiya/mhdfbotpluginexample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-pluginexample/src/main/java/cn/chengzhiya/mhdfbotpluginexample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/OneBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/OneBotImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/QqBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/QqBotImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MinecraftWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MinecraftWebSocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/EventController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/SignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/SignController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +136,7 @@
       <command value="mvn clean package" />
     </option>
   </component>
-  <component name="RunManager" selected="应用程序.Main">
+  <component name="RunManager" selected="JAR 应用程序.未命名">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.chengzhiya.mhdfbot.Main" />
       <module name="mhdf-bot" />
@@ -216,7 +152,6 @@
     </configuration>
     <configuration name="未命名" type="JarApplication" nameIsGenerated="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/mhdf-bot/target/[梦之机器人]mhdf-bot-2.1.2.jar" />
-      <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED" />
       <option name="WORKING_DIRECTORY" value="D:\Projects\MHDF-Bot" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="azul-21" />
@@ -345,7 +280,7 @@
       <workItem from="1754929803502" duration="1041000" />
       <workItem from="1754971686818" duration="32000" />
       <workItem from="1756477453426" duration="1155000" />
-      <workItem from="1758207500928" duration="7130000" />
+      <workItem from="1758207500928" duration="8460000" />
     </task>
     <task id="LOCAL-00001" summary="提交V2.0.0框架本体">
       <option name="closed" value="true" />
@@ -619,7 +554,23 @@
       <option name="project" value="LOCAL" />
       <updated>1752244438049</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="将所有HTTP部分改用 MHDF-HttpFramework">
+      <option name="closed" value="true" />
+      <created>1758260291611</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1758260291611</updated>
+    </task>
+    <task id="LOCAL-00036" summary="修复一个错误">
+      <option name="closed" value="true" />
+      <created>1758270089562</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1758270089562</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -638,8 +589,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="调整构建名称" />
-    <MESSAGE value="实现插件模块的注册" />
     <MESSAGE value="提交 workspace.xml" />
     <MESSAGE value="实现资源操作" />
     <MESSAGE value="新增获取群成员实例列表的缓存开关设置" />
@@ -663,7 +612,9 @@
     <MESSAGE value="修复无法启动的问题" />
     <MESSAGE value="修改API部分的pom文件" />
     <MESSAGE value="修改readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改readme" />
+    <MESSAGE value="将所有HTTP部分改用 MHDF-HttpFramework" />
+    <MESSAGE value="修复一个错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复一个错误" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

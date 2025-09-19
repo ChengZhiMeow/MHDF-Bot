@@ -135,25 +135,30 @@ public final class QqBotImpl implements Bot {
     public void init() {
         this.httpClient = new QqBotHttpClient();
 
-        SSLConfig sslConfig = new SSLConfig();
-        {
-            YamlConfiguration config = this.getBotConfig().getConfigurationSection("webHook.ssl");
-            if (config != null) {
-                sslConfig.setEnable(config.getBoolean("enable"));
-                sslConfig.setAlias(config.getString("alias"));
-                sslConfig.setFile(config.getString("file"));
-                sslConfig.setKey(config.getString("key"));
-            }
-        }
-
-        this.httpServer = new QqBotHttpServer(
-                this.getBotConfig().getInt("webHook.port"),
-                sslConfig
-        );
-
         this.updateAccessToken();
         this.updateBotName();
-        this.getHttpServer().start();
+
+        long startTime = System.currentTimeMillis();
+        {
+            SSLConfig sslConfig = new SSLConfig();
+            {
+                YamlConfiguration config = this.getBotConfig().getConfigurationSection("webHook.ssl");
+                if (config != null) {
+                    sslConfig.setEnable(config.getBoolean("enable"));
+                    sslConfig.setAlias(config.getString("alias"));
+                    sslConfig.setFile(config.getString("file"));
+                    sslConfig.setKey(config.getString("key"));
+                }
+            }
+
+            this.httpServer = new QqBotHttpServer(
+                    this.getBotConfig().getInt("webHook.port"),
+                    sslConfig
+            );
+            this.getHttpServer().start();
+        }
+        long endTime = System.currentTimeMillis();
+        MHDFBot.getLogger().info("WebHook服务器启动成功,本次启动时长: {}ms", endTime - startTime);
     }
 
     @Override
