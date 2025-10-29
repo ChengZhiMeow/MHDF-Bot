@@ -37,7 +37,7 @@ public final class OneBotImpl implements Bot {
 
     @Override
     public YamlConfiguration getBotConfig() {
-        YamlConfiguration config = Main.getConfigManager().getConfig().getConfigurationSection("botSettings.ontBot");
+        YamlConfiguration config = Main.getConfigManager().getConfig().getConfigurationSection("botSettings.oneBot");
         if (config == null) {
             throw new NullPointerException("机器人配置错误!");
         }
@@ -173,7 +173,7 @@ public final class OneBotImpl implements Bot {
         body.put("auto_escape", autoEscape);
 
         JSONObject data = JSONObject.parseObject(this.getHttpClient().post("send_msg", body.toString()));
-        return Objects.requireNonNull(data).getLong("message_id");
+        return data.getJSONObject("data").getLong("message_id");
     }
 
     @Override
