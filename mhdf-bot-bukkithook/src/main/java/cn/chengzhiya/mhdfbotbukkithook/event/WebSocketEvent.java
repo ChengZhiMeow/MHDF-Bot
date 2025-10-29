@@ -10,16 +10,16 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("unused")
 public final class WebSocketEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
+
+    public @NotNull
+    static HandlerList getHandlerList() {
+        return WebSocketEvent.handlers;
+    }
     private final JSONObject data;
 
     public WebSocketEvent(JSONObject data) {
         super(true);
         this.data = data;
-    }
-
-    public @NotNull
-    static HandlerList getHandlerList() {
-        return WebSocketEvent.handlers;
     }
 
     @Override

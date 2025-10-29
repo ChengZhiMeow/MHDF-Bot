@@ -5,11 +5,10 @@ import cn.chengzhiya.mhdfbot.api.util.MessageUtil;
 
 @SuppressWarnings("unused")
 public final class MessageBuilder {
-    private final StringBuilder builder = new StringBuilder();
-
     public static MessageBuilder builder() {
         return new MessageBuilder();
     }
+    private final StringBuilder builder = new StringBuilder();
 
     public MessageBuilder text(String text) {
         this.builder.append(text);

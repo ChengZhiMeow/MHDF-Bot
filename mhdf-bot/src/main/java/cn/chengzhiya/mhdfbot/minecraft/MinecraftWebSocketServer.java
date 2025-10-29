@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @ServerEndpoint("/ws")
 @SuppressWarnings("unused")
 public final class MinecraftWebSocketServer {
-    private final int port = Main.getConfigManager().getConfig().getInt("webSocketServerSettings.port");
+    private final int port = Main.getConfigManager().getData().getInt("webSocketServerSettings.port");
     private final Set<Session> sessions = new CopyOnWriteArraySet<>();
 
     /**

@@ -1,9 +1,9 @@
 package cn.chengzhiya.mhdfbot.api.bot;
 
+import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.group.Group;
 import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
 import cn.chengzhiya.mhdfbot.api.entity.message.Record;
@@ -25,7 +25,7 @@ public interface Bot {
      *
      * @return 机器人配置实例
      */
-    YamlConfiguration getBotConfig();
+    ConfigurationSection getBotConfig();
 
     /**
      * 初始化

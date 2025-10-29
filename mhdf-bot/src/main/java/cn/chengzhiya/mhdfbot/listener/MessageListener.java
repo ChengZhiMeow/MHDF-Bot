@@ -13,7 +13,7 @@ public final class MessageListener implements Listener {
      */
     @EventHandler
     public void onGroupMessage(GroupMessageEvent event) {
-        if (!Main.getConfigManager().getConfig().getBoolean("logSettings.groupMessage")) {
+        if (!Main.getConfigManager().getData().getBoolean("logSettings.groupMessage")) {
             return;
         }
 
@@ -31,7 +31,7 @@ public final class MessageListener implements Listener {
      */
     @EventHandler
     public void onPrivateMessage(PrivateMessageEvent event) {
-        if (!Main.getConfigManager().getConfig().getBoolean("logSettings.privateMessage")) {
+        if (!Main.getConfigManager().getData().getBoolean("logSettings.privateMessage")) {
             return;
         }
 

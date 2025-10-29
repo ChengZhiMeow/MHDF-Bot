@@ -1,7 +1,7 @@
 package cn.chengzhiya.mhdfbot.api.plugin;
 
+import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.listener.Listener;
@@ -61,7 +61,11 @@ public abstract class JavaPlugin implements Plugin {
      * 重载配置文件
      */
     public void reloadConfig() {
-        this.config = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "config.yml"));
+        try {
+            this.config = YamlConfiguration.loadConfiguration(new File(this.getDataFolder(), "config.yml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

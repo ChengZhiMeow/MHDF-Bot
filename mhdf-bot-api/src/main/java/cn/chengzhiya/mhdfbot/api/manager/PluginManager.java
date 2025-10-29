@@ -1,7 +1,7 @@
 package cn.chengzhiya.mhdfbot.api.manager;
 
+import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.enums.plugin.PluginStatus;

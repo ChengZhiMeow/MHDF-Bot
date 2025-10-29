@@ -1,11 +1,11 @@
 package cn.chengzhiya.mhdfbot.bot;
 
+import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.bot.Bot;
 import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
 import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
 import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.group.Group;
 import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
 import cn.chengzhiya.mhdfbot.api.entity.message.Record;
@@ -36,8 +36,8 @@ public final class OneBotImpl implements Bot {
     private OneBotWebSocketClient webSocketClient;
 
     @Override
-    public YamlConfiguration getBotConfig() {
-        YamlConfiguration config = Main.getConfigManager().getConfig().getConfigurationSection("botSettings.oneBot");
+    public ConfigurationSection getBotConfig() {
+        ConfigurationSection config = Main.getConfigManager().getData().getConfigurationSection("botSettings.oneBot");
         if (config == null) {
             throw new NullPointerException("机器人配置错误!");
         }

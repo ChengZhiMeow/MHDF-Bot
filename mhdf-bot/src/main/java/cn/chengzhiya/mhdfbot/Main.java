@@ -1,7 +1,8 @@
 package cn.chengzhiya.mhdfbot;
 
+import cn.chengzhimeow.ccyaml.CCYaml;
+import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
-import cn.chengzhiya.mhdfbot.api.entity.config.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
 import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.enums.bot.BotType;
@@ -18,6 +19,7 @@ import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -28,13 +30,19 @@ public class Main {
     private static final PluginInfo frameworkInfo =
             new PluginInfo("MHDF-Bot", "2.1.2", null, Collections.singletonList("ChengZhiYa"));
     @Getter
+    private static final CCYaml yamlManager = new CCYaml(
+            Main.class.getClassLoader(),
+            new File("."),
+            Main.frameworkInfo.getVersion()
+    );
+    @Getter
     private static MinecraftWebSocketServer minecraftWebSocketServer;
 
     public static void main(String[] args) throws Exception {
         Long startTime = System.currentTimeMillis();
 
-        Main.getConfigManager().saveDefaultConfig();
-        Main.getConfigManager().reloadConfig();
+        Main.getConfigManager().saveDefaultFile();
+        Main.getConfigManager().reload();
 
         Main.initBot();
 
@@ -69,7 +77,7 @@ public class Main {
      * 初始化机器人
      */
     private static void initBot() {
-        YamlConfiguration botConfig = Main.getConfigManager().getConfig().getConfigurationSection("botSettings");
+        ConfigurationSection botConfig = Main.getConfigManager().getData().getConfigurationSection("botSettings");
         if (botConfig == null) {
             throw new RuntimeException("机器人配置错误!");
         }
