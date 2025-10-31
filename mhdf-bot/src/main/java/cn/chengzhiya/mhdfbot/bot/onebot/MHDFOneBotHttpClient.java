@@ -7,7 +7,11 @@ public final class MHDFOneBotHttpClient extends HttpClient {
     private final String httpHost = MHDFBot.getBot().getBotConfig().getString("httpHost");
 
     public MHDFOneBotHttpClient() {
-        this.getHeaderHashMap().put("Authorization", "Bearer " + MHDFBot.getBot().getBotConfig().getString("accessToken"));
+        super();
+
+        String token = MHDFBot.getBot().getBotConfig().getString("accessToken");
+        if (token != null && !token.isEmpty())
+            this.getHeaderHashMap().put("Authorization", "Bearer " + token);
     }
 
     @Override

@@ -15,6 +15,8 @@ import cn.chengzhiya.mhdfbot.feature.listener.MessageListener;
 import cn.chengzhiya.mhdfbot.lang.Languages;
 import cn.chengzhiya.mhdfbot.manager.MHDFConfigManager;
 import cn.chengzhiya.mhdfbot.minecraft.MHDFMinecraftWebSocketServer;
+import cn.chengzhiya.mhdfbot.thread.MHDFBotServiceThread;
+import cn.chengzhiya.mhdfbot.thread.MHDFMinecraftWsServerThread;
 import lombok.Getter;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
@@ -23,6 +25,7 @@ import org.jline.reader.UserInterruptException;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Main {
     @Getter
@@ -34,7 +37,7 @@ public class Main {
     @Getter
     private static MHDFMinecraftWebSocketServer minecraftWebSocketServer;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Main.frameworkInfo = new PluginInfo("MHDF-Bot", "2.1.4", Main.class.getName(), List.of("ChengZhiMeow"));
         Main.yamlManager = new CCYaml(
                 Main.class.getClassLoader(),
@@ -55,10 +58,10 @@ public class Main {
 
             MHDFBot.getPluginManager().loadPlugins();
 
-            MHDFBot.getScheduler().runTask(MHDFBot::init);
-
             Main.minecraftWebSocketServer = new MHDFMinecraftWebSocketServer();
-            MHDFBot.getScheduler().runTask(() -> Main.getMinecraftWebSocketServer().startServer());
+            MHDFMinecraftWsServerThread.getInstance().execute(() -> Main.getMinecraftWebSocketServer().startServer());
+
+            MHDFBotServiceThread.getInstance().execute(MHDFBot::init);
         }
         MHDFBot.getLogger().info(Languages.START_DONE, System.currentTimeMillis() - startTime);
 
@@ -83,7 +86,7 @@ public class Main {
         ConfigurationSection botConfig = Main.getConfigManager().getData().getConfigurationSection("botSettings");
         if (botConfig == null) throw new RuntimeException("机器人配置错误!");
 
-        MHDFBot.setBotType(BotType.valueOf(botConfig.getString("type").toUpperCase(Locale.ROOT)));
+        MHDFBot.setBotType(BotType.valueOf(Objects.requireNonNull(botConfig.getString("type")).toUpperCase(Locale.ROOT)));
         switch (MHDFBot.getBotType()) {
             case ONEBOT -> MHDFBot.setBot(new MHDFOneBot());
             case QQBOT -> MHDFBot.setBot(new MHDFQqBot());

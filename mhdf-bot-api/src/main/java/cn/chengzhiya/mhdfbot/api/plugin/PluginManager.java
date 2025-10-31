@@ -3,7 +3,6 @@ package cn.chengzhiya.mhdfbot.api.plugin;
 import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 public interface PluginManager {
@@ -25,7 +24,7 @@ public interface PluginManager {
     /**
      * 加载插件目录下所有插件
      */
-    void loadPlugins() throws IOException;
+    void loadPlugins();
 
     /**
      * 加载指定插件文件

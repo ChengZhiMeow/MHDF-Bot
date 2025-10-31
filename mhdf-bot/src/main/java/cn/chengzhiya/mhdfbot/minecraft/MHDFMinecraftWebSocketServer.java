@@ -3,6 +3,7 @@ package cn.chengzhiya.mhdfbot.minecraft;
 import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.event.minecraft.MinecraftWebsocketMessageEvent;
+import cn.chengzhiya.mhdfbot.thread.MHDFScheduledThread;
 import com.alibaba.fastjson2.JSONObject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
@@ -20,6 +21,8 @@ import java.util.logging.Logger;
 @SuppressWarnings("unused")
 public final class MHDFMinecraftWebSocketServer {
     private final int port = Main.getConfigManager().getData().getInt("webSocketServerSettings.port");
+    private final MHDFScheduledThread thread = new MHDFScheduledThread("MHDF-Bot Minecraft-Websocket-HeartBeat Thread") {
+    };
     private final Set<Session> sessions = new CopyOnWriteArraySet<>();
 
     /**
@@ -38,13 +41,13 @@ public final class MHDFMinecraftWebSocketServer {
             tomcat.getConnector();
 
             tomcat.start();
-            MHDFBot.getLogger().info("websocket服务端启动成功(0.0.0.0:{})!", this.port);
+            MHDFBot.getLogger().info("Minecraft-WebSocket服务端启动成功(0.0.0.0:{})!", this.port);
             tomcat.getServer().await();
         } catch (LifecycleException e) {
             throw new RuntimeException(e);
         }
 
-        MHDFBot.getScheduler().runTaskTimer(() -> this.send("heartBeat", new JSONObject()), 0, 1);
+        this.thread.schedule(() -> this.send("heartBeat", new JSONObject()), 0, 1000);
     }
 
     /**
@@ -95,6 +98,6 @@ public final class MHDFMinecraftWebSocketServer {
     @OnError
     public void onClose(Session session) {
         this.sessions.remove(session);
-        MHDFBot.getLogger().info("客户端{}断开websocket服务端!", session.getId());
+        MHDFBot.getLogger().info("客户端{}断开WebSocket服务端!", session.getId());
     }
 }

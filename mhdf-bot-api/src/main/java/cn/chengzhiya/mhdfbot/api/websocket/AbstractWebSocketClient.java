@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -42,8 +41,9 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
                     .configurator(new ClientEndpointConfig.Configurator() {
                         @Override
                         public void beforeRequest(Map<String, List<String>> headers) {
-                            if (AbstractWebSocketClient.this.getAccessToken() != null) {
-                                headers.put("Authorization", Collections.singletonList(AbstractWebSocketClient.this.getAccessToken()));
+                            String token = AbstractWebSocketClient.this.getAccessToken();
+                            if (token != null && !token.isEmpty()) {
+                                headers.put("Authorization", List.of(token));
                             }
                         }
                     })
@@ -51,7 +51,7 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
 
             this.getContainer().connectToServer(this, clientEndpointConfig, new URI(this.getUrlString()));
         } catch (DeploymentException | IOException | URISyntaxException e) {
-            MHDFBot.getLogger().info("无法正常连接至websocket服务端,正在重试!");
+            MHDFBot.getLogger().info("无法正常连接至WebSocket服务端,正在重试!");
             MHDFBot.getScheduler().runTaskLater(this::connectServer, 5L);
         }
     }
@@ -75,7 +75,7 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
         this.open(config);
 
         session.addMessageHandler(String.class, this::handleMessage);
-        MHDFBot.getLogger().info("websocket服务端连接成功({})!",
+        MHDFBot.getLogger().info("WebSocket服务端连接成功({})!",
                 this.getUrlString()
         );
     }
@@ -85,7 +85,7 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
         this.close(closeReason);
 
         this.session = null;
-        MHDFBot.getLogger().info("websocket服务端已离线({})!",
+        MHDFBot.getLogger().info("WebSocket服务端已离线({})!",
                 this.getUrlString()
         );
 

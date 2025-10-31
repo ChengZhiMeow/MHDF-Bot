@@ -1,4 +1,6 @@
 target/
+javadoc/
+work/
 
 *.iml
 *.jar

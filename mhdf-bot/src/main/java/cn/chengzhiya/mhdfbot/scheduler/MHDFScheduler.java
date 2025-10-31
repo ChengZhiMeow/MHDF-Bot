@@ -1,31 +1,30 @@
 package cn.chengzhiya.mhdfbot.scheduler;
 
 import cn.chengzhiya.mhdfbot.api.scheduler.Scheduler;
+import cn.chengzhiya.mhdfbot.thread.MHDFScheduledThread;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-public final class MHDFScheduler implements Scheduler {
-    private final ScheduledExecutorService asyncScheduled = Executors.newSingleThreadScheduledExecutor();
+public final class MHDFScheduler extends MHDFScheduledThread implements Scheduler {
+    public MHDFScheduler() {
+        super(1, "MHDF-Bot Async-Scheduler Thread");
+    }
 
     @Override
     public void runTask(Runnable runnable) {
-        this.asyncScheduled.submit(runnable);
+        this.execute(runnable);
     }
 
     @Override
     public void runTaskLater(Runnable runnable, long delay) {
-        this.asyncScheduled.schedule(runnable, delay, TimeUnit.SECONDS);
+        this.schedule(runnable, delay);
     }
 
     @Override
     public void runTaskTimer(Runnable runnable, long delay, long period) {
-        this.asyncScheduled.scheduleAtFixedRate(runnable, delay, period, TimeUnit.SECONDS);
+        this.schedule(runnable, delay, period);
     }
 
     @Override
     public void shutdown() {
-        this.asyncScheduled.shutdown();
+        this.kill();
     }
 }

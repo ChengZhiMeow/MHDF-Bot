@@ -20,7 +20,8 @@ public final class MHDFOneBotWebSocketClient extends AbstractWebSocketClient {
                 true
         );
 
-        super.setAccessToken("Bearer " + MHDFBot.getBot().getBotConfig().getString("accessToken"));
+        String token = MHDFBot.getBot().getBotConfig().getString("accessToken");
+        if (token != null) super.setAccessToken("Bearer " + token);
     }
 
     @Override
