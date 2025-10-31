@@ -2,20 +2,19 @@ package cn.chengzhiya.mhdfbot.api.plugin;
 
 import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
-import cn.chengzhiya.mhdfbot.api.entity.plugin.Command;
-import cn.chengzhiya.mhdfbot.api.entity.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.listener.Listener;
-import cn.chengzhiya.mhdfbot.api.util.FileUtil;
-import lombok.Data;
+import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
+import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
+import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.jar.JarEntry;
+import java.net.URL;
 
-@Data
+@Getter
 @SuppressWarnings("unused")
 public abstract class JavaPlugin implements Plugin {
     private PluginInfo pluginInfo;
@@ -27,7 +26,7 @@ public abstract class JavaPlugin implements Plugin {
      * @return 日志实例
      */
     public Logger getLogger() {
-        return MHDFBot.getLogger(this.pluginInfo.getName());
+        return MHDFBot.getLogger(this.pluginInfo.name());
     }
 
     /**
@@ -36,7 +35,6 @@ public abstract class JavaPlugin implements Plugin {
      * @param command 命令实例
      */
     public void registerCommand(Command command) {
-        command.plugin(this.pluginInfo);
         MHDFBot.getCommandManager().registerCommand(command);
     }
 
@@ -53,7 +51,8 @@ public abstract class JavaPlugin implements Plugin {
      * 保存默认配置文件
      */
     public void saveDefaultConfig() {
-        FileUtil.createFolder(this.getDataFolder());
+        if (!this.getDataFolder().exists()) // noinspection ResultOfMethodCallIgnored
+            this.getDataFolder().mkdirs();
         this.saveResource("config.yml", "config.yml", false);
     }
 
@@ -81,23 +80,20 @@ public abstract class JavaPlugin implements Plugin {
             return;
         }
 
-        JarEntry jarEntry = this.getPluginInfo().getJarFile().getJarEntry(resourcePath);
-        if (jarEntry == null) {
-            throw new RuntimeException("找不到资源: " + resourcePath);
-        }
+        ClassLoader classLoader = this.getPluginInfo().plugin().getClass().getClassLoader();
+        URL url = classLoader.getResource(resourcePath);
+        if (url == null) throw new RuntimeException("找不到资源: " + resourcePath);
 
-        try {
-            try (InputStream in = this.getPluginInfo().getJarFile().getInputStream(jarEntry)) {
-                try (FileOutputStream out = new FileOutputStream(file)) {
-                    if (in == null) {
-                        throw new RuntimeException("读取资源 " + resourcePath + " 的时候发生了错误");
-                    }
+        try (InputStream in = classLoader.getResourceAsStream(resourcePath)) {
+            try (FileOutputStream out = new FileOutputStream(file)) {
+                if (in == null) {
+                    throw new RuntimeException("读取资源 " + resourcePath + " 的时候发生了错误");
+                }
 
-                    byte[] buf = new byte[1024];
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                        out.write(buf, 0, len);
-                    }
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
                 }
             }
         } catch (IOException e) {
@@ -111,6 +107,6 @@ public abstract class JavaPlugin implements Plugin {
      * @return 数据目录实例
      */
     public File getDataFolder() {
-        return new File("./plugins/" + this.pluginInfo.getName());
+        return new File("./plugins/" + this.pluginInfo.name());
     }
 }

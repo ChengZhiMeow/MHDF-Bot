@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.api.event.notice;
 
-import cn.chengzhiya.mhdfbot.api.enums.notice.GroupDecreaseSubType;
+import cn.chengzhiya.mhdfbot.api.notice.type.GroupDecreaseSubType;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 

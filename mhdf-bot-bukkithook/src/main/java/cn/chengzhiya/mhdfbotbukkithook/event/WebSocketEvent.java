@@ -15,6 +15,7 @@ public final class WebSocketEvent extends Event {
     static HandlerList getHandlerList() {
         return WebSocketEvent.handlers;
     }
+
     private final JSONObject data;
 
     public WebSocketEvent(JSONObject data) {

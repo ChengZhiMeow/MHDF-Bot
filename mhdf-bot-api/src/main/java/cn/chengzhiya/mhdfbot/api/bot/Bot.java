@@ -1,25 +1,57 @@
 package cn.chengzhiya.mhdfbot.api.bot;
 
 import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
-import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
-import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
-import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
-import cn.chengzhiya.mhdfbot.api.entity.group.Group;
-import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
-import cn.chengzhiya.mhdfbot.api.entity.message.Record;
-import cn.chengzhiya.mhdfbot.api.entity.user.Friend;
-import cn.chengzhiya.mhdfbot.api.entity.user.Member;
-import cn.chengzhiya.mhdfbot.api.entity.user.Stranger;
-import cn.chengzhiya.mhdfbot.api.enums.message.MessageType;
-import cn.chengzhiya.mhdfbot.api.enums.message.RecordFormat;
-import cn.chengzhiya.mhdfbot.api.enums.notice.HonorType;
-import cn.chengzhiya.mhdfbot.api.enums.request.RequestSubType;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotLoginInfo;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotStatus;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotVersionInfo;
+import cn.chengzhiya.mhdfbot.api.command.CommandManager;
 import cn.chengzhiya.mhdfbot.api.event.message.AbstractMessageEvent;
+import cn.chengzhiya.mhdfbot.api.group.data.Group;
+import cn.chengzhiya.mhdfbot.api.group.data.GroupHonors;
+import cn.chengzhiya.mhdfbot.api.listener.ListenerManager;
+import cn.chengzhiya.mhdfbot.api.message.data.RecordInfo;
+import cn.chengzhiya.mhdfbot.api.message.type.MessageType;
+import cn.chengzhiya.mhdfbot.api.message.type.RecordFormat;
+import cn.chengzhiya.mhdfbot.api.notice.type.HonorType;
+import cn.chengzhiya.mhdfbot.api.notice.type.request.RequestSubType;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginManager;
+import cn.chengzhiya.mhdfbot.api.scheduler.Scheduler;
+import cn.chengzhiya.mhdfbot.api.user.data.Friend;
+import cn.chengzhiya.mhdfbot.api.user.data.Member;
+import cn.chengzhiya.mhdfbot.api.user.data.Stranger;
 
 import java.io.File;
 import java.util.List;
 
 public interface Bot {
+    /**
+     * 获取插件控制器实例
+     *
+     * @return 插件控制器实例
+     */
+    PluginManager getPluginManager();
+
+    /**
+     * 获取命令控制器实例
+     *
+     * @return 命令控制器实例
+     */
+    CommandManager getCommandManager();
+
+    /**
+     * 获取监听器控制器实例
+     *
+     * @return 监听器控制器实例
+     */
+    ListenerManager getListenerManager();
+
+    /**
+     * 获取调度器实例
+     *
+     * @return 调度器实例
+     */
+    Scheduler getScheduler();
+
     /**
      * 获取机器人配置实例
      *
@@ -54,21 +86,21 @@ public interface Bot {
      *
      * @return 运行状态实例
      */
-    Status getStatus();
+    BotStatus getStatus();
 
     /**
      * 获取版本信息实例
      *
      * @return 版本信息实例
      */
-    VersionInfo getVersionInfo();
+    BotVersionInfo getVersionInfo();
 
     /**
      * 获取账户登录信息
      *
      * @return 账户登录信息实例
      */
-    LoginInfo getLoginInfo();
+    BotLoginInfo getLoginInfo();
 
     /**
      * 判断是否能发送语音
@@ -466,7 +498,7 @@ public interface Bot {
      * @param type    群荣誉类型
      * @return 群荣誉实例
      */
-    GroupHonor getGroupHonorInfo(Long groupId, HonorType type);
+    GroupHonors getGroupHonorInfo(Long groupId, HonorType type);
 
     /**
      * 获取指定群聊的群荣誉
@@ -474,7 +506,7 @@ public interface Bot {
      * @param groupId 目标群号
      * @return 群荣誉实例
      */
-    GroupHonor getGroupHonorInfo(Long groupId);
+    GroupHonors getGroupHonorInfo(Long groupId);
 
     /**
      * 获取指定地址的cookie
@@ -491,7 +523,7 @@ public interface Bot {
      * @param format 语音导出格式
      * @return 语音实例
      */
-    Record getRecord(String file, RecordFormat format);
+    RecordInfo getRecord(String file, RecordFormat format);
 
     /**
      * 获取指定文件ID的语音实例
@@ -499,7 +531,7 @@ public interface Bot {
      * @param file 语音文件ID
      * @return 语音实例
      */
-    Record getRecord(String file);
+    RecordInfo getRecord(String file);
 
     /**
      * 获取指定文件ID的图片文件路径

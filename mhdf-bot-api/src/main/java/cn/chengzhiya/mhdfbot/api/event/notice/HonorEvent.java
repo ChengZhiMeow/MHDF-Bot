@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.api.event.notice;
 
-import cn.chengzhiya.mhdfbot.api.enums.notice.HonorType;
+import cn.chengzhiya.mhdfbot.api.notice.type.HonorType;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 

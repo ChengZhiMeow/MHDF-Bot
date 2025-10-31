@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.api.event.bot;
 
-import cn.chengzhiya.mhdfbot.api.enums.bot.LifecycleSubType;
+import cn.chengzhiya.mhdfbot.api.bot.type.LifecycleSubType;
 import cn.chengzhiya.mhdfbot.api.event.AbstractEvent;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;

@@ -1,25 +1,25 @@
 package cn.chengzhiya.mhdfbot.api;
 
 import cn.chengzhiya.mhdfbot.api.bot.Bot;
-import cn.chengzhiya.mhdfbot.api.entity.bot.LoginInfo;
-import cn.chengzhiya.mhdfbot.api.entity.bot.Status;
-import cn.chengzhiya.mhdfbot.api.entity.bot.VersionInfo;
-import cn.chengzhiya.mhdfbot.api.entity.group.Group;
-import cn.chengzhiya.mhdfbot.api.entity.group.GroupHonor;
-import cn.chengzhiya.mhdfbot.api.entity.message.Record;
-import cn.chengzhiya.mhdfbot.api.entity.user.Friend;
-import cn.chengzhiya.mhdfbot.api.entity.user.Member;
-import cn.chengzhiya.mhdfbot.api.entity.user.Stranger;
-import cn.chengzhiya.mhdfbot.api.enums.bot.BotType;
-import cn.chengzhiya.mhdfbot.api.enums.message.MessageType;
-import cn.chengzhiya.mhdfbot.api.enums.message.RecordFormat;
-import cn.chengzhiya.mhdfbot.api.enums.notice.HonorType;
-import cn.chengzhiya.mhdfbot.api.enums.request.RequestSubType;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotLoginInfo;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotStatus;
+import cn.chengzhiya.mhdfbot.api.bot.data.BotVersionInfo;
+import cn.chengzhiya.mhdfbot.api.bot.type.BotType;
+import cn.chengzhiya.mhdfbot.api.command.CommandManager;
 import cn.chengzhiya.mhdfbot.api.event.message.AbstractMessageEvent;
-import cn.chengzhiya.mhdfbot.api.manager.CommandManager;
-import cn.chengzhiya.mhdfbot.api.manager.ListenerManager;
-import cn.chengzhiya.mhdfbot.api.manager.PluginManager;
-import cn.chengzhiya.mhdfbot.api.manager.SchedulerManager;
+import cn.chengzhiya.mhdfbot.api.group.data.Group;
+import cn.chengzhiya.mhdfbot.api.group.data.GroupHonors;
+import cn.chengzhiya.mhdfbot.api.listener.ListenerManager;
+import cn.chengzhiya.mhdfbot.api.message.data.RecordInfo;
+import cn.chengzhiya.mhdfbot.api.message.type.MessageType;
+import cn.chengzhiya.mhdfbot.api.message.type.RecordFormat;
+import cn.chengzhiya.mhdfbot.api.notice.type.HonorType;
+import cn.chengzhiya.mhdfbot.api.notice.type.request.RequestSubType;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginManager;
+import cn.chengzhiya.mhdfbot.api.scheduler.Scheduler;
+import cn.chengzhiya.mhdfbot.api.user.data.Friend;
+import cn.chengzhiya.mhdfbot.api.user.data.Member;
+import cn.chengzhiya.mhdfbot.api.user.data.Stranger;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -40,26 +40,11 @@ public final class MHDFBot {
     @Getter
     private static final Logger logger = MHDFBot.getLogger("MHDF-Bot");
     @Getter
-    private static final PluginManager pluginManager = new PluginManager();
-    @Getter
-    private static final CommandManager commandManager = new CommandManager();
-    @Getter
-    private static final ListenerManager listenerManager = new ListenerManager();
-    @Getter
     @Setter
     private static BotType botType;
     @Getter
     @Setter
     private static Bot bot;
-
-    /**
-     * 获取调度器实例
-     *
-     * @return 调度器实例
-     */
-    public static SchedulerManager getScheduler() {
-        return new SchedulerManager();
-    }
 
     /**
      * 获取日志实例
@@ -86,6 +71,22 @@ public final class MHDFBot {
         return LogManager.getLogger(prefix);
     }
 
+    public static PluginManager getPluginManager() {
+        return MHDFBot.getBot().getPluginManager();
+    }
+
+    public static CommandManager getCommandManager() {
+        return MHDFBot.getBot().getCommandManager();
+    }
+
+    public static ListenerManager getListenerManager() {
+        return MHDFBot.getBot().getListenerManager();
+    }
+
+    public static Scheduler getScheduler() {
+        return MHDFBot.getBot().getScheduler();
+    }
+
     public static void init() {
         MHDFBot.getBot().init();
     }
@@ -102,15 +103,15 @@ public final class MHDFBot {
         MHDFBot.getBot().restart();
     }
 
-    public static Status getStatus() {
+    public static BotStatus getStatus() {
         return MHDFBot.getBot().getStatus();
     }
 
-    public static VersionInfo getVersionInfo() {
+    public static BotVersionInfo getVersionInfo() {
         return MHDFBot.getBot().getVersionInfo();
     }
 
-    public static LoginInfo getLoginInfo() {
+    public static BotLoginInfo getLoginInfo() {
         return MHDFBot.getBot().getLoginInfo();
     }
 
@@ -302,11 +303,11 @@ public final class MHDFBot {
         return MHDFBot.getBot().getGroupMemberList(groupId);
     }
 
-    public static GroupHonor getGroupHonorInfo(Long groupId, HonorType type) {
+    public static GroupHonors getGroupHonorInfo(Long groupId, HonorType type) {
         return MHDFBot.getBot().getGroupHonorInfo(groupId, type);
     }
 
-    public static GroupHonor getGroupHonorInfo(Long groupId) {
+    public static GroupHonors getGroupHonorInfo(Long groupId) {
         return MHDFBot.getBot().getGroupHonorInfo(groupId);
     }
 
@@ -314,11 +315,11 @@ public final class MHDFBot {
         return MHDFBot.getBot().getCookies(domain);
     }
 
-    public static Record getRecord(String file, RecordFormat format) {
+    public static RecordInfo getRecord(String file, RecordFormat format) {
         return MHDFBot.getBot().getRecord(file, format);
     }
 
-    public static Record getRecord(String file) {
+    public static RecordInfo getRecord(String file) {
         return MHDFBot.getBot().getRecord(file);
     }
 

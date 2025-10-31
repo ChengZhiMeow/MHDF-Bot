@@ -1,6 +1,5 @@
 package cn.chengzhiya.mhdfbot.api.http;
 
-import cn.chengzhiya.mhdfbot.api.http.entity.JsonHttpData;
 import com.alibaba.fastjson2.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;

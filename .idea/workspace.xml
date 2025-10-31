@@ -4,9 +4,119 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修复一个错误">
+    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="改用CC-Yaml">
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/data/BotLoginInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/data/BotStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/data/BotVersionInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/command/CommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/listener/ListenerManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/OpenIdCacheManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/data/MusicInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/scheduler/Scheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/MHDFAbstractBot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/command/MHDFCommandManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/lang/Languages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/listener/MHDFListenerManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginClassLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/scheduler/MHDFScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/QqBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/QqBotImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/MHDFBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/MHDFBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/builder/MediaBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/MediaBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/builder/MessageBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/MessageBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/Music.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/bot/LoginInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/bot/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/bot/VersionInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/file/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/data/FileInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/file/MediaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/data/MediaInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/group/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/group/data/Group.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/group/GroupHonor.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/group/data/GroupHonors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/group/Honor.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/group/data/GroupHonor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/message/Record.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/data/RecordInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/plugin/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/data/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/plugin/PluginInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/data/PluginInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/AbstractStranger.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/data/Stranger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Birthday.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/data/Birthday.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Friend.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/data/Friend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/data/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/data/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/entity/user/Stranger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/BotType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/type/BotType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/IntentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/type/IntentType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/LifecycleSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/type/LifecycleSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/bot/OpenIdType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/bot/type/OpenIdType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/file/MediaType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/type/MediaType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/type/MessageSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/type/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/message/RecordFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/message/type/RecordFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/minecraft/ServerType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/minecraft/type/MinecraftServerType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupAdminSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/GroupAdminSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupBanSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/GroupBanSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupDecreaseSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/GroupDecreaseSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/GroupIncreaseSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/GroupIncreaseSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/HonorType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/HonorType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NoticeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/NoticeType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/notice/NotifySubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/NotifySubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/plugin/PluginStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestSubType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/request/RequestSubType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/request/RequestType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/notice/type/request/RequestType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/RoleType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/type/RoleType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/enums/user/SexType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/user/type/SexType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/bot/LifecycleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/bot/LifecycleEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/message/AbstractMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/message/AbstractMessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/message/GroupMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/message/GroupMessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/minecraft/MinecraftWebsocketMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/minecraft/MinecraftWebsocketMessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupAdminEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupAdminEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupBanEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupBanEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupDecreaseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupDecreaseEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupIncreaseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupIncreaseEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupUploadEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/GroupUploadEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/HonorEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/notice/HonorEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/AbstractRequestEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/AbstractRequestEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/GroupRequestEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/event/request/GroupRequestEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/exception/DownloadException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/HttpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/entity/JsonHttpData.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/http/JsonHttpData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/CommandManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/ListenerManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/PluginManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/manager/SchedulerManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/JavaPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/JavaPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/runnable/MHDFBotRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/runnable/MHDFBotRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/Ed25519Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/util/Ed25519Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/ErrorUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/FileUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/MessageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/MessageEscapeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/util/OpenIdCacheUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/event/WebSocketEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/event/WebSocketEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-pluginexample/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-pluginexample/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/OneBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/QqBotImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/command/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/feature/command/Help.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/command/Plugins.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/feature/command/Plugins.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/console/CommandCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/console/MHDFCommandCompleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/listener/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/feature/listener/MessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/manager/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/manager/MHDFConfigManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MinecraftWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MHDFMinecraftWebSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/onebot/OneBotWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotWebSocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBotHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/QqBotHttpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBotHttpServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/EventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/NoFoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/NoFoundController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/qqbot/httphandle/SignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/SignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,65 +168,66 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "JAR 应用程序.未命名.executor": "Run",
-    "Maven.MHDF-Bot build.executor": "Run",
-    "Maven.generate javadoc.executor": "Run",
-    "Maven.mhdf-bot [clean].executor": "Run",
-    "Maven.mhdf-bot [deploy].executor": "Run",
-    "Maven.mhdf-bot [org.apache.maven.plugins:maven-javadoc-plugin:3.11.1:javadoc].executor": "Run",
-    "Maven.mhdf-bot [org.apache.maven.plugins:maven-site-plugin:3.12.1:attach-descriptor].executor": "Run",
-    "Maven.mhdf-bot [org.projectlombok:lombok-maven-plugin:1.18.20.0:delombok].executor": "Run",
-    "Maven.mhdf-bot [package].executor": "Run",
-    "Maven.mhdf-bot [verify].executor": "Run",
-    "Maven.mhdf-bot-api [deploy].executor": "Run",
-    "Maven.mhdf-bot-api [package].executor": "Run",
-    "Maven.mhdfbot [clean,package].executor": "Run",
-    "Maven.mhdfbot [clean].executor": "Run",
-    "Maven.mhdfbot [deploy].executor": "Run",
-    "Maven.mhdfbot [install].executor": "Run",
-    "Maven.mhdfbot [org.apache.maven.plugins:maven-javadoc-plugin:3.11.1:javadoc].executor": "Run",
-    "Maven.mhdfbot [package].executor": "Run",
-    "Maven.mhdfbot [verify].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "v2",
-    "jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk": "azul-21",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/MHDF-Bot",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.3321839",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true",
-    "应用程序.Main.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;JAR 应用程序.未命名.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.MHDF-Bot build.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.generate javadoc.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [org.apache.maven.plugins:maven-javadoc-plugin:3.11.1:javadoc].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [org.apache.maven.plugins:maven-site-plugin:3.12.1:attach-descriptor].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [org.projectlombok:lombok-maven-plugin:1.18.20.0:delombok].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot-api [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdf-bot-api [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [clean,package,deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [org.apache.maven.plugins:maven-javadoc-plugin:3.11.1:javadoc].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.mhdfbot [verify].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;v2&quot;,
+    &quot;jdk.selected.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: &quot;azul-21&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/MHDF-Bot/plugins&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3321839&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;应用程序.Main.executor&quot;: &quot;Run&quot;
   },
-  "keyToStringList": {
-    "jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk": [
-      "21=C:/Users/ChengZhiYa/.jdks/azul-21.0.3"
+  &quot;keyToStringList&quot;: {
+    &quot;jdk.preference.com.intellij.ui.dsl.builder.impl.RowImpl.sdk&quot;: [
+      &quot;21=C:/Users/ChengZhiYa/.jdks/azul-21.0.3&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\MHDF-Bot\plugins" />
+      <recent name="D:\Projects\MHDF-Bot\tomcat.5835" />
+      <recent name="D:\Projects\MHDF-Bot\plugins\MHDFBot-ChatGLM" />
       <recent name="D:\Projects\MHDF-Bot" />
       <recent name="D:\Projects\MHDF-Bot\mhdf-bot\src\main\java\cn\chengzhiya\mhdfbot\api" />
-      <recent name="D:\Projects\MHDF-Bot\files" />
-      <recent name="D:\Projects\MHDF-Bot\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Projects\MHDF-Bot\files" />
@@ -134,9 +245,10 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean package" />
+      <command value="mvn clean package deploy" />
     </option>
   </component>
-  <component name="RunManager" selected="JAR 应用程序.未命名">
+  <component name="RunManager" selected="应用程序.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="cn.chengzhiya.mhdfbot.Main" />
       <module name="mhdf-bot" />
@@ -280,7 +392,13 @@
       <workItem from="1754929803502" duration="1041000" />
       <workItem from="1754971686818" duration="32000" />
       <workItem from="1756477453426" duration="1155000" />
-      <workItem from="1758207500928" duration="8460000" />
+      <workItem from="1758207500928" duration="8652000" />
+      <workItem from="1761193170495" duration="15678000" />
+      <workItem from="1761225936432" duration="1861000" />
+      <workItem from="1761309008101" duration="192000" />
+      <workItem from="1761751946582" duration="16370000" />
+      <workItem from="1761906571653" duration="896000" />
+      <workItem from="1761907495213" duration="6503000" />
     </task>
     <task id="LOCAL-00001" summary="提交V2.0.0框架本体">
       <option name="closed" value="true" />
@@ -570,7 +688,31 @@
       <option name="project" value="LOCAL" />
       <updated>1758270089562</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="整理代码">
+      <option name="closed" value="true" />
+      <created>1758270413870</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1758270413870</updated>
+    </task>
+    <task id="LOCAL-00038" summary="修复无法启动onebot模式的问题">
+      <option name="closed" value="true" />
+      <created>1761752027058</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1761752027058</updated>
+    </task>
+    <task id="LOCAL-00039" summary="改用CC-Yaml">
+      <option name="closed" value="true" />
+      <created>1761752641593</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1761752641593</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,9 +731,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="提交 workspace.xml" />
-    <MESSAGE value="实现资源操作" />
-    <MESSAGE value="新增获取群成员实例列表的缓存开关设置" />
     <MESSAGE value="修复saveDefaultConfig()不自动创建dataFolder的问题" />
     <MESSAGE value="修复插件saveResource()方法无法正常使用的BUG" />
     <MESSAGE value="调整子服连接器与群组连接器WS客户端的初始化实例代码位置防止instance为null的报错" />
@@ -614,7 +753,10 @@
     <MESSAGE value="修改readme" />
     <MESSAGE value="将所有HTTP部分改用 MHDF-HttpFramework" />
     <MESSAGE value="修复一个错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复一个错误" />
+    <MESSAGE value="整理代码" />
+    <MESSAGE value="修复无法启动onebot模式的问题" />
+    <MESSAGE value="改用CC-Yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="改用CC-Yaml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

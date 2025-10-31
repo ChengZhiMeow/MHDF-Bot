@@ -12,15 +12,7 @@ public abstract class MHDFBotRunnable implements Runnable {
         MHDFBot.getScheduler().runTaskLater(this, delay);
     }
 
-    public void runTaskAsynchronously() {
-        MHDFBot.getScheduler().runTaskAsynchronously(this);
-    }
-
-    public void runTaskAsynchronouslyLater(long delay) {
-        MHDFBot.getScheduler().runTaskAsynchronouslyLater(this, delay);
-    }
-
-    public void runTaskAsynchronouslyTimer(long delay, long period) {
-        MHDFBot.getScheduler().runTaskAsynchronouslyTimer(this, delay, period);
+    public void runTaskTimer(long delay, long period) {
+        MHDFBot.getScheduler().runTaskTimer(this, delay, period);
     }
 }

@@ -7,6 +7,11 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="chengzhimeow-maven-repo-releases" />
+      <option name="name" value="chengzhimeow-maven-repo-releases" />
+      <option name="url" value="https://repo-eo.catnies.top/mhdf" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="maven-maven2" />
       <option name="name" value="maven-maven2" />
       <option name="url" value="https://repo1.maven.org/maven2/" />

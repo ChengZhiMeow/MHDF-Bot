@@ -1,7 +1,7 @@
 package cn.chengzhiya.mhdfbot.api.event.request;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
-import cn.chengzhiya.mhdfbot.api.enums.request.RequestSubType;
+import cn.chengzhiya.mhdfbot.api.notice.type.request.RequestSubType;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 
