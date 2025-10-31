@@ -43,6 +43,25 @@
         </repository>
     </distributionManagement>
 
+    <repositories>
+        <repository>
+            <id>alimaven-public</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
+            <id>nachorealms-repository-releases</id>
+            <url>https://repo-eo.catnies.top/releases</url>
+        </repository>
+        <repository>
+            <id>chengzhimeow-maven-repo-releases</id>
+            <url>https://repo-eo.catnies.top/mhdf</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
