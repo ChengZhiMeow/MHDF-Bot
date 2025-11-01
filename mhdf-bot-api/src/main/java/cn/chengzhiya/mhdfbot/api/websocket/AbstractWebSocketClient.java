@@ -74,7 +74,8 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
         this.session = session;
         this.open(config);
 
-        session.addMessageHandler(String.class, this::handleMessage);
+        if (session.getMessageHandlers().isEmpty())
+            session.addMessageHandler(String.class, this::handleMessage);
         MHDFBot.getLogger().info("WebSocket服务端连接成功({})!",
                 this.getUrlString()
         );
@@ -84,26 +85,32 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
     public void onClose(Session session, CloseReason closeReason) {
         this.close(closeReason);
 
+        for (MessageHandler handler : this.session.getMessageHandlers()) {
+            try {
+                session.removeMessageHandler(handler);
+            }catch (Throwable ignored) {}
+        }
         this.session = null;
         MHDFBot.getLogger().info("WebSocket服务端已离线({})!",
                 this.getUrlString()
         );
 
-        if (this.isCloseReConnect()) {
-            this.connectServer();
-        }
+        if (this.isCloseReConnect()) this.connectServer();
     }
 
     @OnError
     public void onError(Session session, Throwable e) {
         this.error(e);
 
+        for (MessageHandler handler : this.session.getMessageHandlers()) {
+            try {
+                session.removeMessageHandler(handler);
+            }catch (Throwable ignored) {}
+        }
         this.session = null;
         MHDFBot.getLogger().error(e);
 
-        if (this.isCloseReConnect()) {
-            this.connectServer();
-        }
+        if (this.isCloseReConnect()) this.connectServer();
     }
 
     @Override

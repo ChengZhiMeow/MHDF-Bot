@@ -30,7 +30,7 @@ public final class MHDFOneBotWebSocketClient extends AbstractWebSocketClient {
         JSONObject data = JSONObject.parseObject(message);
         if (data.getString("post_type") != null) {
             switch (data.getString("post_type")) {
-                case "message" -> {
+                case "message", "message_sent" -> {
                     switch (data.getString("message_type")) {
                         case "group" -> MHDFBot.getListenerManager().callEvent(new GroupMessageEvent(data));
                         case "private" -> MHDFBot.getListenerManager().callEvent(new PrivateMessageEvent(data));

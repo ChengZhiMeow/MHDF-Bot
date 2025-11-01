@@ -2,6 +2,7 @@ package cn.chengzhiya.mhdfbot.bot.onebot;
 
 import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfbot.Main;
+import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.bot.data.BotLoginInfo;
 import cn.chengzhiya.mhdfbot.api.bot.data.BotStatus;
 import cn.chengzhiya.mhdfbot.api.bot.data.BotVersionInfo;
@@ -168,7 +169,12 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("auto_escape", autoEscape);
 
         JSONObject data = JSONObject.parseObject(this.httpClient.post("send_msg", body.toString()));
-        return data.getJSONObject("data").getLong("message_id");
+        try {
+            return data.getJSONObject("data").getLong("message_id");
+        } catch (NullPointerException e) {
+            MHDFBot.getLogger().error(Languages.NOT_FOUND_MESSAGE_ID, data.toString());
+            throw e;
+        }
     }
 
     @Override

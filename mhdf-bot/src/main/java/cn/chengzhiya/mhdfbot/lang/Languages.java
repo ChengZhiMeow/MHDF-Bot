@@ -12,6 +12,7 @@ public final class Languages {
     public static final String NOT_FOUND_BOT_CONFIG = "找不到机器人配置!";
     public static final String NOT_SUPPORT_BOT_TYPE = "不支持的机器人类型!";
     public static final String NOT_SUPPORT_API = "当前机器人类型不支持该操作!";
+    public static final String NOT_FOUND_MESSAGE_ID = "无法获取消息的消息ID,返回数据: {}";
     // WebHook服务端
     public static final String WEBHOOK_GET_FILE_INVALID_PATH_MESSAGE = "该目录无法访问!";
     public static final String WEBHOOK_GET_FILE_INVALID_PATH_LOG = "{}尝试访问{},操作已拦截!";
