@@ -4,6 +4,7 @@ import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.command.CommandManager;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
 import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
+import cn.chengzhiya.mhdfbot.lang.Languages;
 
 import java.util.*;
 
@@ -47,7 +48,7 @@ public final class MHDFCommandManager implements CommandManager {
         System.arraycopy(parts, 1, args, 0, parts.length - 1);
 
         if (this.getCommand(parts[0]) == null) {
-            MHDFBot.getLogger().error("找不到这个命令");
+            MHDFBot.getLogger().error(Languages.NOT_FOUND_COMMAND);
             return;
         }
 

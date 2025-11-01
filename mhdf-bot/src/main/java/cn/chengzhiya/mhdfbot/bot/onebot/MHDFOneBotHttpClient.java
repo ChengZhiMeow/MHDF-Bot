@@ -1,15 +1,16 @@
 package cn.chengzhiya.mhdfbot.bot.onebot;
 
-import cn.chengzhiya.mhdfbot.api.MHDFBot;
+import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfhttpframework.client.HttpClient;
 
 public final class MHDFOneBotHttpClient extends HttpClient {
-    private final String httpHost = MHDFBot.getBot().getBotConfig().getString("httpHost");
+    private final String httpHost;
 
-    public MHDFOneBotHttpClient() {
+    public MHDFOneBotHttpClient(ConfigurationSection botConfig) {
         super();
 
-        String token = MHDFBot.getBot().getBotConfig().getString("accessToken");
+        this.httpHost = botConfig.getString("http_host");
+        String token = botConfig.getString("access_token");
         if (token != null && !token.isEmpty())
             this.getHeaderHashMap().put("Authorization", "Bearer " + token);
     }

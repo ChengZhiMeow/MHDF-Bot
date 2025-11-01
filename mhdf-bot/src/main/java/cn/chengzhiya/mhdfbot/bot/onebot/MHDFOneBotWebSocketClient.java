@@ -1,5 +1,6 @@
 package cn.chengzhiya.mhdfbot.bot.onebot;
 
+import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.event.bot.HeartbeatEvent;
 import cn.chengzhiya.mhdfbot.api.event.bot.LifecycleEvent;
@@ -14,14 +15,14 @@ import cn.chengzhiya.mhdfbot.api.websocket.AbstractWebSocketClient;
 import com.alibaba.fastjson2.JSONObject;
 
 public final class MHDFOneBotWebSocketClient extends AbstractWebSocketClient {
-    public MHDFOneBotWebSocketClient() {
+    public MHDFOneBotWebSocketClient(ConfigurationSection botConfig) {
         super(
-                MHDFBot.getBot().getBotConfig().getString("websocketHost"),
+                botConfig.getString("websocket_host"),
                 true
         );
 
-        String token = MHDFBot.getBot().getBotConfig().getString("accessToken");
-        if (token != null) super.setAccessToken("Bearer " + token);
+        String token = botConfig.getString("access_token");
+        if (token != null && !token.isEmpty()) super.setAccessToken("Bearer " + token);
     }
 
     @Override

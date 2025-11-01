@@ -19,6 +19,7 @@ import cn.chengzhiya.mhdfbot.api.user.data.Friend;
 import cn.chengzhiya.mhdfbot.api.user.data.Member;
 import cn.chengzhiya.mhdfbot.api.user.data.Stranger;
 import cn.chengzhiya.mhdfbot.bot.MHDFAbstractBot;
+import cn.chengzhiya.mhdfbot.lang.Languages;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -28,31 +29,29 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-@Getter
 public final class MHDFOneBot extends MHDFAbstractBot {
-    private MHDFOneBotHttpClient httpClient;
-    private MHDFOneBotWebSocketClient webSocketClient;
+    private final MHDFOneBotHttpClient httpClient;
+    private final MHDFOneBotWebSocketClient webSocketClient;
+    @Getter
+    private final ConfigurationSection botConfig;
 
-    @Override
-    public ConfigurationSection getBotConfig() {
-        ConfigurationSection config = Main.getConfigManager().getData().getConfigurationSection("botSettings.oneBot");
-        if (config == null) throw new NullPointerException("机器人配置错误!");
+    public MHDFOneBot() {
+        this.botConfig = Main.getConfigManager().getData().getConfigurationSection("bot_settings.one_bot");
+        if (this.botConfig == null) throw new RuntimeException(Languages.NOT_FOUND_BOT_CONFIG);
 
-        return config;
+        this.httpClient = new MHDFOneBotHttpClient(this.botConfig);
+        this.webSocketClient = new MHDFOneBotWebSocketClient(this.botConfig);
     }
 
     @Override
     public void init() {
-        this.httpClient = new MHDFOneBotHttpClient();
-        this.webSocketClient = new MHDFOneBotWebSocketClient();
-
-        this.getWebSocketClient().connectServer();
+        this.webSocketClient.connectServer();
     }
 
     @Override
     @SneakyThrows
     public void cleanCache() {
-        this.getHttpClient().post("clean_cache");
+        this.httpClient.post("clean_cache");
     }
 
     @Override
@@ -61,7 +60,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         JSONObject body = new JSONObject();
         body.put("delay", delay);
 
-        this.getHttpClient().post("set_restart", body.toString());
+        this.httpClient.post("set_restart", body.toString());
     }
 
     @Override
@@ -72,7 +71,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotStatus getStatus() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_status"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_status"));
 
         return BotStatus.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -80,7 +79,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotVersionInfo getVersionInfo() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_version_info"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_version_info"));
 
         return BotVersionInfo.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -88,7 +87,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotLoginInfo getLoginInfo() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_login_info"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_login_info"));
 
         return BotLoginInfo.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -96,7 +95,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public Boolean ifCanSendRecord() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("if_can_send_record"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_record"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
@@ -104,7 +103,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public Boolean ifCanSendImage() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("if_can_send_image"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_image"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
@@ -112,7 +111,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public long getCsrfToken() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_csrf_token"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_csrf_token"));
 
         return Objects.requireNonNull(data).getLong("token");
     }
@@ -120,7 +119,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public List<Friend> getFriendList() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_friend_list"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_friend_list"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Friend::fromJson)
@@ -130,7 +129,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public List<Group> getGroupList() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_list"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_list"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Group::fromJson)
@@ -143,7 +142,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         JSONObject body = new JSONObject();
         body.put("message_id", messageId);
 
-        JSONObject data = Objects.requireNonNull(JSONObject.parseObject(this.getHttpClient().post("get_msg", body.toString())))
+        JSONObject data = Objects.requireNonNull(JSONObject.parseObject(this.httpClient.post("get_msg", body.toString())))
                 .getJSONObject("data");
 
         return switch (data.getString("message_type")) {
@@ -168,7 +167,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("message", message);
         body.put("auto_escape", autoEscape);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("send_msg", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("send_msg", body.toString()));
         return data.getJSONObject("data").getLong("message_id");
     }
 
@@ -198,7 +197,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         JSONObject body = new JSONObject();
         body.put("message_id", messageId);
 
-        this.getHttpClient().post("delete_msg", body.toString());
+        this.httpClient.post("delete_msg", body.toString());
     }
 
     @Override
@@ -208,7 +207,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", targetId);
         body.put("times", times);
 
-        this.getHttpClient().post("send_like", body.toString());
+        this.httpClient.post("send_like", body.toString());
     }
 
     @Override
@@ -219,7 +218,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("reject_add_request", rejectAddRequest);
 
-        this.getHttpClient().post("set_group_kick", body.toString());
+        this.httpClient.post("set_group_kick", body.toString());
     }
 
     @Override
@@ -235,7 +234,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("duration", duration);
 
-        this.getHttpClient().post("set_group_ban", body.toString());
+        this.httpClient.post("set_group_ban", body.toString());
     }
 
     @Override
@@ -255,7 +254,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("group_id", groupId);
         body.put("enable", enable);
 
-        this.getHttpClient().post("set_group_whole_ban", body.toString());
+        this.httpClient.post("set_group_whole_ban", body.toString());
     }
 
     @Override
@@ -276,7 +275,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("enable", enable);
 
-        this.getHttpClient().post("set_group_admin", body.toString());
+        this.httpClient.post("set_group_admin", body.toString());
     }
 
     @Override
@@ -297,7 +296,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("card", card);
 
-        this.getHttpClient().post("set_group_card", body.toString());
+        this.httpClient.post("set_group_card", body.toString());
     }
 
     @Override
@@ -312,7 +311,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("group_id", groupId);
         body.put("group_name", name);
 
-        this.getHttpClient().post("set_group_name", body.toString());
+        this.httpClient.post("set_group_name", body.toString());
     }
 
     @Override
@@ -322,7 +321,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("group_id", groupId);
         body.put("is_dismiss", dismiss);
 
-        this.getHttpClient().post("set_group_leave", body.toString());
+        this.httpClient.post("set_group_leave", body.toString());
     }
 
     @Override
@@ -344,7 +343,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("special_title", specialTitle);
         body.put("duration", duration);
 
-        this.getHttpClient().post("set_group_special_title", body.toString());
+        this.httpClient.post("set_group_special_title", body.toString());
     }
 
     @Override
@@ -365,7 +364,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("approve", approve);
         body.put("remark", remark);
 
-        this.getHttpClient().post("set_friend_add_request", body.toString());
+        this.httpClient.post("set_friend_add_request", body.toString());
     }
 
     @Override
@@ -392,7 +391,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("approve", approve);
         body.put("reason", reason);
 
-        this.getHttpClient().post("set_group_add_request", body.toString());
+        this.httpClient.post("set_group_add_request", body.toString());
     }
 
     @Override
@@ -417,7 +416,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_stranger_info", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_stranger_info", body.toString()));
 
         return Stranger.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -435,7 +434,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("user_id", userId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_member_info", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_member_info", body.toString()));
 
         return Member.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -452,7 +451,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("group_id", groupId);
         body.put("no_cache", !cache);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_member_list", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_member_list", body.toString()));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Member::fromJson)
@@ -471,7 +470,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("group_id", groupId);
         body.put("type", type.toString().toLowerCase(Locale.ROOT));
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_group_honor_info", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_honor_info", body.toString()));
 
         return GroupHonors.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -487,7 +486,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         JSONObject body = new JSONObject();
         body.put("domain", domain);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_cookies", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_cookies", body.toString()));
 
         return Objects.requireNonNull(data).getString("cookies");
     }
@@ -499,7 +498,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         body.put("file", file);
         body.put("format", format.toString());
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_record", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_record", body.toString()));
 
         return RecordInfo.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -515,7 +514,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
         JSONObject body = new JSONObject();
         body.put("file", file);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post("get_image", body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_image", body.toString()));
 
         return new java.io.File(Objects.requireNonNull(data).getJSONObject("data").getString("file"));
     }

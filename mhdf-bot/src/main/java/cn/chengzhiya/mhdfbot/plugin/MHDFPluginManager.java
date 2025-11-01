@@ -50,27 +50,35 @@ public final class MHDFPluginManager implements PluginManager {
     @Override
     public void loadPlugin(File pluginFile) {
         try (JarFile jarFile = new JarFile(pluginFile)) {
-            JarEntry pluginInfoFile = jarFile.getJarEntry("plugin.yml");
-            if (pluginInfoFile == null) {
-                MHDFBot.getLogger().error(Languages.PLUGIN_LOAD_ERROR_INVALID, pluginFile.getName());
-                return;
+            // 读取 plugin.yml
+            PluginInfo pluginInfo;
+            {
+                JarEntry pluginInfoFile = jarFile.getJarEntry("plugin.yml");
+                if (pluginInfoFile == null) {
+                    MHDFBot.getLogger().error(Languages.PLUGIN_LOAD_ERROR_INVALID, pluginFile.getName());
+                    return;
+                }
+
+                YamlConfiguration pluginInfoData = YamlConfiguration.loadConfiguration(jarFile.getInputStream(pluginInfoFile));
+                pluginInfo = new PluginInfo(
+                        pluginInfoData.getString("name"),
+                        pluginInfoData.getString("version"),
+                        pluginInfoData.getString("main"),
+                        pluginInfoData.getStringList("authors")
+                );
             }
-            YamlConfiguration pluginInfoData = YamlConfiguration.loadConfiguration(jarFile.getInputStream(pluginInfoFile));
-            PluginInfo pluginInfo = new PluginInfo(
-                    pluginInfoData.getString("name"),
-                    pluginInfoData.getString("version"),
-                    pluginInfoData.getString("main"),
-                    pluginInfoData.getStringList("authors")
-            );
+
             MHDFBot.getLogger().info(Languages.PLUGIN_LOADING, pluginInfo.name(), pluginInfo.version());
             ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
             try {
+                // 改用插件类加载器
                 URL[] urls = {pluginFile.toURI().toURL()};
                 MHDFPluginClassLoader classLoader = new MHDFPluginClassLoader(urls, MHDFBot.class.getClassLoader(), this);
                 Thread.currentThread().setContextClassLoader(classLoader);
 
                 Class<?> clazz = classLoader.loadClass(pluginInfo.main());
 
+                // 初始化插件主类
                 JavaPlugin javaPlugin = (JavaPlugin) clazz.getDeclaredConstructor().newInstance();
                 pluginInfo.plugin(javaPlugin);
                 pluginInfo.jarFile(pluginFile);
@@ -105,10 +113,16 @@ public final class MHDFPluginManager implements PluginManager {
     public void unloadPlugin(String pluginName) {
         PluginInfo pluginInfo = this.getPlugin(pluginName);
         if (pluginInfo == null) return;
+
+        // 卸载插件
         JavaPlugin plugin = pluginInfo.plugin();
         plugin.onDisable();
+
+        // 卸载插件的监听器和命令
         MHDFBot.getListenerManager().unregisterAllListener(pluginInfo);
         MHDFBot.getCommandManager().unregisterAllCommand(pluginInfo);
+
+        // 关闭类加载器
         this.pluginHashMap.remove(pluginName);
         ClassLoader classLoader = plugin.getClass().getClassLoader();
         if (classLoader instanceof URLClassLoader) {
@@ -124,6 +138,7 @@ public final class MHDFPluginManager implements PluginManager {
     public void reloadPlugin(String pluginName) {
         PluginInfo pluginInfo = this.getPlugin(pluginName);
         if (pluginInfo == null) return;
+
         File pluginFile = pluginInfo.jarFile();
         this.unloadPlugin(pluginName);
         this.loadPlugin(pluginFile);

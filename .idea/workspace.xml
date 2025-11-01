@@ -4,24 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="重构API设计&#10;改用CC-Yaml作为YAML处理库">
-      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/thread/MHDFBotServiceThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/thread/MHDFMinecraftWsServerThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/thread/MHDFScheduledThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修复重试功能异常的问题">
+      <change afterPath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_info.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/type/MediaType.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/file/type/MediaType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/minecraft/WebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/minecraft/WebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/minecraft/WebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/minecraft/WebSocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-pluginexample/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-pluginexample/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotHttpClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBotWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBotHttpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBotHttpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/EventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/NoFoundController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/NoFoundController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/SignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/controller/SignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/command/MHDFCommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/command/MHDFCommandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/feature/listener/MessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/feature/listener/MessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/lang/Languages.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/lang/Languages.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MHDFMinecraftWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MHDFMinecraftWebSocketServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/scheduler/MHDFScheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/scheduler/MHDFScheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -301,7 +309,7 @@
       <workItem from="1761309008101" duration="192000" />
       <workItem from="1761751946582" duration="16370000" />
       <workItem from="1761906571653" duration="896000" />
-      <workItem from="1761907495213" duration="13942000" />
+      <workItem from="1761907495213" duration="25453000" />
     </task>
     <task id="LOCAL-00001" summary="提交V2.0.0框架本体">
       <option name="closed" value="true" />
@@ -623,7 +631,47 @@
       <option name="project" value="LOCAL" />
       <updated>1761916845654</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="改用 JDK21&#10;将部分调度器使用改用独立线程">
+      <option name="closed" value="true" />
+      <created>1761925804397</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1761925804397</updated>
+    </task>
+    <task id="LOCAL-00042" summary="修复 actions">
+      <option name="closed" value="true" />
+      <created>1761926356727</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1761926356727</updated>
+    </task>
+    <task id="LOCAL-00043" summary="修复 actions">
+      <option name="closed" value="true" />
+      <created>1761926795735</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1761926795735</updated>
+    </task>
+    <task id="LOCAL-00044" summary="修复 actions">
+      <option name="closed" value="true" />
+      <created>1761927260516</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1761927260516</updated>
+    </task>
+    <task id="LOCAL-00045" summary="修复重试功能异常的问题">
+      <option name="closed" value="true" />
+      <created>1761973096657</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1761973096657</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -642,9 +690,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="修复插件saveResource()方法无法正常使用的BUG" />
-    <MESSAGE value="调整子服连接器与群组连接器WS客户端的初始化实例代码位置防止instance为null的报错" />
-    <MESSAGE value="修复单位错误的问题" />
     <MESSAGE value="修复ws地址获取失败的BUG" />
     <MESSAGE value="修复无法连接websocket服务器的问题&#10;修复Event报错的问题" />
     <MESSAGE value="格式化代码&#10;修复http API部分请求超时不处理的BUG" />
@@ -667,7 +712,10 @@
     <MESSAGE value="修复无法启动onebot模式的问题" />
     <MESSAGE value="改用CC-Yaml" />
     <MESSAGE value="重构API设计&#10;改用CC-Yaml作为YAML处理库" />
-    <option name="LAST_COMMIT_MESSAGE" value="重构API设计&#10;改用CC-Yaml作为YAML处理库" />
+    <MESSAGE value="改用 JDK21&#10;将部分调度器使用改用独立线程" />
+    <MESSAGE value="修复 actions" />
+    <MESSAGE value="修复重试功能异常的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复重试功能异常的问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

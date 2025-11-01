@@ -14,7 +14,9 @@ public final class NoFoundController {
     @Priority(-999)
     @RequestPath("/default")
     @RequestType(RequestTypes.ALL)
-    public static void noFound(HttpServletResponse response) {
+    public static void noFound(
+            HttpServletResponse response
+    ) {
         HttpUtil.returnJsonHttpData(response, JsonHttpData.noInterface);
     }
 }

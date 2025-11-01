@@ -2,6 +2,7 @@ package cn.chengzhiya.mhdfbot;
 
 import cn.chengzhimeow.ccyaml.CCYaml;
 import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
+import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.bot.type.BotType;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
@@ -23,7 +24,9 @@ import org.jline.reader.LineReaderBuilder;
 import org.jline.reader.UserInterruptException;
 
 import java.io.File;
-import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -38,7 +41,24 @@ public class Main {
     private static MHDFMinecraftWebSocketServer minecraftWebSocketServer;
 
     public static void main(String[] args) {
-        Main.frameworkInfo = new PluginInfo("MHDF-Bot", "2.1.4", Main.class.getName(), List.of("ChengZhiMeow"));
+        long startTime = System.currentTimeMillis();
+
+        // 读取机器人信息
+        URL url = Main.class.getClassLoader().getResource("mhdfbot_info.yml");
+        if (url == null) throw new RuntimeException(Languages.FILE_CORRUPTED);
+        try (InputStream in = url.openStream()) {
+            YamlConfiguration frameworkInfoConfig = YamlConfiguration.loadConfiguration(in);
+            Main.frameworkInfo = new PluginInfo(
+                    frameworkInfoConfig.getString("name"),
+                    frameworkInfoConfig.getString("version"),
+                    Main.class.getName(),
+                    frameworkInfoConfig.getStringList("authoendrs")
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 读取配置
         Main.yamlManager = new CCYaml(
                 Main.class.getClassLoader(),
                 new File("./"),
@@ -46,25 +66,33 @@ public class Main {
         );
         Main.configManager = new MHDFConfigManager();
 
-        long startTime = System.currentTimeMillis();
-        {
-            Main.getConfigManager().saveDefaultFile();
-            Main.getConfigManager().reload();
+        // 启动程序
+        MHDFBot.getLogger().info("===========================================");
+        MHDFBot.getLogger().info("MHDF-Bot | 版本: {}", Main.frameworkInfo.version());
+        MHDFBot.getLogger().info("MHDF-Bot | 作者: {}", Main.frameworkInfo.authoendrs());
+        MHDFBot.getLogger().info("");
+        MHDFBot.getLogger().info("Ciallo～ (∠·ω< )⌒★");
+        MHDFBot.getLogger().info("\"在意的话，会让眼前的幸福逃走的，傻子才会在意。\"");
+        MHDFBot.getLogger().info("===========================================");
 
-            Main.initBot();
+        Main.getConfigManager().saveDefaultFile();
+        Main.getConfigManager().reload();
 
-            Main.registerCommand();
-            Main.registerListener();
+        Main.initBot();
 
-            MHDFBot.getPluginManager().loadPlugins();
+        Main.registerCommand();
+        Main.registerListener();
 
-            Main.minecraftWebSocketServer = new MHDFMinecraftWebSocketServer();
-            MHDFMinecraftWsServerThread.getInstance().execute(() -> Main.getMinecraftWebSocketServer().startServer());
+        MHDFBot.getPluginManager().loadPlugins();
 
-            MHDFBotServiceThread.getInstance().execute(MHDFBot::init);
-        }
+        Main.minecraftWebSocketServer = new MHDFMinecraftWebSocketServer();
+        MHDFMinecraftWsServerThread.getInstance().execute(() -> Main.getMinecraftWebSocketServer().startServer());
+
+        MHDFBotServiceThread.getInstance().execute(MHDFBot::init);
+
         MHDFBot.getLogger().info(Languages.START_DONE, System.currentTimeMillis() - startTime);
 
+        // 控制台
         try {
             LineReader lineReader = LineReaderBuilder.builder()
                     .completer(new MHDFCommandCompleter())
@@ -83,14 +111,14 @@ public class Main {
      * 初始化机器人
      */
     private static void initBot() {
-        ConfigurationSection botConfig = Main.getConfigManager().getData().getConfigurationSection("botSettings");
-        if (botConfig == null) throw new RuntimeException("机器人配置错误!");
+        ConfigurationSection config = Main.getConfigManager().getData().getConfigurationSection("bot_settings");
+        if (config == null) throw new NullPointerException(Languages.NOT_FOUND_BOT_CONFIG);
 
-        MHDFBot.setBotType(BotType.valueOf(Objects.requireNonNull(botConfig.getString("type")).toUpperCase(Locale.ROOT)));
+        MHDFBot.setBotType(BotType.valueOf(Objects.requireNonNull(config.getString("type")).toUpperCase(Locale.ROOT)));
         switch (MHDFBot.getBotType()) {
             case ONEBOT -> MHDFBot.setBot(new MHDFOneBot());
             case QQBOT -> MHDFBot.setBot(new MHDFQqBot());
-            default -> throw new RuntimeException("不支持的机器人类型!");
+            default -> throw new RuntimeException(Languages.NOT_SUPPORT_BOT_TYPE);
         }
     }
 
@@ -99,11 +127,11 @@ public class Main {
      */
     private static void registerCommand() {
         MHDFBot.getCommandManager().registerCommand(
-                new Command("help").plugin(Main.frameworkInfo).executor(new Help()).description("查看命令帮助").usage("help <页数>")
+                new Command("help").plugin(Main.frameworkInfo).executor(new Help()).description(Languages.COMMAND_HELP_DESCRIPTION).usage(Languages.COMMAND_HELP_USAGE)
         );
 
         MHDFBot.getCommandManager().registerCommand(
-                new Command("plugins").plugin(Main.frameworkInfo).executor(new Plugins()).description("查看插件列表")
+                new Command("plugins").plugin(Main.frameworkInfo).executor(new Plugins()).description(Languages.COMMAND_PLUGINS_DESCRIPTION)
         );
     }
 

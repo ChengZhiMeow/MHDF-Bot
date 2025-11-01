@@ -22,6 +22,7 @@ import cn.chengzhiya.mhdfbot.api.user.data.Friend;
 import cn.chengzhiya.mhdfbot.api.user.data.Member;
 import cn.chengzhiya.mhdfbot.api.user.data.Stranger;
 import cn.chengzhiya.mhdfbot.bot.MHDFAbstractBot;
+import cn.chengzhiya.mhdfbot.lang.Languages;
 import cn.chengzhiya.mhdfhttpframework.server.entity.SSLConfig;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
@@ -36,24 +37,44 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Getter
 public final class MHDFQqBot extends MHDFAbstractBot {
-    private final String accessTokenUrl = "https://bots.qq.com/app/getAppAccessToken";
-    private final String openApiUrl = "https://api.sgroup.qq.com";
+    public static final String ACCESS_TOKEN_API_URL = "https://bots.qq.com/app/getAppAccessToken";
+    public static final String OPEN_API_URL = "https://api.sgroup.qq.com";
+
+    @Getter
+    private final BotVersionInfo versionInfo = new BotVersionInfo("腾讯官方机器人", "1.0.0", "11");
+    @Getter
+    private final BotStatus status = new BotStatus(true, true);
+    @Getter
+    private final ConfigurationSection botConfig;
+    private final long botQq;
+
+    private final MHDFQqBotHttpClient httpClient;
+    private final MHDFQqBotHttpServer httpServer;
+
     @Setter
     private String botName;
 
-    private MHDFQqBotHttpClient httpClient;
-    private MHDFQqBotHttpServer httpServer;
+    public MHDFQqBot() {
+        this.botConfig = Main.getConfigManager().getData().getConfigurationSection("bot_settings.qq_bot");
+        if (this.botConfig == null) throw new RuntimeException(Languages.NOT_FOUND_BOT_CONFIG);
 
-    @Override
-    public ConfigurationSection getBotConfig() {
-        ConfigurationSection config = Main.getConfigManager().getData().getConfigurationSection("botSettings.qqBot");
-        if (config == null) {
-            throw new NullPointerException("机器人配置错误!");
+        this.botQq = this.botConfig.getLong("qq");
+
+        SSLConfig sslConfig = new SSLConfig();
+        ConfigurationSection config = this.botConfig.getConfigurationSection("web_hook.ssl");
+        if (config != null) {
+            sslConfig.setEnable(config.getBoolean("enable"));
+            sslConfig.setAlias(config.getString("alias"));
+            sslConfig.setFile(config.getString("file"));
+            sslConfig.setKey(config.getString("key"));
         }
 
-        return config;
+        this.httpClient = new MHDFQqBotHttpClient();
+        this.httpServer = new MHDFQqBotHttpServer(
+                this.botConfig.getInt("web_hook.port"),
+                sslConfig
+        );
     }
 
     /**
@@ -62,14 +83,14 @@ public final class MHDFQqBot extends MHDFAbstractBot {
     @SneakyThrows
     private void updateAccessToken() {
         JSONObject body = new JSONObject();
-        body.put("appId", this.getBotConfig().getString("appId"));
-        body.put("clientSecret", this.getBotConfig().getString("secret"));
+        body.put("appId", this.botConfig.getString("app_id"));
+        body.put("clientSecret", this.botConfig.getString("secret"));
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(this.getAccessTokenUrl(), body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post(MHDFQqBot.ACCESS_TOKEN_API_URL, body.toString()));
 
         Integer code = data.getInteger("code");
         if (code != null) {
-            MHDFBot.getLogger().info("机器人访问密钥更新失败, 错误码: {}({})",
+            MHDFBot.getLogger().error(Languages.QQ_BOT_UPDATE_TOKEN_FAILED,
                     code,
                     data.getString("message")
             );
@@ -79,13 +100,13 @@ public final class MHDFQqBot extends MHDFAbstractBot {
         String accessToken = "QQBot " + data.getString("access_token");
         int updateTime = data.getInteger("expires_in") - 30;
 
-        this.getHttpClient().getHeaderHashMap().put("Authorization", accessToken);
-        MHDFBot.getLogger().info("机器人访问密钥更新完成, 新的密钥: {}, 下次更新还需要 {} 秒后!",
+        this.httpClient.getHeaderHashMap().put("Authorization", accessToken);
+        MHDFBot.getLogger().info(Languages.QQ_BOT_UPDATE_TOKEN_DONE,
                 accessToken,
                 updateTime
         );
 
-        super.getScheduler().runTaskLater(this::updateAccessToken, updateTime);
+        super.getScheduler().runTaskLater(this::updateAccessToken, updateTime * 1000L);
     }
 
     /**
@@ -93,7 +114,7 @@ public final class MHDFQqBot extends MHDFAbstractBot {
      */
     @SneakyThrows
     private void updateBotName() {
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().get(this.getOpenApiUrl() + "/users/@me"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.get(MHDFQqBot.OPEN_API_URL + "/users/@me"));
         this.setBotName(data.getString("username"));
     }
 
@@ -114,60 +135,41 @@ public final class MHDFQqBot extends MHDFAbstractBot {
             File outFile = new File("files", fileName);
             Files.copy(file.toPath(), outFile.toPath());
 
-            mediaUrl = Objects.requireNonNull(this.getBotConfig().getString("webHook.defaultFileFormat"))
+            mediaUrl = Objects.requireNonNull(this.botConfig.getString("web_hook.default_file_url_format"))
                     .replace("{name}", fileName);
         }
+
         JSONObject body = new JSONObject();
-        body.put("file_type", type.ordinal() + 1);
+        body.put("file_type", type.ordinal());
         body.put("url", mediaUrl);
         body.put("srv_send_msg", false);
 
         String targetType = openIdType == OpenIdType.GROUP ? "groups" : "users";
-        String url = this.getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/files";
+        String url = MHDFQqBot.OPEN_API_URL + "/v2/" + targetType + "/" + openId + "/files";
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(url, body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post(url, body.toString()));
         return MediaInfo.fromJson(data);
     }
 
     @Override
     @SneakyThrows
     public void init() {
-        this.httpClient = new MHDFQqBotHttpClient();
-
         this.updateAccessToken();
         this.updateBotName();
 
         long startTime = System.currentTimeMillis();
-        {
-            SSLConfig sslConfig = new SSLConfig();
-            {
-                ConfigurationSection config = this.getBotConfig().getConfigurationSection("webHook.ssl");
-                if (config != null) {
-                    sslConfig.setEnable(config.getBoolean("enable"));
-                    sslConfig.setAlias(config.getString("alias"));
-                    sslConfig.setFile(config.getString("file"));
-                    sslConfig.setKey(config.getString("key"));
-                }
-            }
-
-            this.httpServer = new MHDFQqBotHttpServer(
-                    this.getBotConfig().getInt("webHook.port"),
-                    sslConfig
-            );
-            this.getHttpServer().start();
-        }
-        long endTime = System.currentTimeMillis();
-        MHDFBot.getLogger().info("WebHook服务器启动成功,本次启动时长: {}ms", endTime - startTime);
+        this.httpServer.start();
+        MHDFBot.getLogger().info(Languages.WEBHOOK_START_DONE, System.currentTimeMillis() - startTime);
     }
 
     @Override
     public void cleanCache() {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void restart(Long delay) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
@@ -176,30 +178,8 @@ public final class MHDFQqBot extends MHDFAbstractBot {
     }
 
     @Override
-    public BotStatus getStatus() {
-        JSONObject data = new JSONObject();
-        data.put("online", true);
-        data.put("good", true);
-
-        return BotStatus.fromJson(data);
-    }
-
-    @Override
-    public BotVersionInfo getVersionInfo() {
-        JSONObject data = new JSONObject();
-        data.put("app_name", "腾讯官方机器人");
-        data.put("app_version", "1.0.0");
-        data.put("protocol_version", "11");
-
-        return BotVersionInfo.fromJson(data);
-    }
-
-    @Override
     public BotLoginInfo getLoginInfo() {
-        JSONObject data = new JSONObject();
-        data.put("user_id", this.getBotConfig().getLong("qq"));
-        data.put("nickname", this.getBotName());
-        return BotLoginInfo.fromJson(data);
+        return new BotLoginInfo(this.botQq, this.botName);
     }
 
     @Override
@@ -214,22 +194,22 @@ public final class MHDFQqBot extends MHDFAbstractBot {
 
     @Override
     public long getCsrfToken() {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public List<Friend> getFriendList() {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public List<Group> getGroupList() {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public AbstractMessageEvent getMsg(Long messageId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
@@ -241,8 +221,8 @@ public final class MHDFQqBot extends MHDFAbstractBot {
             Pattern pattern = Pattern.compile("\\[CQ:reply,id=(\\d+)]");
             Matcher matcher = pattern.matcher(message);
             if (!matcher.find()) {
-                MHDFBot.getLogger().error("官方机器人模式下消息必须带有回复!");
-                return 0;
+                MHDFBot.getLogger().error(Languages.QQ_BOT_SEND_MESSAGE_WITH_NO_REPLY);
+                return -1;
             }
             messageId = matcher.group(1);
         }
@@ -279,7 +259,7 @@ public final class MHDFQqBot extends MHDFAbstractBot {
             }
         }
 
-        String url = this.getOpenApiUrl() + "/v2/" + targetType + "/" + openId + "/messages";
+        String url = MHDFQqBot.OPEN_API_URL + "/v2/" + targetType + "/" + openId + "/messages";
 
         JSONObject body = new JSONObject();
         body.put("content", allowText ? message : null);
@@ -288,13 +268,10 @@ public final class MHDFQqBot extends MHDFAbstractBot {
         body.put("msg_id", OpenIdCacheManager.getInstance().getData(OpenIdType.MESSAGE, Integer.parseInt(messageId)));
         body.put("msg_seq", 1);
 
-        JSONObject data = JSONObject.parseObject(this.getHttpClient().post(url, body.toString()));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post(url, body.toString()));
         if (data == null) {
-            MHDFBot.getLogger().info("消息({})发送失败,内容: {}",
-                    messageType.name(),
-                    message
-            );
-            return -999;
+            MHDFBot.getLogger().error(Languages.QQ_BOT_SEND_MESSAGE_ERROR, messageType.name(), message);
+            return -1;
         }
 
         return OpenIdCacheManager.getInstance().addData(OpenIdType.MESSAGE, data.getString("id"));
@@ -327,206 +304,206 @@ public final class MHDFQqBot extends MHDFAbstractBot {
 
     @Override
     public void sendLike(Long targetId, int times) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void groupKick(Long groupId, Long userId, boolean rejectAddRequest) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void groupKick(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupMute(Long groupId, Long userId, Long duration) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupMute(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void unsetGroupMute(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupWholeMute(Long groupId, boolean enable) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupWholeMute(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void unsetGroupWholeMute(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupAdmin(Long groupId, Long userId, boolean enable) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupAdmin(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void unsetGroupAdmin(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupCard(Long groupId, Long userId, String card) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void unsetGroupCard(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupName(Long groupId, String name) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void leaveGroup(Long groupId, boolean dismiss) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void leaveGroup(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void dismissGroup(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle, Long duration) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void setGroupSpecialTitle(Long groupId, Long userId, String specialTitle) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void unsetGroupSpecialTitle(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void handleFriendAddRequest(String flag, boolean approve, String remark) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void handleFriendAddRequest(String flag, boolean approve) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void acceptFriendAddRequest(String flag) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void rejectFriendAddRequest(String flag) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve, String reason) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void handleGroupAddRequest(String flag, RequestSubType type, boolean approve) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void acceptGroupAddRequest(String flag, RequestSubType type) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public void rejectGroupAddRequest(String flag, RequestSubType type) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public Stranger getStrangerInfo(Long userId, boolean cache) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public Stranger getStrangerInfo(Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public Member getGroupMemberInfo(Long groupId, Long userId, boolean cache) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public Member getGroupMemberInfo(Long groupId, Long userId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public List<Member> getGroupMemberList(Long groupId, boolean cache) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public List<Member> getGroupMemberList(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public GroupHonors getGroupHonorInfo(Long groupId, HonorType type) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public GroupHonors getGroupHonorInfo(Long groupId) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public String getCookies(String domain) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public RecordInfo getRecord(String file, RecordFormat format) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public RecordInfo getRecord(String file) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override
     public File getImage(String file) {
-        throw new RuntimeException("官方机器人不支持该操作!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 }

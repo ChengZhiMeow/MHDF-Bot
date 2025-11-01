@@ -3,6 +3,7 @@ package cn.chengzhiya.mhdfbot.bot.qqbot.controller;
 import cn.chengzhiya.mhdfbot.Main;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.event.message.GroupMessageEvent;
+import cn.chengzhiya.mhdfbot.lang.Languages;
 import cn.chengzhiya.mhdfbot.thread.MHDFScheduledThread;
 import cn.chengzhiya.mhdfhttpframework.api.enums.RequestTypes;
 import cn.chengzhiya.mhdfhttpframework.server.annotation.BodyData;
@@ -23,18 +24,16 @@ public final class EventController {
     @IgnoreNullParam
     @RequestPath("/default")
     @RequestType(RequestTypes.POST)
-    public static void callEvent(HttpServletResponse response,
-                                 @BodyData("body") JSONObject body,
-                                 @BodyData("t") String event,
-                                 @BodyData("d") JSONObject d
+    public static void callEvent(
+            HttpServletResponse response,
+            @BodyData("body") JSONObject body,
+            @BodyData("t") String event,
+            @BodyData("d") JSONObject d
     ) {
         if (EventController.handleEvent.contains(body)) return;
 
-        if (Main.getConfigManager().getData().getBoolean("logSettings.groupMessage")) {
-            MHDFBot.getLogger().info("收到来自腾讯服务器的事件, 事件: {}, 数据: {}",
-                    event,
-                    body
-            );
+        if (Main.getConfigManager().getData().getBoolean("log_settings.web_hook")) {
+            MHDFBot.getLogger().info(Languages.MESSAGE_LOG_WEBHOOK, event, body);
         }
 
         // 因为部分情况下腾讯会请求多次，所以需要将相同事件忽略

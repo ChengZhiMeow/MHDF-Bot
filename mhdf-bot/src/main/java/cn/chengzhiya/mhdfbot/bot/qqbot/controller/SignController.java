@@ -22,8 +22,11 @@ public final class SignController {
     @Priority(-1)
     @RequestPath("/default")
     @RequestType(RequestTypes.POST)
-    public static boolean postSign(HttpServletRequest request, HttpServletResponse response,
-                                   @BodyData("d") JSONObject d
+    @SuppressWarnings("SameReturnValue")
+    public static boolean postSign(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @BodyData("d") JSONObject d
     ) {
         String eventTs = d.getString("event_ts");
         String plainToken = d.getString("plain_token");

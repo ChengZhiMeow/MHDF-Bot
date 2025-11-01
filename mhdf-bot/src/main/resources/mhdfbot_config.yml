@@ -1,25 +1,25 @@
 # 机器人设置
-botSettings:
+bot_settings:
   # 类型
-  # qqBot
-  # oneBot
-  type: "oneBot"
+  # qqbot
+  # onebot
+  type: "onebot"
   # 官方机器人
-  qqBot:
+  qq_bot:
     # 机器人QQ
     qq: 0
     # 机器人ID
-    appId: ""
+    app_id: ""
     # 机器人令牌
     token: ""
     # 机器人密钥
     secret: ""
     # 接口服务
-    webHook:
+    web_hook:
       # 端口
       port: 8443
       # 默认文件URL格式
-      defaultFileFormat: "http://127.0.0.1:8443/file/get?path={name}"
+      default_file_url_format: "http://127.0.0.1:8443/file/get?path={name}"
       # ssl设置(jks格式)
       ssl:
         # 开关
@@ -32,22 +32,24 @@ botSettings:
         key: ""
 
   # OneBot
-  oneBot:
+  one_bot:
     # WebSocket地址 (末尾必须为/)
-    websocketHost: "ws://127.0.0.1:3001/"
+    websocket_host: "ws://127.0.0.1:3001/"
     # HTTP地址 (末尾必须为/)
-    httpHost: "http://127.0.0.1:3000/"
+    http_host: "http://127.0.0.1:3000/"
     # 鉴权
-    # accessToken: ""
+    # access_token: ""
 
-# WebSocket服务器设置
-webSocketServerSettings:
+# Minecraft-WebSocket服务器设置
+minecraft_websocket_settings:
   # 端口
   port: 5835
 
 # 日志设置
-logSettings:
+log_settings:
   # 群聊消息
-  groupMessage: true
+  group: true
   # 私聊消息
-  privateMessage: true
+  private: true
+  # WebHook服务端消息
+  web_hook: true

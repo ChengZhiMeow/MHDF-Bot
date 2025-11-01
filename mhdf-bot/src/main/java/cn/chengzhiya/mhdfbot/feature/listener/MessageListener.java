@@ -14,7 +14,7 @@ public final class MessageListener implements Listener {
      */
     @EventHandler
     public void onPrivateMessage(PrivateMessageEvent event) {
-        if (!Main.getConfigManager().getData().getBoolean("logSettings.privateMessage")) return;
+        if (!Main.getConfigManager().getData().getBoolean("logSettings.private")) return;
 
         MHDFBot.getLogger().info(
                 Languages.MESSAGE_LOG_PRIVATE,
@@ -29,7 +29,7 @@ public final class MessageListener implements Listener {
      */
     @EventHandler
     public void onGroupMessage(GroupMessageEvent event) {
-        if (!Main.getConfigManager().getData().getBoolean("logSettings.groupMessage")) return;
+        if (!Main.getConfigManager().getData().getBoolean("logSettings.group")) return;
 
         MHDFBot.getLogger().info(
                 Languages.MESSAGE_LOG_GROUP,
