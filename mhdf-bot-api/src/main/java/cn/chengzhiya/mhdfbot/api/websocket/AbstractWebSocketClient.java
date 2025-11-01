@@ -51,8 +51,8 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
 
             this.getContainer().connectToServer(this, clientEndpointConfig, new URI(this.getUrlString()));
         } catch (DeploymentException | IOException | URISyntaxException e) {
-            MHDFBot.getLogger().info("无法正常连接至WebSocket服务端,正在重试!");
-            MHDFBot.getScheduler().runTaskLater(this::connectServer, 5L);
+            MHDFBot.getLogger().info("无法正常连接至WebSocket服务端,5秒后重试!");
+            MHDFBot.getScheduler().runTaskLater(this::connectServer, 5000);
         }
     }
 
