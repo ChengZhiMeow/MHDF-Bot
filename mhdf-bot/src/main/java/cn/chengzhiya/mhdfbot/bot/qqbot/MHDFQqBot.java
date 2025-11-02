@@ -299,7 +299,7 @@ public final class MHDFQqBot extends MHDFAbstractBot {
 
     @Override
     public void deleteMsg(Long messageId) {
-        throw new RuntimeException("开发中!");
+        throw new RuntimeException(Languages.NOT_SUPPORT_API);
     }
 
     @Override

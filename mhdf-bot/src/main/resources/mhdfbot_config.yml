@@ -44,6 +44,8 @@ bot_settings:
 minecraft_websocket_settings:
   # 端口
   port: 5835
+  # 鉴权
+  # access_token: ""
 
 # 日志设置
 log_settings:

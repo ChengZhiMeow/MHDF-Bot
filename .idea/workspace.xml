@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修复重连ws后重复触发事件的问题">
+    <list default="true" id="cfb55dfe-83a9-449c-bfff-9d8a6235514a" name="更改" comment="修复无法发送私聊消息的问题&#10;修复关闭插件功能不生效的问题&#10;修复部分情况不会自动重连ws的问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/plugin/PluginManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-api/src/main/java/cn/chengzhiya/mhdfbot/api/websocket/AbstractWebSocketClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/onebot/MHDFOneBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/lang/Languages.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/lang/Languages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginClassLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginClassLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/plugin/MHDFPluginManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/minecraft/WebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/java/cn/chengzhiya/mhdfbotbukkithook/minecraft/WebSocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bukkithook/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/minecraft/WebSocketClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/java/cn/chengzhiya/mhdfbotbungeehook/minecraft/WebSocketClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot-bungeehook/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/bot/qqbot/MHDFQqBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MHDFMinecraftWebSocketServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/java/cn/chengzhiya/mhdfbot/minecraft/MHDFMinecraftWebSocketServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mhdf-bot/src/main/resources/mhdfbot_config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -293,15 +293,8 @@
       <workItem from="1761751946582" duration="16370000" />
       <workItem from="1761906571653" duration="896000" />
       <workItem from="1761907495213" duration="30505000" />
-      <workItem from="1761997379700" duration="37110000" />
-    </task>
-    <task id="LOCAL-00001" summary="提交V2.0.0框架本体">
-      <option name="closed" value="true" />
-      <created>1733146065795</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1733146065795</updated>
+      <workItem from="1761997379700" duration="37944000" />
+      <workItem from="1762081456518" duration="2654000" />
     </task>
     <task id="LOCAL-00002" summary="提交V2.0.0框架本体">
       <option name="closed" value="true" />
@@ -687,7 +680,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762007930604</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="修复无法发送私聊消息的问题&#10;修复关闭插件功能不生效的问题&#10;修复部分情况不会自动重连ws的问题">
+      <option name="closed" value="true" />
+      <created>1762076950530</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1762076950531</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -706,7 +707,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="修改Bot架构" />
     <MESSAGE value="支持官方机器人" />
     <MESSAGE value="使用 梦东maven仓库" />
     <MESSAGE value="支持QQ机器人自动接管本地资源处理" />
@@ -731,7 +731,8 @@
     <MESSAGE value="修复日志不会打印的问题" />
     <MESSAGE value="修复重连ws后重复触发事件的问题&#10;修复不监听自己发送的消息的问题" />
     <MESSAGE value="修复重连ws后重复触发事件的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复重连ws后重复触发事件的问题" />
+    <MESSAGE value="修复无法发送私聊消息的问题&#10;修复关闭插件功能不生效的问题&#10;修复部分情况不会自动重连ws的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复无法发送私聊消息的问题&#10;修复关闭插件功能不生效的问题&#10;修复部分情况不会自动重连ws的问题" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -747,6 +748,10 @@
         <breakpoint type="java-exception">
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="10" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="com.alibaba.fastjson2.JSONException" package="com.alibaba.fastjson2" />
+          <option name="timeStamp" value="15" />
         </breakpoint>
         <line-breakpoint type="java-line">
           <url>jar://$MAVEN_REPOSITORY$/cn/ChengZhiYa/MHDF-HttpFramework-client/1.0.3/MHDF-HttpFramework-client-1.0.3.jar!/cn/chengzhiya/mhdfhttpframework/client/HttpClient.class</url>

@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("unused")
 public final class MHDFMinecraftWebSocketServer {
     private final int port = Main.getConfigManager().getData().getInt("minecraft_websocket_settings.port");
+    private final String accessToken = Main.getConfigManager().getData().getString("minecraft_websocket_settings.access_token");
     private final MHDFScheduledThread thread = new MHDFScheduledThread("MHDF-Bot Minecraft-Websocket-HeartBeat Thread") {
     };
     private final Set<Session> sessions = new CopyOnWriteArraySet<>();
@@ -78,13 +79,24 @@ public final class MHDFMinecraftWebSocketServer {
 
             session.getBasicRemote().sendText(sendData.toJSONString());
         } catch (IOException e) {
-            this.sessions.remove(session);
+            this.disableSession(session);
             throw new RuntimeException(e);
         }
     }
 
     @OnOpen
     public void onOpen(Session session) {
+        if (this.accessToken != null && !this.accessToken.isEmpty()) {
+            String token = session.getUserProperties().get("Authorization").toString();
+            if (token == null || !token.equals(this.accessToken)) {
+                try {
+                    session.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                return;
+            }
+        }
         this.sessions.add(session);
         MHDFBot.getLogger().info(Languages.MINECRAFT_WEBSOCKET_CONNECT, session.getId());
     }
@@ -98,7 +110,19 @@ public final class MHDFMinecraftWebSocketServer {
     @OnClose
     @OnError
     public void onClose(Session session) {
-        this.sessions.remove(session);
+        this.disableSession(session);
         MHDFBot.getLogger().info(Languages.MINECRAFT_WEBSOCKET_DISCONNECT, session.getId());
+    }
+
+    private void disableSession(Session session) {
+        if (session == null) return;
+
+        for (MessageHandler handler : session.getMessageHandlers()) {
+            try {
+                session.removeMessageHandler(handler);
+            } catch (Throwable ignored) {
+            }
+        }
+        this.sessions.remove(session);
     }
 }

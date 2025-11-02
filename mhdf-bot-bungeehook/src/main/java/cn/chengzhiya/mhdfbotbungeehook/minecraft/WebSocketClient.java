@@ -8,24 +8,48 @@ import jakarta.websocket.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Objects;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @ClientEndpoint
 @SuppressWarnings({"unused", "CallToPrintStackTrace"})
 public final class WebSocketClient {
     private final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+    private final URI host;
+    private final String accessToken;
     public Session session;
+
+    public WebSocketClient() {
+        try {
+            this.host = new URI("ws://" + Main.instance.getConfig().getString("minecraft_websocket_settings.host"));
+            this.accessToken = Main.instance.getConfig().getString("minecraft_websocket_settings.access_token");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * 连接服务器
      */
     public void connectServer() {
         try {
-            this.container.connectToServer(this, new URI(Objects.requireNonNull(Main.instance.getConfig().getString("webSocketSettings.host"))));
-        } catch (DeploymentException | IOException | URISyntaxException e) {
-            Main.instance.getLogger().info("无法正常连接至WebSocket服务端!");
-            Main.instance.getProxy().getScheduler().schedule(Main.instance, this::connectServer, 5L, TimeUnit.SECONDS);
+            ClientEndpointConfig clientEndpointConfig = ClientEndpointConfig.Builder.create()
+                    .configurator(new ClientEndpointConfig.Configurator() {
+                        @Override
+                        public void beforeRequest(Map<String, List<String>> headers) {
+                            String token = WebSocketClient.this.accessToken;
+                            if (token != null && !token.isEmpty())
+                                headers.put("Authorization", List.of(token));
+                        }
+                    })
+                    .build();
+
+            this.container.connectToServer(this, this.host);
+        } catch (DeploymentException | IOException e) {
+            Main.instance.getLogger().info("无法正常连接至Minecraft-WebSocket服务端");
+            e.printStackTrace();
+            Main.instance.getProxy().getScheduler().schedule(Main.instance, this::connectServer, 5, TimeUnit.SECONDS);
         }
     }
 
