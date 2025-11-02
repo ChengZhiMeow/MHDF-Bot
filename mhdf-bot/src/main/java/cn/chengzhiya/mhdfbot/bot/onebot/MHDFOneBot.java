@@ -179,7 +179,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
 
     @Override
     public long sendPrivateMsg(Long targetId, String message, boolean autoEscape) {
-        return this.sendMsg(MessageType.GROUP, targetId, message, autoEscape);
+        return this.sendMsg(MessageType.PRIVATE, targetId, message, autoEscape);
     }
 
     @Override

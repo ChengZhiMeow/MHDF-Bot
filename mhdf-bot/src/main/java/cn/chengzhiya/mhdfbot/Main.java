@@ -92,6 +92,9 @@ public class Main {
 
         MHDFBot.getLogger().info(Languages.START_DONE, System.currentTimeMillis() - startTime);
 
+        // 关闭程序
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> MHDFBot.getPluginManager().unloadPlugins()));
+
         // 控制台
         try {
             LineReader lineReader = LineReaderBuilder.builder()

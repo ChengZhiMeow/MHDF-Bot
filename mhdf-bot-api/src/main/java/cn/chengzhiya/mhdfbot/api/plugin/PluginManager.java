@@ -3,6 +3,7 @@ package cn.chengzhiya.mhdfbot.api.plugin;
 import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 public interface PluginManager {
@@ -43,12 +44,12 @@ public interface PluginManager {
      *
      * @param pluginName 插件名称
      */
-    void unloadPlugin(String pluginName);
+    void unloadPlugin(String pluginName) throws IOException;
 
     /**
      * 重载指定名称的插件
      *
      * @param pluginName 插件名称
      */
-    void reloadPlugin(String pluginName);
+    void reloadPlugin(String pluginName) throws IOException;
 }

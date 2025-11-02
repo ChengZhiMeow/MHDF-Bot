@@ -5,7 +5,8 @@ public final class Languages {
     public static final String PLUGIN_LOAD_ERROR_INVALID = "{}不是一个有效的插件!";
     public static final String PLUGIN_LOADING = "插件{}({})加载中";
     public static final String PLUGIN_LOAD_ERROR_THROW_EXCEPTION = "在加载插件 {} 的时候遇到了问题:";
-    public static final String PLUGIN_DISABLE_ERROR_THROW_EXCEPTION = "在卸载插件 {} 的时候遇到了问题:";
+    public static final String PLUGIN_UNLOADING = "插件{}({})卸载中";
+    public static final String PLUGIN_UNLOADING_ERROR_THROW_EXCEPTION = "在卸载插件 {} 的时候遇到了问题:";
     // 错误
     public static final String FILE_CORRUPTED = "框架文件损坏,请重新下载后重试!";
     public static final String NOT_FOUND_COMMAND = "找不到命令!";

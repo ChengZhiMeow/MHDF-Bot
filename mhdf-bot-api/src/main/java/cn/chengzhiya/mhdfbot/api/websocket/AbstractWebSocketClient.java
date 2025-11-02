@@ -88,6 +88,7 @@ public abstract class AbstractWebSocketClient extends Endpoint implements WebSoc
         );
 
         this.close(closeReason);
+        if (this.closeReConnect) this.connectServer();
     }
 
     @OnError

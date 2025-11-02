@@ -13,11 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -25,7 +24,7 @@ import java.util.jar.JarFile;
 @SuppressWarnings({"CallToPrintStackTrace", "unused"})
 public final class MHDFPluginManager implements PluginManager {
     private final File pluginFolder = new File("./plugins");
-    private final HashMap<String, PluginInfo> pluginHashMap = new HashMap<>();
+    private final Map<String, PluginInfo> pluginHashMap = new ConcurrentHashMap<>();
 
     @Override
     public PluginInfo getPlugin(String pluginName) {
@@ -106,36 +105,42 @@ public final class MHDFPluginManager implements PluginManager {
 
     @Override
     public void unloadPlugins() {
-        new ArrayList<>(this.pluginHashMap.keySet()).forEach(this::unloadPlugin);
+        this.pluginHashMap.keySet().forEach(k -> {
+            try {
+                this.unloadPlugin(k);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
-    public void unloadPlugin(String pluginName) {
+    public void unloadPlugin(String pluginName) throws IOException {
         PluginInfo pluginInfo = this.getPlugin(pluginName);
         if (pluginInfo == null) return;
 
         // 卸载插件
+        MHDFBot.getLogger().info(Languages.PLUGIN_UNLOADING, pluginInfo.name(), pluginInfo.version());
         JavaPlugin plugin = pluginInfo.plugin();
-        plugin.onDisable();
+        ClassLoader pluginClassLoader = plugin.getClass().getClassLoader();
 
-        // 卸载插件的监听器和命令
-        MHDFBot.getListenerManager().unregisterAllListener(pluginInfo);
-        MHDFBot.getCommandManager().unregisterAllCommand(pluginInfo);
+        ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            plugin.onDisable();
 
-        // 关闭类加载器
-        this.pluginHashMap.remove(pluginName);
-        ClassLoader classLoader = plugin.getClass().getClassLoader();
-        if (classLoader instanceof URLClassLoader) {
-            try {
-                ((URLClassLoader) classLoader).close();
-            } catch (IOException e) {
-                MHDFBot.getLogger().error(Languages.PLUGIN_DISABLE_ERROR_THROW_EXCEPTION, pluginName, e);
-            }
+            // 卸载插件的监听器和命令
+            MHDFBot.getListenerManager().unregisterAllListener(pluginInfo);
+            MHDFBot.getCommandManager().unregisterAllCommand(pluginInfo);
+
+            // 删除插件
+            this.pluginHashMap.remove(pluginName);
+        } catch (Throwable e) {
+            MHDFBot.getLogger().error(Languages.PLUGIN_UNLOADING_ERROR_THROW_EXCEPTION, pluginName, e);
         }
     }
 
     @Override
-    public void reloadPlugin(String pluginName) {
+    public void reloadPlugin(String pluginName) throws IOException {
         PluginInfo pluginInfo = this.getPlugin(pluginName);
         if (pluginInfo == null) return;
 
