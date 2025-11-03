@@ -20,17 +20,11 @@ public final class MHDFListenerManager implements ListenerManager {
     @Override
     public void registerListener(PluginInfo pluginInfo, Listener listener) {
         for (Method method : listener.getClass().getMethods()) {
-            if (!method.isAnnotationPresent(EventHandler.class)) {
-                continue;
-            }
-            if (method.getParameterCount() != 1) {
-                continue;
-            }
+            if (!method.isAnnotationPresent(EventHandler.class)) continue;
+            if (method.getParameterCount() != 1) continue;
 
             Class<?> param = method.getParameterTypes()[0];
-            if (!Event.class.isAssignableFrom(param)) {
-                continue;
-            }
+            if (!Event.class.isAssignableFrom(param)) continue;
 
             // noinspection unchecked
             Class<? extends Event> event = (Class<? extends Event>) param;
@@ -56,9 +50,7 @@ public final class MHDFListenerManager implements ListenerManager {
     @Override
     public void callEvent(Event event) {
         List<RegisterListener> list = this.map.get(event.getClass());
-        if (list == null || list.isEmpty()) {
-            return;
-        }
+        if (list == null || list.isEmpty()) return;
 
         for (RegisterListener registerListener : list) {
             try {

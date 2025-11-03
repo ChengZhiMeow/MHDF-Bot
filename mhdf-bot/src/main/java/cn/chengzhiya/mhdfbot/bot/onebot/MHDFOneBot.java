@@ -72,7 +72,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotStatus getStatus() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_status"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_status", "{}"));
 
         return BotStatus.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -80,7 +80,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotVersionInfo getVersionInfo() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_version_info"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_version_info", "{}"));
 
         return BotVersionInfo.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -88,7 +88,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public BotLoginInfo getLoginInfo() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_login_info"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_login_info", "{}"));
 
         return BotLoginInfo.fromJson(Objects.requireNonNull(data).getJSONObject("data"));
     }
@@ -96,7 +96,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public Boolean ifCanSendRecord() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_record"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_record", "{}"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
@@ -104,7 +104,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public Boolean ifCanSendImage() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_image"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("if_can_send_image", "{}"));
 
         return Objects.requireNonNull(data).getJSONObject("data").getBoolean("yes");
     }
@@ -112,7 +112,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public long getCsrfToken() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_csrf_token"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_csrf_token", "{}"));
 
         return Objects.requireNonNull(data).getLong("token");
     }
@@ -120,7 +120,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public List<Friend> getFriendList() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_friend_list"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_friend_list", "{}"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Friend::fromJson)
@@ -130,7 +130,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
     @Override
     @SneakyThrows
     public List<Group> getGroupList() {
-        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_list"));
+        JSONObject data = JSONObject.parseObject(this.httpClient.post("get_group_list", "{}"));
 
         return Objects.requireNonNull(data).getList("data", JSONObject.class).stream()
                 .map(Group::fromJson)

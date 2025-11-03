@@ -7,6 +7,7 @@ import cn.chengzhiya.mhdfbot.api.manager.OpenIdCacheManager;
 import cn.chengzhiya.mhdfbot.api.message.type.MessageSubType;
 import cn.chengzhiya.mhdfbot.api.message.type.MessageType;
 import cn.chengzhiya.mhdfbot.api.user.data.Sender;
+import cn.chengzhiya.mhdfbot.api.util.MessageEscapeUtil;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 
@@ -29,14 +30,14 @@ public abstract class AbstractMessageEvent extends AbstractEvent {
                 if (content.startsWith(" ")) content = content.substring(1);
                 if (content.endsWith(" ")) content = content.substring(0, content.length() - 1);
 
-                this.message = content;
+                this.message = MessageEscapeUtil.unescape(content);
                 this.messageId = OpenIdCacheManager.getInstance().addData(OpenIdType.MESSAGE, data.getString("id"));
                 this.sender = Sender.fromJson(data.getJSONObject("author"));
             }
             case ONEBOT -> {
                 this.messageType = MessageType.get(data.getString("message_type"));
                 this.subType = MessageSubType.get(data.getString("sub_type"));
-                this.message = data.getString("raw_message");
+                this.message = MessageEscapeUtil.unescape(data.getString("raw_message"));
                 this.messageId = data.getIntValue("message_id");
                 this.sender = Sender.fromJson(data.getJSONObject("sender"));
             }
