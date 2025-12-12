@@ -147,8 +147,8 @@ public final class MHDFOneBot extends MHDFAbstractBot {
                 .getJSONObject("data");
 
         return switch (data.getString("message_type")) {
-            case "group" -> new GroupMessageEvent(body);
-            case "private" -> new PrivateMessageEvent(body);
+            case "group" -> new GroupMessageEvent(data);
+            case "private" -> new PrivateMessageEvent(data);
             default -> null;
         };
     }
