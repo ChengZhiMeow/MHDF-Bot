@@ -10,15 +10,15 @@ public final class PluginInfo {
     private final String name;
     private final String version;
     private final String main;
-    private final List<String> authoendrs;
+    private final List<String> authors;
     private File jarFile;
     private PluginStatus pluginStatus;
 
-    public PluginInfo(String name, String version, String main, List<String> authoendrs) {
+    public PluginInfo(String name, String version, String main, List<String> authors) {
         this.name = name;
         this.version = version;
         this.main = main;
-        this.authoendrs = authoendrs;
+        this.authors = authors;
     }
 
     public String name() {
@@ -33,8 +33,8 @@ public final class PluginInfo {
         return this.main;
     }
 
-    public List<String> authoendrs() {
-        return this.authoendrs;
+    public List<String> authors() {
+        return this.authors;
     }
 
     public File jarFile() {
@@ -60,16 +60,16 @@ public final class PluginInfo {
         return pluginInfo.name.equals(this.name) &&
                 pluginInfo.version.equals(this.version) &&
                 pluginInfo.main.equals(this.main) &&
-                pluginInfo.authoendrs.equals(this.authoendrs);
+                pluginInfo.authors.equals(this.authors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name, this.version, this.main, this.authoendrs);
+        return Objects.hash(this.name, this.version, this.main, this.authors);
     }
 
     @Override
     public String toString() {
-        return "PluginInfo[name=" + this.name + ", version=" + this.version + ", main=" + this.main + ", authoendrs=" + this.authoendrs + "]";
+        return "PluginInfo[name=" + this.name + ", version=" + this.version + ", main=" + this.main + ", authoendrs=" + this.authors + "]";
     }
 }

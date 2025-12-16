@@ -86,7 +86,7 @@ public class Main {
         // 启动程序
         MHDFBot.getLogger().info("===========================================");
         MHDFBot.getLogger().info("MHDF-Bot | 版本: {}", Main.frameworkInfo.version());
-        MHDFBot.getLogger().info("MHDF-Bot | 作者: {}", Main.frameworkInfo.authoendrs());
+        MHDFBot.getLogger().info("MHDF-Bot | 作者: {}", Main.frameworkInfo.authors());
         MHDFBot.getLogger().info("");
         MHDFBot.getLogger().info("Ciallo～ (∠·ω< )⌒★");
         MHDFBot.getLogger().info("\"在意的话，会让眼前的幸福逃走的，傻子才会在意。\"");
