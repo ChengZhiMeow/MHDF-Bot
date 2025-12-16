@@ -121,7 +121,7 @@ public final class MHDFPluginManager implements PluginManager {
 
             Field field = plugin.getClass().getSuperclass().getDeclaredField("logger");
             field.setAccessible(true);
-            field.set(plugin, LoggerManager.getInstance().getLogger(pluginInfo.name()));移除调试日志
+            field.set(plugin, LoggerManager.getInstance().getLogger(pluginInfo.name()));
 
             plugin.onEnable();
             pluginInfo.pluginStatus(PluginStatus.ENABLE_DONE);
