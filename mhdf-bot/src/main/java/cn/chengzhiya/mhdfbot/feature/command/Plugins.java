@@ -2,6 +2,7 @@ package cn.chengzhiya.mhdfbot.feature.command;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.command.CommandExecutor;
+import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
 import cn.chengzhiya.mhdfbot.api.plugin.PluginStatus;
 import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public final class Plugins implements CommandExecutor {
     @Override
     public void onCommand(String command, String[] args) {
-        Collection<PluginInfo> pluginInfoList = MHDFBot.getPluginManager().getPluginList();
+        Collection<JavaPlugin> pluginInfoList = MHDFBot.getPluginManager().getPluginList();
 
         // 输出已加载插件实例列表
         this.printPluginList(pluginInfoList, "已加载插件", PluginStatus.LOAD_DONE);
@@ -27,8 +28,9 @@ public final class Plugins implements CommandExecutor {
      * @param prefix         前缀
      * @param pluginStatus   插件状态
      */
-    private void printPluginList(Collection<PluginInfo> pluginInfoList, String prefix, PluginStatus pluginStatus) {
+    private void printPluginList(Collection<JavaPlugin> pluginInfoList, String prefix, PluginStatus pluginStatus) {
         List<PluginInfo> filterPluginInfoList = pluginInfoList.stream()
+                .map(JavaPlugin::getPluginInfo)
                 .filter(pluginInfo -> pluginInfo.pluginStatus() == pluginStatus)
                 .toList();
 

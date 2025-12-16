@@ -1,6 +1,6 @@
 package cn.chengzhiya.mhdfbot.plugin;
 
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
+import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -21,8 +21,8 @@ public final class MHDFPluginClassLoader extends URLClassLoader {
         try {
             return this.findClassLocal(name);
         } catch (ClassNotFoundException e) {
-            for (PluginInfo pluginInfo : this.pluginManager.getPluginList()) {
-                ClassLoader classLoader = pluginInfo.plugin().getClass().getClassLoader();
+            for (JavaPlugin plugin : this.pluginManager.getPluginList()) {
+                ClassLoader classLoader = plugin.getClass().getClassLoader();
                 if (classLoader == this) continue;
                 if (!(classLoader instanceof MHDFPluginClassLoader mhdfPluginClassLoader)) continue;
 

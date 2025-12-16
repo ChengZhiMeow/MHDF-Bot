@@ -19,15 +19,7 @@ import java.net.URL;
 public abstract class JavaPlugin implements Plugin {
     private PluginInfo pluginInfo;
     private YamlConfiguration config;
-
-    /**
-     * 获取日志实例
-     *
-     * @return 日志实例
-     */
-    public Logger getLogger() {
-        return MHDFBot.getLogger(this.pluginInfo.name());
-    }
+    private Logger logger;
 
     /**
      * 注册命令实例
@@ -80,7 +72,7 @@ public abstract class JavaPlugin implements Plugin {
             return;
         }
 
-        ClassLoader classLoader = this.getPluginInfo().plugin().getClass().getClassLoader();
+        ClassLoader classLoader = this.getClass().getClassLoader();
         URL url = classLoader.getResource(resourcePath);
         if (url == null) throw new RuntimeException("找不到资源: " + resourcePath);
 

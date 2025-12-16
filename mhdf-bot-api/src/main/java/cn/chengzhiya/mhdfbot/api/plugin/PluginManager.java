@@ -1,7 +1,5 @@
 package cn.chengzhiya.mhdfbot.api.plugin;
 
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -13,14 +11,14 @@ public interface PluginManager {
      * @param pluginName 插件名称
      * @return 插件实例
      */
-    PluginInfo getPlugin(String pluginName);
+    JavaPlugin getPlugin(String pluginName);
 
     /**
      * 获取插件实例列表
      *
      * @return 插件实例列表
      */
-    Collection<PluginInfo> getPluginList();
+    Collection<JavaPlugin> getPluginList();
 
     /**
      * 加载插件目录下所有插件
@@ -33,6 +31,18 @@ public interface PluginManager {
      * @param pluginPath 插件文件路径
      */
     void loadPlugin(File pluginPath);
+
+    /**
+     * 启用插件目录下所有插件
+     */
+    void enablePlugins();
+
+    /**
+     * 启用指定名称的插件
+     *
+     * @param pluginName 插件名称
+     */
+    void enablePlugin(String pluginName);
 
     /**
      * 卸载所有插件

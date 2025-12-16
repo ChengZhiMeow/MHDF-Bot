@@ -5,6 +5,8 @@ import cn.chengzhimeow.ccyaml.configuration.ConfigurationSection;
 import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.bot.type.BotType;
+import cn.chengzhiya.mhdfbot.api.log.LoggerManager;
+import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
 import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 import cn.chengzhiya.mhdfbot.bot.onebot.MHDFOneBot;
@@ -14,6 +16,7 @@ import cn.chengzhiya.mhdfbot.feature.command.Help;
 import cn.chengzhiya.mhdfbot.feature.command.Plugins;
 import cn.chengzhiya.mhdfbot.feature.listener.MessageListener;
 import cn.chengzhiya.mhdfbot.lang.Languages;
+import cn.chengzhiya.mhdfbot.log.MHDFLoggerManager;
 import cn.chengzhiya.mhdfbot.manager.MHDFConfigManager;
 import cn.chengzhiya.mhdfbot.minecraft.MHDFMinecraftWebSocketServer;
 import cn.chengzhiya.mhdfbot.thread.MHDFBotServiceThread;
@@ -26,6 +29,7 @@ import org.jline.reader.UserInterruptException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
@@ -66,6 +70,19 @@ public class Main {
         );
         Main.configManager = new MHDFConfigManager();
 
+        // 初始化基础日志控制器
+        try {
+            MHDFLoggerManager loggerManager = new MHDFLoggerManager();
+            loggerManager.registerLogger("MHDF-Bot");
+            loggerManager.initLogger();
+
+            Field field = LoggerManager.class.getDeclaredField("instance");
+            field.setAccessible(true);
+            field.set(null, loggerManager);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
         // 启动程序
         MHDFBot.getLogger().info("===========================================");
         MHDFBot.getLogger().info("MHDF-Bot | 版本: {}", Main.frameworkInfo.version());
@@ -83,7 +100,27 @@ public class Main {
         Main.registerCommand();
         Main.registerListener();
 
+        // 初始化所有插件
         MHDFBot.getPluginManager().loadPlugins();
+
+        // 初始化完整日志控制器
+        try {
+            MHDFLoggerManager loggerManager = new MHDFLoggerManager();
+            loggerManager.registerLogger("MHDF-Bot");
+            for (JavaPlugin plugin : MHDFBot.getPluginManager().getPluginList()) {
+                loggerManager.registerLogger(plugin.getPluginInfo().name());
+            }
+            loggerManager.initLogger();
+
+            Field field = LoggerManager.class.getDeclaredField("instance");
+            field.setAccessible(true);
+            field.set(null, loggerManager);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        // 启用所有插件
+        MHDFBot.getPluginManager().enablePlugins();
 
         Main.minecraftWebSocketServer = new MHDFMinecraftWebSocketServer();
         MHDFMinecraftWsServerThread.getInstance().execute(() -> Main.getMinecraftWebSocketServer().startServer());

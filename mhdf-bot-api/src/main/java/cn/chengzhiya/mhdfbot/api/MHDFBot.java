@@ -10,6 +10,7 @@ import cn.chengzhiya.mhdfbot.api.event.message.AbstractMessageEvent;
 import cn.chengzhiya.mhdfbot.api.group.data.Group;
 import cn.chengzhiya.mhdfbot.api.group.data.GroupHonors;
 import cn.chengzhiya.mhdfbot.api.listener.ListenerManager;
+import cn.chengzhiya.mhdfbot.api.log.LoggerManager;
 import cn.chengzhiya.mhdfbot.api.message.data.RecordInfo;
 import cn.chengzhiya.mhdfbot.api.message.type.MessageType;
 import cn.chengzhiya.mhdfbot.api.message.type.RecordFormat;
@@ -22,15 +23,7 @@ import cn.chengzhiya.mhdfbot.api.user.data.Member;
 import cn.chengzhiya.mhdfbot.api.user.data.Stranger;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.appender.ConsoleAppender;
-import org.apache.logging.log4j.core.config.Configurator;
-import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder;
-import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFactory;
-import org.apache.logging.log4j.core.config.builder.api.RootLoggerComponentBuilder;
-import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
 import java.io.File;
 import java.util.List;
@@ -38,7 +31,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public final class MHDFBot {
     @Getter
-    private static final Logger logger = MHDFBot.getLogger("MHDF-Bot");
+    private static final Logger logger = MHDFBot.getLoggerManager().getLogger("MHDF-Bot");
     @Getter
     @Setter
     private static BotType botType;
@@ -46,29 +39,8 @@ public final class MHDFBot {
     @Setter
     private static Bot bot;
 
-    /**
-     * 获取日志实例
-     *
-     * @param prefix 日志前缀
-     * @return 日志实例
-     */
-    public static Logger getLogger(String prefix) {
-        ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder()
-                .setConfigurationName(prefix);
-
-        AppenderComponentBuilder appender = builder.newAppender(prefix, "Console")
-                .addAttribute("target", ConsoleAppender.Target.SYSTEM_OUT)
-                .add(builder.newLayout("PatternLayout")
-                        .addAttribute("pattern", "[%d{HH:mm:ss} %p] [" + prefix + "] %msg%n")
-                );
-
-        RootLoggerComponentBuilder rootLogger = builder.newRootLogger(org.apache.logging.log4j.Level.DEBUG)
-                .add(builder.newAppenderRef(prefix));
-
-        builder.add(appender).add(rootLogger);
-        Configurator.initialize(builder.build());
-
-        return LogManager.getLogger(prefix);
+    public static LoggerManager getLoggerManager() {
+        return LoggerManager.getInstance();
     }
 
     public static PluginManager getPluginManager() {

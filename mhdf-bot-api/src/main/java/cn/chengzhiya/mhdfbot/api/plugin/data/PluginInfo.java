@@ -1,6 +1,5 @@
 package cn.chengzhiya.mhdfbot.api.plugin.data;
 
-import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
 import cn.chengzhiya.mhdfbot.api.plugin.PluginStatus;
 
 import java.io.File;
@@ -13,7 +12,6 @@ public final class PluginInfo {
     private final String main;
     private final List<String> authoendrs;
     private File jarFile;
-    private JavaPlugin plugin;
     private PluginStatus pluginStatus;
 
     public PluginInfo(String name, String version, String main, List<String> authoendrs) {
@@ -43,20 +41,12 @@ public final class PluginInfo {
         return this.jarFile;
     }
 
-    public JavaPlugin plugin() {
-        return this.plugin;
-    }
-
     public PluginStatus pluginStatus() {
         return this.pluginStatus;
     }
 
     public void jarFile(File jarFile) {
         this.jarFile = jarFile;
-    }
-
-    public void plugin(JavaPlugin plugin) {
-        this.plugin = plugin;
     }
 
     public void pluginStatus(PluginStatus pluginStatus) {

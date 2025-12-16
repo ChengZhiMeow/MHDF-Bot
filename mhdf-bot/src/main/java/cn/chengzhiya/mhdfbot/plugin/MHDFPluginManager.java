@@ -2,6 +2,7 @@ package cn.chengzhiya.mhdfbot.plugin;
 
 import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
+import cn.chengzhiya.mhdfbot.api.log.LoggerManager;
 import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
 import cn.chengzhiya.mhdfbot.api.plugin.PluginManager;
 import cn.chengzhiya.mhdfbot.api.plugin.PluginStatus;
@@ -24,15 +25,15 @@ import java.util.jar.JarFile;
 @SuppressWarnings({"CallToPrintStackTrace", "unused"})
 public final class MHDFPluginManager implements PluginManager {
     private final File pluginFolder = new File("./plugins");
-    private final Map<String, PluginInfo> pluginHashMap = new ConcurrentHashMap<>();
+    private final Map<String, JavaPlugin> pluginHashMap = new ConcurrentHashMap<>();
 
     @Override
-    public PluginInfo getPlugin(String pluginName) {
+    public JavaPlugin getPlugin(String pluginName) {
         return this.pluginHashMap.get(pluginName);
     }
 
     @Override
-    public Collection<PluginInfo> getPluginList() {
+    public Collection<JavaPlugin> getPluginList() {
         return this.pluginHashMap.values();
     }
 
@@ -78,17 +79,16 @@ public final class MHDFPluginManager implements PluginManager {
                 Class<?> clazz = classLoader.loadClass(pluginInfo.main());
 
                 // 初始化插件主类
-                JavaPlugin javaPlugin = (JavaPlugin) clazz.getDeclaredConstructor().newInstance();
-                pluginInfo.plugin(javaPlugin);
+                JavaPlugin plugin = (JavaPlugin) clazz.getDeclaredConstructor().newInstance();
                 pluginInfo.jarFile(pluginFile);
 
-                Field field = javaPlugin.getClass().getSuperclass().getDeclaredField("pluginInfo");
+                // 写入插件信息数据
+                Field field = plugin.getClass().getSuperclass().getDeclaredField("pluginInfo");
                 field.setAccessible(true);
-                field.set(javaPlugin, pluginInfo);
+                field.set(plugin, pluginInfo);
 
-                javaPlugin.onEnable();
                 pluginInfo.pluginStatus(PluginStatus.LOAD_DONE);
-                this.getPluginHashMap().put(pluginInfo.name(), pluginInfo);
+                this.getPluginHashMap().put(pluginInfo.name(), plugin);
             } catch (Throwable e) {
                 pluginInfo.pluginStatus(PluginStatus.LOAD_ERROR);
                 MHDFBot.getLogger().error(Languages.PLUGIN_LOAD_ERROR_THROW_EXCEPTION, pluginInfo.name());
@@ -99,6 +99,37 @@ public final class MHDFPluginManager implements PluginManager {
         } catch (Throwable e) {
             // noinspection LoggingSimilarMessage
             MHDFBot.getLogger().error(Languages.PLUGIN_LOAD_ERROR_THROW_EXCEPTION, pluginFile.getName());
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void enablePlugins() {
+        for (String name : this.pluginHashMap.keySet()) {
+            this.enablePlugin(name);
+        }
+    }
+
+    @Override
+    public void enablePlugin(String pluginName) {
+        JavaPlugin plugin = this.getPlugin(pluginName);
+        PluginInfo pluginInfo = plugin.getPluginInfo();
+        if (pluginInfo.pluginStatus() != PluginStatus.LOAD_DONE) return;
+
+        try {
+            MHDFBot.getLogger().error(Languages.PLUGIN_ENABLING, pluginInfo.name(), pluginInfo.version());
+
+            Field field = plugin.getClass().getSuperclass().getDeclaredField("logger");
+            field.setAccessible(true);
+            field.set(plugin, LoggerManager.getInstance().getLogger(pluginInfo.name()));
+
+            plugin.getLogger().info("ciallo");
+
+            plugin.onEnable();
+            pluginInfo.pluginStatus(PluginStatus.ENABLE_DONE);
+        } catch (Exception e) {
+            pluginInfo.pluginStatus(PluginStatus.ENABLE_ERROR);
+            MHDFBot.getLogger().error(Languages.PLUGIN_ENABLE_ERROR_THROW_EXCEPTION, pluginInfo.name());
             e.printStackTrace();
         }
     }
@@ -116,12 +147,11 @@ public final class MHDFPluginManager implements PluginManager {
 
     @Override
     public void unloadPlugin(String pluginName) throws IOException {
-        PluginInfo pluginInfo = this.getPlugin(pluginName);
-        if (pluginInfo == null) return;
+        JavaPlugin plugin = this.getPlugin(pluginName);
+        PluginInfo pluginInfo = plugin.getPluginInfo();
 
         // 卸载插件
         MHDFBot.getLogger().info(Languages.PLUGIN_UNLOADING, pluginInfo.name(), pluginInfo.version());
-        JavaPlugin plugin = pluginInfo.plugin();
         ClassLoader pluginClassLoader = plugin.getClass().getClassLoader();
 
         ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
@@ -141,11 +171,11 @@ public final class MHDFPluginManager implements PluginManager {
 
     @Override
     public void reloadPlugin(String pluginName) throws IOException {
-        PluginInfo pluginInfo = this.getPlugin(pluginName);
-        if (pluginInfo == null) return;
+        JavaPlugin plugin = this.getPlugin(pluginName);
+        PluginInfo pluginInfo = plugin.getPluginInfo();
 
-        File pluginFile = pluginInfo.jarFile();
         this.unloadPlugin(pluginName);
-        this.loadPlugin(pluginFile);
+        this.loadPlugin(pluginInfo.jarFile());
+        this.enablePlugin(pluginInfo.name());
     }
 }
