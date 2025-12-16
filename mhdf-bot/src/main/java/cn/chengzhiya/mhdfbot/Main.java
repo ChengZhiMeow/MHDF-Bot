@@ -7,8 +7,8 @@ import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.bot.type.BotType;
 import cn.chengzhiya.mhdfbot.api.log.LoggerManager;
 import cn.chengzhiya.mhdfbot.api.plugin.JavaPlugin;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 import cn.chengzhiya.mhdfbot.bot.onebot.MHDFOneBot;
 import cn.chengzhiya.mhdfbot.bot.qqbot.MHDFQqBot;
 import cn.chengzhiya.mhdfbot.console.MHDFCommandCompleter;
@@ -47,19 +47,16 @@ public class Main {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
 
-        // 读取机器人信息
-        URL url = Main.class.getClassLoader().getResource("mhdfbot_info.yml");
-        if (url == null) throw new RuntimeException(Languages.FILE_CORRUPTED);
-        try (InputStream in = url.openStream()) {
-            YamlConfiguration frameworkInfoConfig = YamlConfiguration.loadConfiguration(in);
-            Main.frameworkInfo = new PluginInfo(
-                    frameworkInfoConfig.getString("name"),
-                    frameworkInfoConfig.getString("version"),
-                    Main.class.getName(),
-                    frameworkInfoConfig.getStringList("authoendrs")
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        // 加载框架信息
+        {
+            URL url = Main.class.getClassLoader().getResource("mhdfbot_info.yml");
+            if (url == null) throw new RuntimeException(Languages.FILE_CORRUPTED);
+            try (InputStream in = url.openStream()) {
+                YamlConfiguration frameworkInfoConfig = YamlConfiguration.loadConfiguration(in);
+                Main.frameworkInfo = PluginInfo.by(null, frameworkInfoConfig);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // 读取配置
@@ -71,16 +68,18 @@ public class Main {
         Main.configManager = new MHDFConfigManager();
 
         // 初始化基础日志控制器
-        try {
-            MHDFLoggerManager loggerManager = new MHDFLoggerManager();
-            loggerManager.registerLogger("MHDF-Bot");
-            loggerManager.initLogger();
+        {
+            try {
+                MHDFLoggerManager loggerManager = new MHDFLoggerManager();
+                loggerManager.registerLogger("MHDF-Bot");
+                loggerManager.initLogger();
 
-            Field field = LoggerManager.class.getDeclaredField("instance");
-            field.setAccessible(true);
-            field.set(null, loggerManager);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+                Field field = LoggerManager.class.getDeclaredField("instance");
+                field.setAccessible(true);
+                field.set(null, loggerManager);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // 启动程序
@@ -92,11 +91,14 @@ public class Main {
         MHDFBot.getLogger().info("\"在意的话，会让眼前的幸福逃走的，傻子才会在意。\"");
         MHDFBot.getLogger().info("===========================================");
 
+        // 加载框架配置
         Main.getConfigManager().saveDefaultFile();
         Main.getConfigManager().reload();
 
+        // 初始化机器人实现
         Main.initBot();
 
+        // 注册框架命令与监听器
         Main.registerCommand();
         Main.registerListener();
 
@@ -104,29 +106,34 @@ public class Main {
         MHDFBot.getPluginManager().loadPlugins();
 
         // 初始化完整日志控制器
-        try {
-            MHDFLoggerManager loggerManager = new MHDFLoggerManager();
-            loggerManager.registerLogger("MHDF-Bot");
-            for (JavaPlugin plugin : MHDFBot.getPluginManager().getPluginList()) {
-                loggerManager.registerLogger(plugin.getPluginInfo().name());
-            }
-            loggerManager.initLogger();
+        {
+            try {
+                MHDFLoggerManager loggerManager = new MHDFLoggerManager();
+                loggerManager.registerLogger("MHDF-Bot");
+                for (JavaPlugin plugin : MHDFBot.getPluginManager().getPluginList()) {
+                    loggerManager.registerLogger(plugin.getPluginInfo().name());
+                }
+                loggerManager.initLogger();
 
-            Field field = LoggerManager.class.getDeclaredField("instance");
-            field.setAccessible(true);
-            field.set(null, loggerManager);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+                Field field = LoggerManager.class.getDeclaredField("instance");
+                field.setAccessible(true);
+                field.set(null, loggerManager);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // 启用所有插件
         MHDFBot.getPluginManager().enablePlugins();
 
+        // 启用MCHook WebScoket服务器
         Main.minecraftWebSocketServer = new MHDFMinecraftWebSocketServer();
         MHDFMinecraftWsServerThread.getInstance().execute(() -> Main.getMinecraftWebSocketServer().startServer());
 
+        // 初始化机器人
         MHDFBotServiceThread.getInstance().execute(MHDFBot::init);
 
+        // 启动完成
         MHDFBot.getLogger().info(Languages.START_DONE, System.currentTimeMillis() - startTime);
 
         // 关闭程序

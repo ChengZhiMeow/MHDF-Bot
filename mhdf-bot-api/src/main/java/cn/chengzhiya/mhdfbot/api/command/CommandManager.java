@@ -1,7 +1,7 @@
 package cn.chengzhiya.mhdfbot.api.command;
 
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 
 import java.util.Collection;
 import java.util.List;

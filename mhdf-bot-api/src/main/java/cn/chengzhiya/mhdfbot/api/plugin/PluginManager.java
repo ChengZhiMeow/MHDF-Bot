@@ -1,6 +1,5 @@
 package cn.chengzhiya.mhdfbot.api.plugin;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
@@ -26,11 +25,11 @@ public interface PluginManager {
     void loadPlugins();
 
     /**
-     * 加载指定插件文件
+     * 加载指定插件
      *
-     * @param pluginPath 插件文件路径
+     * @param pluginInfo 插件信息
      */
-    void loadPlugin(File pluginPath);
+    void loadPlugin(PluginInfo pluginInfo);
 
     /**
      * 启用插件目录下所有插件

@@ -1,4 +1,5 @@
 name: "${project.artifactId}"
 version: "${project.version}"
-authoendrs:
+main: cn.chengzhiya.mhdfbot.Main
+authors:
   - ChengZhiMeow

@@ -5,7 +5,7 @@ import cn.chengzhiya.mhdfbot.api.event.Event;
 import cn.chengzhiya.mhdfbot.api.listener.EventHandler;
 import cn.chengzhiya.mhdfbot.api.listener.Listener;
 import cn.chengzhiya.mhdfbot.api.listener.ListenerManager;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.lang.Languages;
 
 import java.lang.reflect.Method;

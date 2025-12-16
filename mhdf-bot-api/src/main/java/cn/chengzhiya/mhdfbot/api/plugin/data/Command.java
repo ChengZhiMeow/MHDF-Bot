@@ -2,6 +2,7 @@ package cn.chengzhiya.mhdfbot.api.plugin.data;
 
 import cn.chengzhiya.mhdfbot.api.command.CommandExecutor;
 import cn.chengzhiya.mhdfbot.api.command.TabCompleter;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 
 @SuppressWarnings("unused")
 public final class Command {

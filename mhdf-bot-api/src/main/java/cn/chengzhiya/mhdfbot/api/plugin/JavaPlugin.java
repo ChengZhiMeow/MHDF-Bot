@@ -4,7 +4,6 @@ import cn.chengzhimeow.ccyaml.configuration.yaml.YamlConfiguration;
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.listener.Listener;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 

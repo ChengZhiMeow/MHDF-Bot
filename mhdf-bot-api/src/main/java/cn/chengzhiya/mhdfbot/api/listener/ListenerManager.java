@@ -1,7 +1,7 @@
 package cn.chengzhiya.mhdfbot.api.listener;
 
 import cn.chengzhiya.mhdfbot.api.event.Event;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 
 public interface ListenerManager {
     /**

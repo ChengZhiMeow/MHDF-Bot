@@ -2,8 +2,8 @@ package cn.chengzhiya.mhdfbot.command;
 
 import cn.chengzhiya.mhdfbot.api.MHDFBot;
 import cn.chengzhiya.mhdfbot.api.command.CommandManager;
+import cn.chengzhiya.mhdfbot.api.plugin.PluginInfo;
 import cn.chengzhiya.mhdfbot.api.plugin.data.Command;
-import cn.chengzhiya.mhdfbot.api.plugin.data.PluginInfo;
 import cn.chengzhiya.mhdfbot.lang.Languages;
 
 import java.util.*;

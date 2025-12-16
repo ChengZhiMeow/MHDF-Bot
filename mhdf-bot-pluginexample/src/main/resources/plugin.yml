@@ -1,4 +1,8 @@
 name: MHDF-Bot-PluginExample
 version: 1.0.0
 main: cn.chengzhiya.mhdfbotpluginexample.Main
-authoendrs: [ ChengZhiYa ]
+authors: [ ChengZhiYa ]
+# support_framework: [ onebot, qqbot ]
+# mhdfbot_version: 2.1.6
+# depend: [ ciallo-plugin ]
+# softdepend: [ zako-plugin ]

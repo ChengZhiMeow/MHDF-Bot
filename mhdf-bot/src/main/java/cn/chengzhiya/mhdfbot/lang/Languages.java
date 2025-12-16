@@ -3,6 +3,10 @@ package cn.chengzhiya.mhdfbot.lang;
 public final class Languages {
     // 插件
     public static final String PLUGIN_LOAD_ERROR_INVALID = "{}不是一个有效的插件!";
+    public static final String PLUGIN_LOAD_ERROR_NOT_SUPPORT_FRAMEWORK = "{}仅支持{}其中一个的机器人类型!";
+    public static final String PLUGIN_LOAD_ERROR_NOT_SUPPORT_MHDFBOT_VERSION = "{}至少需要{}版本的梦之机器人框架,而你的版本为{}!";
+    public static final String PLUGIN_LOAD_ERROR_NOT_INSTALL_DEPEND = "{}需要{}插件作为前置,而你并没有安装它!";
+    public static final String PLUGIN_LOAD_ERROR_CANNOT_SORT_PLUGINS = "加载插件时发生依赖循环: ";
     public static final String PLUGIN_LOADING = "插件{}({})加载中";
     public static final String PLUGIN_LOAD_ERROR_THROW_EXCEPTION = "在加载插件 {} 的时候遇到了问题:";
     public static final String PLUGIN_ENABLING = "插件{}({})启用中";
