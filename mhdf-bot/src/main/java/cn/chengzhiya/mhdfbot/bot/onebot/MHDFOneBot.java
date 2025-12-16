@@ -145,6 +145,7 @@ public final class MHDFOneBot extends MHDFAbstractBot {
 
         JSONObject data = Objects.requireNonNull(JSONObject.parseObject(this.httpClient.post("get_msg", body.toString())))
                 .getJSONObject("data");
+        if (data == null) return null;
 
         return switch (data.getString("message_type")) {
             case "group" -> new GroupMessageEvent(data);
