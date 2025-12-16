@@ -117,7 +117,7 @@ public final class MHDFPluginManager implements PluginManager {
         if (pluginInfo.pluginStatus() != PluginStatus.LOAD_DONE) return;
 
         try {
-            MHDFBot.getLogger().error(Languages.PLUGIN_ENABLING, pluginInfo.name(), pluginInfo.version());
+            MHDFBot.getLogger().info(Languages.PLUGIN_ENABLING, pluginInfo.name(), pluginInfo.version());
 
             Field field = plugin.getClass().getSuperclass().getDeclaredField("logger");
             field.setAccessible(true);
