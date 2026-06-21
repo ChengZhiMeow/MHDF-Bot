@@ -11,7 +11,9 @@ public final class GroupUploadEvent extends AbstractNoticeEvent {
 
     public GroupUploadEvent(JSONObject data) {
         super(data);
-        this.groupId = data.getLong("group_id");
-        this.fileInfo = FileInfo.fromJson(data.getJSONObject("fileInfo"));
+        this.groupId = data.getLongValue("group_id");
+        JSONObject fileData = data.getJSONObject("file");
+        if (fileData == null) fileData = data.getJSONObject("fileInfo");
+        this.fileInfo = FileInfo.fromJson(fileData);
     }
 }
